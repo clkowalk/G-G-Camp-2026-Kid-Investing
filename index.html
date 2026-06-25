@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Adventure — Financial Literacy for Kids</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --green: #0F6E56; --green-dark: #065F46; --green-light: #E1F5EE; --green-mid: #9FE1CB;
+  --amber: #B45309; --amber-light: #FAEEDA; --amber-mid: #FAC775;
+  --purple: #5B21B6; --purple-light: #EEEDFE; --purple-mid: #AFA9EC;
+  --teal: #0F6E56; --teal-light: #E1F5EE;
+  --coral: #C2410C; --coral-light: #FAECE7;
+  --blue: #1E40AF; --blue-light: #E6F1FB; --blue-mid: #B5D4F4;
+  --pink: #BE185D; --pink-light: #FBEAF0;
+  --text: #1a1a1a; --text-muted: #555; --text-hint: #888;
+  --bg: #f8f7f4; --surface: #ffffff; --surface2: #f2f1ee;
+  --border: #e2e0da; --border-strong: #ccc;
+  --radius: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
+
+/* ── SITE HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white; padding: 0; position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.site-header-inner {
+  max-width: 1100px; margin: 0 auto; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.site-logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; white-space: nowrap; }
+.site-logo span { color: #FFD700; }
+.site-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.site-nav a {
+  padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.75); text-decoration: none; transition: all 0.2s;
+  border: 1.5px solid transparent; cursor: pointer; white-space: nowrap;
+}
+.site-nav a:hover { color: white; background: rgba(255,255,255,0.12); }
+.site-nav a.active { color: white; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.15); }
+
+/* ── CHAPTER SYSTEM ── */
+.chapter { display: none; max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+.chapter.active { display: block; }
+
+/* ── CHAPTER HERO ── */
+.chap-hero {
+  border-radius: 18px; padding: 36px 28px 30px;
+  color: white; margin-bottom: 28px; position: relative; overflow: hidden;
+}
+.chap-hero::before { content:''; position:absolute; top:-60px; right:-40px; width:220px; height:220px; background:rgba(255,255,255,0.06); border-radius:50%; }
+.chap-hero::after { content:''; position:absolute; bottom:-50px; left:-30px; width:160px; height:160px; background:rgba(255,255,255,0.04); border-radius:50%; }
+.chap-hero-tag { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; opacity:0.65; margin-bottom:10px; }
+.chap-hero h1 { font-size:28px; font-weight:700; letter-spacing:-0.5px; margin-bottom:8px; line-height:1.25; }
+.chap-hero p { font-size:14px; opacity:0.85; max-width:520px; line-height:1.65; }
+.chap-hero-icons { font-size:32px; margin-bottom:14px; }
+
+/* ── SECTION TABS ── */
+.tabs { display:flex; background:var(--surface); border-bottom:1.5px solid var(--border); border-radius:12px 12px 0 0; overflow-x:auto; margin-bottom:0; }
+.tab-btn {
+  flex:1; min-width:90px; padding:12px 8px 10px; border:none; background:transparent;
+  cursor:pointer; font-size:11px; font-weight:600; color:var(--text-muted);
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  border-bottom:3px solid transparent; transition:all 0.15s; white-space:nowrap;
+}
+.tab-btn:hover:not(.active) { background:#fafafa; color:var(--text); }
+.tab-icon { font-size:18px; }
+
+/* ── TAB PANELS ── */
+.tab-panel { display:none; background:var(--surface); border-radius:0 0 12px 12px; padding:24px; border:1.5px solid var(--border); border-top:none; }
+.tab-panel.active { display:block; animation: panelIn 0.2s ease; }
+@keyframes panelIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── TYPOGRAPHY ── */
+.sec-title { font-size:20px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.sec-sub { font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.6; }
+
+/* ── CALLOUT BOXES ── */
+.callout { border-radius:10px; padding:14px 16px; margin-bottom:16px; font-size:13px; line-height:1.65; font-weight:400; }
+.callout strong { font-weight:700; }
+.callout-amber { background:var(--amber-light); border:1.5px solid var(--amber-mid); color:#4a2800; }
+.callout-green { background:var(--green-light); border:1.5px solid var(--green-mid); color:#033d2c; }
+.callout-purple { background:var(--purple-light); border:1.5px solid var(--purple-mid); color:#2e1065; }
+.callout-teal { background:#E1F5EE; border:1.5px solid #9FE1CB; color:#04342C; }
+.callout-blue { background:var(--blue-light); border:1.5px solid var(--blue-mid); color:#0d1f6e; }
+.callout-coral { background:var(--coral-light); border:1.5px solid #F5C4B3; color:#4a1b0c; }
+
+/* ── CARD GRIDS ── */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:20px; }
+.card { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:16px; }
+.card-emoji { font-size:24px; margin-bottom:10px; }
+.card h3 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:5px; }
+.card p { font-size:12px; color:var(--text-muted); line-height:1.55; }
+.card.accent-l { border-left:4px solid var(--amber); }
+.card.accent-g { border-left:4px solid var(--green); }
+.card.accent-p { border-left:4px solid var(--purple); }
+.card.accent-t { border-left:4px solid var(--teal); }
+.card.accent-b { border-left:4px solid var(--blue); }
+.card.accent-c { border-left:4px solid var(--coral); }
+.card.accent-pk { border-left:4px solid var(--pink); }
+
+/* ── QUIZ ── */
+.quiz { background:var(--surface2); border-radius:12px; padding:18px; margin-bottom:14px; border:1.5px solid var(--border); }
+.quiz-q { font-size:14px; font-weight:700; color:var(--text); margin-bottom:14px; }
+.quiz-opts { display:flex; flex-direction:column; gap:8px; }
+.quiz-opt {
+  background:var(--surface); border:1.5px solid var(--border); border-radius:9px;
+  padding:11px 15px; cursor:pointer; font-size:13px; color:var(--text);
+  text-align:left; transition:all 0.15s; font-weight:500;
+}
+.quiz-opt:hover:not([disabled]) { border-color:var(--green); color:var(--green-dark); background:var(--green-light); }
+.quiz-opt.correct { background:#EAF3DE; border-color:#059669; color:#1a4d2e; }
+.quiz-opt.wrong { background:#FCEBEB; border-color:#b91c1c; color:#4a1515; }
+.quiz-result { font-size:13px; padding:11px 15px; border-radius:9px; margin-top:10px; display:none; font-weight:500; }
+.quiz-result.show { display:block; }
+
+/* ── BUTTONS ── */
+.btn { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; border:1.5px solid var(--border-strong); background:var(--surface); color:var(--text); transition:all 0.15s; }
+.btn:hover { background:var(--surface2); }
+.btn-green { background:var(--green); color:white; border-color:var(--green); }
+.btn-green:hover { background:var(--green-dark); }
+.btn-amber { background:var(--amber); color:white; border-color:var(--amber); }
+.btn-amber:hover { background:#92400E; }
+.btn-purple { background:var(--purple); color:white; border-color:var(--purple); }
+.btn-purple:hover { background:#4c1d95; }
+
+/* ── TIMELINE ── */
+.timeline { position:relative; padding-left:32px; margin-bottom:20px; }
+.timeline::before { content:''; position:absolute; left:11px; top:0; bottom:0; width:2px; background:var(--border); }
+.tl-item { position:relative; margin-bottom:20px; }
+.tl-dot { position:absolute; left:-26px; top:4px; width:16px; height:16px; border-radius:50%; border:2.5px solid var(--amber); background:var(--surface); }
+.tl-dot.filled { background:var(--amber); }
+.tl-year { font-size:10px; font-weight:700; color:var(--amber); margin-bottom:3px; text-transform:uppercase; letter-spacing:0.8px; }
+.tl-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.tl-body { font-size:12px; color:var(--text-muted); line-height:1.6; }
+
+/* ── STORY PAIR ── */
+.story-pair { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
+@media(max-width:520px){.story-pair{grid-template-columns:1fr;}}
+.story-card { border-radius:12px; padding:18px; border:1.5px solid var(--border); background:var(--surface); }
+.story-card.gold-top { border-top:4px solid #D97706; }
+.story-card.green-top { border-top:4px solid #059669; }
+.story-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.story-tag { display:inline-block; font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; margin-bottom:10px; }
+.tag-amber { background:var(--amber-light); color:#78350f; }
+.tag-green { background:var(--green-light); color:#064e3b; }
+.story-body { font-size:12px; color:var(--text-muted); line-height:1.6; }
+.story-detail { margin-top:10px; padding-top:10px; border-top:1px solid var(--border); font-size:11px; color:var(--text-hint); line-height:1.55; }
+
+/* ── PERSON CARD ── */
+.person-card { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:18px; margin-bottom:12px; }
+.person-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:12px; }
+.person-avatar { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.person-name { font-size:14px; font-weight:700; color:var(--text); }
+.person-type { font-size:11px; color:var(--text-muted); margin-top:2px; }
+.person-body { font-size:13px; color:var(--text-muted); line-height:1.65; margin-bottom:10px; }
+.person-quote { font-size:13px; font-weight:600; padding:10px 14px; border-radius:9px; border:1.5px solid; font-style:italic; }
+
+/* ── TRADE STEPS ── */
+.trade-step { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+.trade-step:last-child{border-bottom:none;}
+.step-num { width:26px; height:26px; border-radius:50%; background:var(--amber-light); color:#78350f; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+
+/* ── PUZZLE ── */
+.puzzle-wrap { background:var(--surface2); border-radius:12px; padding:18px; margin-bottom:16px; border:1.5px solid var(--border); }
+.puzzle-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+.p-card { background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
+.p-card-emoji { font-size:24px; margin-bottom:6px; }
+.p-card-name { font-size:12px; font-weight:700; color:var(--text); }
+.p-has { font-size:11px; color:var(--text-muted); margin-top:3px; }
+.p-wants { font-size:11px; color:var(--amber); margin-top:2px; font-weight:600; }
+
+/* ── PROPERTY LIST ── */
+.prop-item { display:flex; align-items:flex-start; gap:14px; padding:13px 0; border-bottom:1px solid var(--border); }
+.prop-item:last-child{border-bottom:none;}
+.prop-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+.prop-item h4 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.prop-item p { font-size:12px; color:var(--text-muted); line-height:1.55; }
+
+/* ── COMPARE TABLE ── */
+.cmp-table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:18px; }
+.cmp-table th { font-size:12px; font-weight:700; color:var(--text-muted); padding:8px 10px; border-bottom:2px solid var(--border); text-align:left; }
+.cmp-table td { padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+.cmp-table tr:last-child td { border-bottom:none; }
+.good { color:#166534; font-weight:600; }
+.bad { color:#991b1b; font-weight:500; }
+
+/* ── TRICK CARDS (expand) ── */
+.trick-card { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:16px; margin-bottom:10px; cursor:pointer; transition:all 0.15s; }
+.trick-card:hover { border-color:var(--green); }
+.trick-header { display:flex; align-items:center; gap:10px; }
+.trick-num { width:30px; height:30px; border-radius:50%; background:var(--purple-light); color:var(--purple); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+.trick-title { font-size:14px; font-weight:700; color:var(--text); flex:1; }
+.trick-arrow { color:var(--text-hint); font-size:13px; transition:transform 0.2s; }
+.trick-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); font-size:13px; color:var(--text-muted); line-height:1.65; }
+.trick-body.open { display:block; }
+.trick-example { background:var(--surface2); border-radius:8px; padding:10px 13px; margin-top:10px; font-size:12px; color:var(--text-muted); }
+.trick-example strong { color:var(--text); font-weight:700; }
+
+/* ── AD SPOTTER ── */
+.ad-mock { background:var(--surface2); border:1.5px solid var(--border); border-radius:10px; padding:15px; margin-bottom:12px; position:relative; }
+.ad-badge { position:absolute; top:9px; right:9px; font-size:9px; background:var(--amber-light); color:#78350f; border:1px solid var(--amber-mid); border-radius:4px; padding:2px 7px; font-weight:700; }
+.ad-text { font-size:13px; color:var(--text); margin-bottom:6px; line-height:1.5; }
+.ad-meta { font-size:11px; color:var(--text-hint); }
+.reveal-btn { font-size:12px; font-weight:700; color:var(--purple); background:none; border:1.5px solid var(--purple-mid); border-radius:7px; padding:5px 12px; cursor:pointer; margin-top:10px; transition:all 0.15s; }
+.reveal-btn:hover { background:var(--purple-light); }
+.reveal-box { display:none; margin-top:10px; background:var(--purple-light); border-radius:9px; padding:12px; font-size:12px; color:#2e1065; line-height:1.6; border:1px solid var(--purple-mid); }
+.reveal-box.show { display:block; }
+
+/* ── VALUE CHIPS ── */
+.value-picker { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:8px; margin-bottom:16px; }
+.value-chip { border:1.5px solid var(--border); border-radius:10px; padding:11px 8px; text-align:center; cursor:pointer; transition:all 0.15s; background:var(--surface); }
+.value-chip:hover { border-color:var(--green); }
+.value-chip.picked { border-color:var(--green); background:var(--green-light); }
+.value-chip-emoji { font-size:20px; margin-bottom:5px; }
+.value-chip-label { font-size:11px; font-weight:700; color:var(--text); }
+
+/* ── TRADEOFF SLIDERS ── */
+.slider-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.slider-row label { font-size:13px; color:var(--text-muted); min-width:100px; font-weight:500; }
+.slider-row input[type=range] { flex:1; accent-color:var(--green); }
+.slider-row span { font-size:13px; font-weight:700; color:var(--text); min-width:38px; text-align:right; }
+.outcome-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+.outcome-box { border-radius:10px; padding:12px; text-align:center; }
+.outcome-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+.outcome-val { font-size:22px; font-weight:700; }
+.outcome-bar { height:5px; border-radius:3px; margin-top:7px; transition:width 0.4s; }
+
+/* ── INTERNET STEPS ── */
+.inet-step { display:flex; gap:14px; margin-bottom:16px; align-items:flex-start; }
+.inet-bubble { width:40px; height:40px; border-radius:50%; background:var(--purple-light); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.inet-step h4 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.inet-step p { font-size:12px; color:var(--text-muted); line-height:1.6; }
+
+/* ── MARKET / INVEST SECTION ── */
+.market-filter { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.filter-btn { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; border:1.5px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all 0.15s; }
+.filter-btn:hover { border-color:var(--green); color:var(--green); }
+.filter-btn.active { background:var(--green); color:white; border-color:var(--green); }
+.market-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin-bottom:16px; }
+.mcard { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:13px; cursor:pointer; transition:all 0.15s; position:relative; }
+.mcard:hover { border-color:var(--green); transform:translateY(-1px); box-shadow:var(--shadow); }
+.mcard.owned { border-color:var(--green); background:var(--green-light); }
+.mc-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:7px; }
+.mc-emoji { font-size:22px; }
+.mc-type { font-size:9px; font-weight:700; padding:2px 7px; border-radius:8px; }
+.type-stock { background:var(--purple-light); color:var(--purple); }
+.type-bond { background:var(--blue-light); color:var(--blue); }
+.type-fund { background:var(--green-light); color:var(--green-dark); }
+.mc-name { font-size:12px; font-weight:700; color:var(--text); }
+.mc-ticker { font-size:10px; color:var(--text-muted); margin-bottom:7px; }
+.mc-price { font-size:18px; font-weight:700; color:var(--text); }
+.mc-change { font-size:11px; margin-top:3px; }
+.owned-badge { position:absolute; top:8px; right:8px; font-size:9px; background:var(--green); color:white; border-radius:5px; padding:2px 6px; font-weight:700; }
+.up { color:#059669; } .down { color:#b91c1c; }
+mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
+
+/* ── PORTFOLIO ── */
+.port-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+.pstat { background:var(--surface2); border-radius:10px; padding:12px; }
+.pstat-label { font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+.pstat-val { font-size:20px; font-weight:700; color:var(--text); }
+.pstat-sub { font-size:11px; color:var(--text-hint); margin-top:2px; }
+.holding { background:var(--surface); border:1.5px solid var(--border); border-radius:11px; padding:14px; margin-bottom:9px; cursor:pointer; transition:all 0.15s; }
+.holding:hover { border-color:var(--green); }
+.h-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:7px; }
+.h-emoji { font-size:22px; }
+.h-name { font-size:14px; font-weight:700; color:var(--text); }
+.h-ticker { font-size:11px; color:var(--text-muted); }
+.h-val { font-size:16px; font-weight:700; color:var(--text); text-align:right; }
+.h-gain { font-size:12px; text-align:right; margin-top:2px; }
+.h-bar-wrap { height:5px; background:var(--surface2); border-radius:3px; overflow:hidden; margin-top:8px; }
+.h-bar-fill { height:100%; border-radius:3px; transition:width 0.5s; }
+.alloc-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.alloc-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.alloc-name { font-size:13px; color:var(--text); flex:1; font-weight:500; }
+.alloc-pct { font-size:13px; font-weight:700; color:var(--text); }
+.alloc-bar-wrap { width:90px; height:5px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+.alloc-bar { height:100%; border-radius:3px; transition:width 0.5s; }
+
+/* ── MODAL ── */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:500; padding:20px; }
+.modal-overlay.hidden { display:none; }
+.modal { background:var(--surface); border-radius:16px; padding:22px; width:100%; max-width:380px; box-shadow:0 20px 60px rgba(0,0,0,0.25); border:1.5px solid var(--border); }
+.modal h3 { font-size:18px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.modal-price { font-size:26px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.modal-desc { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+.shares-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.shares-row label { font-size:13px; color:var(--text-muted); font-weight:500; }
+.shares-input { border:1.5px solid var(--border); border-radius:8px; padding:8px 11px; font-size:15px; font-weight:700; background:var(--surface2); color:var(--text); width:75px; }
+.modal-total { font-size:13px; color:var(--text-muted); margin-bottom:16px; }
+.modal-btns { display:flex; gap:9px; }
+
+/* ── NEWS ── */
+.news-item { background:var(--surface); border:1.5px solid var(--border); border-radius:11px; padding:14px; margin-bottom:10px; }
+.news-ticker { font-size:10px; font-weight:700; padding:3px 8px; border-radius:7px; display:inline-block; margin-bottom:7px; }
+.news-headline { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.news-body { font-size:12px; color:var(--text-muted); line-height:1.55; }
+.news-impact { font-size:12px; margin-top:7px; font-weight:700; }
+
+/* ── CHART WRAPPERS ── */
+.chart-wrap { background:var(--surface2); border-radius:12px; padding:16px; margin-bottom:14px; border:1.5px solid var(--border); }
+.chart-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+.chart-title { font-size:14px; font-weight:700; color:var(--text); }
+.period-btns { display:flex; gap:5px; }
+.period-btn { font-size:10px; font-weight:700; padding:4px 9px; border-radius:6px; cursor:pointer; border:1.5px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all 0.15s; }
+.period-btn.active { background:var(--green); color:white; border-color:var(--green); }
+
+/* ── PLAYER TABS ── */
+.player-switch { display:flex; gap:8px; margin-bottom:16px; }
+.player-btn { padding:7px 18px; border-radius:20px; font-size:13px; font-weight:700; cursor:pointer; border:2px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all 0.15s; }
+.player-btn.active { background:var(--green); color:white; border-color:var(--green); }
+
+/* ── PORTFOLIO HERO BAR ── */
+.port-hero { background:linear-gradient(135deg,#0C444C,#0F6E56); color:white; border-radius:12px; padding:18px 20px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; }
+.ph-stat-label { font-size:10px; opacity:0.65; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:3px; }
+.ph-stat-val { font-size:22px; font-weight:700; }
+.ph-stat-change { font-size:12px; margin-top:2px; }
+.up-w { color:#9FE1CB; } .down-w { color:#F09595; }
+
+/* ── SIM CONTROLS ── */
+.sim-result { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin-top:14px; }
+.sim-box { border-radius:9px; padding:12px; text-align:center; }
+.sim-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+.sim-val { font-size:18px; font-weight:700; }
+
+/* ── FLEX UTILITIES ── */
+.flex-between { display:flex; justify-content:space-between; align-items:center; }
+.gap-8 { gap:8px; }
+.mt-12 { margin-top:12px; }
+.mt-16 { margin-top:16px; }
+.mb-0 { margin-bottom:0; }
+.hidden { display:none !important; }
+.empty-state { text-align:center; padding:36px 16px; color:var(--text-hint); font-size:14px; }
+.empty-state .es-emoji { font-size:40px; margin-bottom:10px; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px) {
+  .site-nav { display:none; }
+  .chap-hero h1 { font-size:22px; }
+  .port-summary { grid-template-columns:1fr 1fr; }
+  .puzzle-grid { grid-template-columns:1fr; }
+  .outcome-grid { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-logo">🪙 <span>Money</span> Adventure</div>
+    <nav class="site-nav" id="site-nav">
+      <a onclick="showChapter('money')" data-ch="money" class="active">💰 What is Money?</a>
+      <a onclick="showChapter('life')" data-ch="life">🌱 Your Life</a>
+      <a onclick="showChapter('ads')" data-ch="ads">📣 Advertising</a>
+      <a onclick="showChapter('smart')" data-ch="smart">🛍️ Smart Spending</a>
+      <a onclick="showChapter('invest')" data-ch="invest">📈 Invest!</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 1 — WHAT IS MONEY?
+     ════════════════════════════════════════════ -->
+<section class="chapter active" id="ch-money">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#78350F,#92400E,#B45309);">
+    <div class="chap-hero-tag">Chapter 1 — Start here</div>
+    <div class="chap-hero-icons">🌾 🐔 🪙</div>
+    <h1>What is money, and why do we have it?</h1>
+    <p>Before credit cards, banks, or coins — people traded stuff for other stuff. Here's why that got really complicated, really fast — and how money solved everything.</p>
+  </div>
+
+  <div class="tabs" id="tabs-money">
+    <button class="tab-btn active" onclick="showTab('money','barter',this)"><span class="tab-icon">🤝</span>Trading stuff</button>
+    <button class="tab-btn" onclick="showTab('money','problem',this)"><span class="tab-icon">😩</span>The problem</button>
+    <button class="tab-btn" onclick="showTab('money','solution',this)"><span class="tab-icon">🪙</span>Money!</button>
+    <button class="tab-btn" onclick="showTab('money','history',this)"><span class="tab-icon">📜</span>History</button>
+    <button class="tab-btn" onclick="showTab('money','today',this)"><span class="tab-icon">💳</span>Today</button>
+  </div>
+
+  <!-- BARTER -->
+  <div class="tab-panel active" id="money-barter">
+    <div class="sec-title">Life before money</div>
+    <div class="sec-sub">Imagine there are no stores, no cash, no apps. If you want something, you have to trade something you have for it. This is called <strong>barter</strong> — and humans did it for thousands of years.</div>
+    <div class="callout callout-amber"><strong>🌾 Picture this:</strong> You're a farmer in a small village 3,000 years ago. You grow wheat. Your neighbor raises chickens. Another makes pottery. You all need things the others have — so you trade!</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-emoji">👨‍🌾</div><h3>Farmer Mae</h3><p>Has: 🌾 wheat, 🥕 carrots<br>Needs: 🐔 chickens</p></div>
+      <div class="card"><div class="card-emoji">👩‍🍳</div><h3>Potter Sam</h3><p>Has: 🏺 pots, 🪣 buckets<br>Needs: 🌾 wheat</p></div>
+      <div class="card"><div class="card-emoji">🧑‍🌾</div><h3>Herder Bea</h3><p>Has: 🐔 chickens, 🥛 milk<br>Needs: 🏺 pots</p></div>
+      <div class="card"><div class="card-emoji">🧑‍🔧</div><h3>Smith Tok</h3><p>Has: 🪓 tools, ⚔️ knives<br>Needs: 🥛 milk</p></div>
+    </div>
+    <div style="background:var(--surface2);border-radius:12px;padding:18px;margin-bottom:18px;border:1.5px solid var(--border);">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;">Mae's trade — just to get one chicken:</div>
+      <div class="trade-step"><div class="step-num">1</div><span>Mae brings 🌾 wheat to the village marketplace</span></div>
+      <div class="trade-step"><div class="step-num">2</div><span>Potter Sam needs wheat — trades Mae a 🏺 pot</span></div>
+      <div class="trade-step"><div class="step-num">3</div><span>Mae takes the pot to Herder Bea, who trades a 🐔 chicken for it</span></div>
+      <div class="trade-step"><div class="step-num">4</div><span>Mae finally has her chicken — but it took <strong>3 stops and a whole day!</strong></span></div>
+    </div>
+    <div class="callout callout-green"><strong>✅ When barter worked:</strong> In tiny villages where everyone knew each other, simple trades worked fine. But as villages grew bigger and people needed more things, serious problems appeared.</div>
+    <div class="quiz" id="qm1">
+      <div class="quiz-q">Farmer Mae has wheat but needs a chicken. She finds someone with chickens, but they don't want wheat — they want a pot. What does Mae have to do?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm1')">Give up and go home</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qm1')">Find someone who'll trade wheat for a pot, then trade the pot for the chicken</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm1')">Just steal the chicken when no one's looking</button>
+      </div>
+      <div class="quiz-result" id="qm1-result"></div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <div class="tab-panel" id="money-problem">
+    <div class="sec-title">Why barter broke down</div>
+    <div class="sec-sub">As communities grew, barter ran into four big walls. These problems made people realize they needed something completely different.</div>
+    <div class="puzzle-wrap">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">The "double coincidence of wants" puzzle</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.55;">For a trade to happen, <em>both</em> people have to want exactly what the other has — at the same time. Can you see who can actually trade with whom here?</div>
+      <div class="puzzle-grid">
+        <div class="p-card"><div class="p-card-emoji">👨‍🌾</div><div class="p-card-name">Mae</div><div class="p-has">Has: 🌾 wheat</div><div class="p-wants">Wants: 🐟 fish</div></div>
+        <div class="p-card"><div class="p-card-emoji">🧑‍🎣</div><div class="p-card-name">River</div><div class="p-has">Has: 🐟 fish</div><div class="p-wants">Wants: 🪓 tools</div></div>
+        <div class="p-card"><div class="p-card-emoji">🧑‍🔧</div><div class="p-card-name">Tok</div><div class="p-has">Has: 🪓 tools</div><div class="p-wants">Wants: 🌾 wheat</div></div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">Mae needs fish — but River doesn't want wheat ❌. River needs tools — Tok has them, but Tok needs wheat that Mae has ❌. There's no direct trade that works!</div>
+      <button class="btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none';">Show me the only solution ▾</button>
+      <div style="display:none;background:var(--green-light);border-radius:9px;padding:13px;font-size:13px;color:#033d2c;line-height:1.65;border:1px solid var(--green-mid);margin-top:2px;">Mae must first find someone who wants wheat AND has something River wants, trade for it, then go back to River, then finally get fish. What should have taken 5 minutes now takes a full day. <strong>Money solved this forever.</strong></div>
+    </div>
+    <div class="card-grid">
+      <div class="card accent-c"><div class="card-emoji">🐄</div><h3>Can't make change</h3><p>A cow is worth a lot. But what if you only want bread? You can't give someone half a cow. Big things can't be split easily.</p></div>
+      <div class="card accent-l"><div class="card-emoji">🍎</div><h3>Things go bad</h3><p>Apples rot. Milk curdles. Fish stinks. You can't save your "wealth" for later if it decomposes. You had to trade immediately.</p></div>
+      <div class="card accent-p"><div class="card-emoji">🏋️</div><h3>Too heavy to carry</h3><p>Traveling to trade? Bring 50 chickens or 10 bags of grain. Barter meant your "wallet" was heavy, smelly, and exhausting.</p></div>
+      <div class="card accent-t"><div class="card-emoji">🤔</div><h3>No agreed value</h3><p>How many apples is a chicken worth? Three? Ten? Everyone argued. Every trade was a new negotiation with no fair answer.</p></div>
+    </div>
+    <div class="quiz" id="qm2">
+      <div class="quiz-q">A farmer has a whole cow but just wants some bread for dinner. Why is this a barter problem?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm2')">Bread is more valuable than a cow</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qm2')">You can't split a cow into small pieces to make change — it's not divisible</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm2')">The baker probably doesn't like cows</button>
+      </div>
+      <div class="quiz-result" id="qm2-result"></div>
+    </div>
+  </div>
+
+  <!-- SOLUTION -->
+  <div class="tab-panel" id="money-solution">
+    <div class="sec-title">The brilliant invention of money</div>
+    <div class="sec-sub">People figured out that if everyone agreed to accept one special thing as a stand-in for value, all those barter problems vanished instantly. That thing — whatever it was — became money.</div>
+    <div class="callout callout-amber"><strong>💡 The key insight:</strong> Money doesn't have value because it <em>is</em> valuable. It has value because everyone <em>agrees</em> it's valuable. A dollar bill is just paper — but because millions of people trust it, it works!</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">The 5 things that make something good money:</div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px;">
+      <div class="prop-item"><div class="prop-icon">✂️</div><div><h4>Divisible — can be split into exact pieces</h4><p>A dollar becomes 4 quarters or 100 pennies. Unlike a cow, you can always make exact change for anything.</p></div></div>
+      <div class="prop-item"><div class="prop-icon">💎</div><div><h4>Durable — doesn't rot or break</h4><p>Gold coins last thousands of years. Dollar bills last years. Unlike fish or apples, money doesn't go bad while you're waiting to use it.</p></div></div>
+      <div class="prop-item"><div class="prop-icon">🎒</div><div><h4>Portable — easy to carry</h4><p>A wallet of cash beats hauling 50 chickens. You can carry enormous value in a tiny space — or on a chip in your phone.</p></div></div>
+      <div class="prop-item"><div class="prop-icon">🔍</div><div><h4>Recognizable — everyone knows what it is</h4><p>Everyone knows what a dollar looks like. No arguing about whether it's real or what it's worth. Trusted everywhere.</p></div></div>
+      <div class="prop-item"><div class="prop-icon">📏</div><div><h4>A common measure — gives everything a fair price</h4><p>Instead of endless arguments about "how many apples is a chicken?" — everything gets a price in dollars. Fair, fast, and simple.</p></div></div>
+    </div>
+    <div class="callout callout-green"><strong>🔄 Now Mae's trade is easy:</strong> Instead of hauling wheat to Sam, getting a pot, then finding Bea — Mae just sells her wheat for coins, walks to Herder Bea, and buys a chicken. Two steps instead of five. Five minutes instead of a full day!</div>
+    <div class="quiz" id="qm3">
+      <div class="quiz-q">Why is paper money — which is just printed paper — actually valuable?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm3')">Because paper is rare and hard to find</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm3')">Because the government put gold inside every bill</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qm3')">Because everyone in society agrees to trust and accept it as having value</button>
+      </div>
+      <div class="quiz-result" id="qm3-result"></div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="tab-panel" id="money-history">
+    <div class="sec-title">How money evolved over time</div>
+    <div class="sec-sub">Humans tried shells, cattle, gold, and paper before landing on what we use today. Here's the journey across 12,000 years.</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">~10,000 BCE</div><div class="tl-title">🤝 Pure barter</div><div class="tl-body">Early farming communities traded directly — grain for animals, tools for food. Worked in tiny villages where everyone knew each other.</div></div>
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">~9,000 – 3,000 BCE</div><div class="tl-title">🐄 Commodity money — cattle and grain</div><div class="tl-body">Cattle, grain, and salt became early currencies because everyone needed them. "How rich are you?" meant "how many cattle do you own?" The words "cattle" and "capital" share the same ancient root!</div></div>
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">~1,200 BCE</div><div class="tl-title">🐚 Shell money — cowrie shells</div><div class="tl-body">Cowrie shells were used as money across Africa, Asia, and the Americas. Small, durable, hard to fake, and easy to count — but you couldn't find them everywhere.</div></div>
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">~600 BCE</div><div class="tl-title">🪙 Metal coins — gold and silver</div><div class="tl-body">The kingdom of Lydia (now Turkey) made the first official coins. Durable, portable, and rare enough to hold value. They spread across the world rapidly.</div></div>
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">~700 CE</div><div class="tl-title">📜 Paper money — invented in China</div><div class="tl-body">Merchants got tired of hauling heavy coins. Banks gave them a paper "receipt" for their gold — and that paper receipt became money. Over 1,300 years ago!</div></div>
+      <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1600s – 1900s</div><div class="tl-title">🏦 National currencies and banks</div><div class="tl-body">Governments standardized money and made sure everyone trusted it. The US dollar, British pound, and other national currencies were born.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1950s onward</div><div class="tl-title">💳 Credit and debit cards</div><div class="tl-body">No more carrying cash! A plastic card linked to your bank account could pay for anything. Money moved invisibly through computers.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">Today</div><div class="tl-title">📱 Digital money</div><div class="tl-body">Tap your phone, scan an app, send money across the world in seconds. The form keeps changing — but the core idea is still the same as those first cowrie shells: an agreed symbol of value that lets people trade fairly.</div></div>
+    </div>
+    <div class="callout callout-teal"><strong>🌍 The big picture:</strong> Every form of money in history solved the same barter problems. The materials changed, but the idea never did: agree on something everyone trusts, and trade becomes easy.</div>
+  </div>
+
+  <!-- TODAY -->
+  <div class="tab-panel" id="money-today">
+    <div class="sec-title">Why money is good for everyone</div>
+    <div class="sec-sub">Money isn't just convenient — it's one of the great inventions that allowed civilization to grow and thrive.</div>
+    <div class="callout callout-purple"><strong>🌱 Think about this:</strong> Without money, a doctor couldn't just be a doctor — they'd also have to grow food, make clothes, and build their own house, because they'd have no way to trade their skills for those things. Money lets people specialize and do what they're best at.</div>
+    <table class="cmp-table">
+      <thead><tr><th>Without money (barter)</th><th>With money</th></tr></thead>
+      <tbody>
+        <tr><td class="bad">❌ Must find someone who wants exactly what you have</td><td class="good">✅ Sell to anyone, buy from anyone</td></tr>
+        <tr><td class="bad">❌ Your wealth rots, breaks, or gets smelly</td><td class="good">✅ Save money for years — it keeps its value</td></tr>
+        <tr><td class="bad">❌ Can't make exact change for big items</td><td class="good">✅ Exact prices, exact change, every time</td></tr>
+        <tr><td class="bad">❌ Your "wallet" is heavy and exhausting to carry</td><td class="good">✅ A card or phone holds unlimited value</td></tr>
+        <tr><td class="bad">❌ Prices are always a new argument</td><td class="good">✅ One price everyone understands and trusts</td></tr>
+        <tr><td class="bad">❌ Hard to save for the future — your grain might rot</td><td class="good">✅ Save money now, use it whenever you need it</td></tr>
+      </tbody>
+    </table>
+    <div class="card-grid">
+      <div class="card accent-g"><div class="card-emoji">🩺</div><h3>Specialization</h3><p>Doctors doctor. Farmers farm. Teachers teach. Money lets everyone get paid for doing what they're best at.</p></div>
+      <div class="card accent-t"><div class="card-emoji">🌍</div><h3>Global trade</h3><p>A toy made in one country, with parts from five others, sold in yours — money makes that possible worldwide.</p></div>
+      <div class="card accent-p"><div class="card-emoji">⏳</div><h3>Saving for the future</h3><p>Work hard now, use that effort later — for school, emergencies, adventures, or retirement. Barter could never do this.</p></div>
+      <div class="card accent-l"><div class="card-emoji">⚖️</div><h3>Fair exchange</h3><p>When everyone uses the same currency, trades are transparent. You always know the price before you commit.</p></div>
+    </div>
+    <div class="callout callout-green"><strong>🧠 The big takeaway:</strong> Money is a tool — like a hammer or a calculator. It can build a wonderful life, or be wasted on things that don't matter. Learning to use it well is one of the most powerful skills you'll ever have — and that's what this whole course is about!</div>
+    <div class="quiz" id="qm4">
+      <div class="quiz-q">Why can a doctor today just focus on being a doctor, instead of also growing food and making clothes?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm4')">Doctors are too smart to farm</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qm4')">Money lets them earn from their skill and trade it for everything else they need</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm4')">The government gives doctors free food and clothes</button>
+      </div>
+      <div class="quiz-result" id="qm4-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 2 — WHAT KIND OF LIFE DO YOU WANT?
+     ════════════════════════════════════════════ -->
+<section class="chapter" id="ch-life">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#064E3B,#065F46,#047857);">
+    <div class="chap-hero-tag">Chapter 2 — The most important question</div>
+    <div class="chap-hero-icons">🏔️ 🏠 ✨</div>
+    <h1>What kind of life do you want?</h1>
+    <p>Before anyone tries to sell you something, it helps to know what you actually want your life to look like. This is your chance to figure that out.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('life','twopaths',this)"><span class="tab-icon">🔀</span>Two paths</button>
+    <button class="tab-btn" onclick="showTab('life','stories',this)"><span class="tab-icon">📖</span>Real stories</button>
+    <button class="tab-btn" onclick="showTab('life','science',this)"><span class="tab-icon">🔬</span>Science says</button>
+    <button class="tab-btn" onclick="showTab('life','design',this)"><span class="tab-icon">🎨</span>Design your life</button>
+    <button class="tab-btn" onclick="showTab('life','tradeoffs',this)"><span class="tab-icon">⚖️</span>Tradeoffs</button>
+  </div>
+
+  <!-- TWO PATHS -->
+  <div class="tab-panel active" id="life-twopaths">
+    <div class="sec-title">There is no wrong answer — but there are tradeoffs</div>
+    <div class="sec-sub">People make very different choices about what to do with their money and their lives. Neither path is "right" — but each comes with real consequences worth understanding before you choose.</div>
+    <div class="callout callout-green"><strong>🌱 The big question:</strong> When you grow up and earn money, what will you do with it? The answer shapes almost everything — where you live, how stressed you feel, how free you are, and what memories you make.</div>
+    <div class="story-pair">
+      <div class="story-card gold-top">
+        <div style="font-size:28px;margin-bottom:8px;">🏡</div>
+        <div class="story-name">The "More is More" life</div>
+        <span class="story-tag tag-amber">Lots of stuff</span>
+        <div class="story-body">A big house, a new car every few years, the latest gadgets, designer clothes, lots of subscriptions, eating out often. Life feels exciting and full. There's always something new coming.</div>
+        <div class="story-detail">Often means: longer work hours to pay for it all, stress about bills, not much savings, feeling like you always need the next thing to feel happy again.</div>
+      </div>
+      <div class="story-card green-top">
+        <div style="font-size:28px;margin-bottom:8px;">🎒</div>
+        <div class="story-name">The "Enough is Enough" life</div>
+        <span class="story-tag tag-green">Simple + free</span>
+        <div class="story-body">A comfortable but modest home, a reliable car (or a bike), experiences over gadgets, cooking at home, saving a big chunk of every paycheck. Life feels spacious and calm.</div>
+        <div class="story-detail">Often means: less financial stress, more freedom to say no to bad jobs, ability to take adventures, retire earlier, and choose how you spend your time.</div>
+      </div>
+    </div>
+    <div class="callout callout-amber"><strong>🤔 Here's the twist:</strong> The "More is More" life often costs so much that you have to work harder and longer to pay for it — which leaves less time to actually enjoy the stuff you bought! It can become a treadmill that's very hard to step off.</div>
+    <div class="card-grid">
+      <div class="card accent-l"><div class="card-emoji">📦</div><h3>Stuff fades fast</h3><p>The excitement from buying something new lasts an average of just a few days to a few weeks. Then it becomes just another thing you own.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🏕️</div><h3>Experiences last forever</h3><p>A camping trip, learning to surf, a road trip with family — you carry these memories your whole life. They actually get better with time.</p></div>
+      <div class="card accent-t"><div class="card-emoji">🔓</div><h3>Freedom is priceless</h3><p>Having money saved means you can say no to things you don't want and yes to things you do. No object can give you that.</p></div>
+      <div class="card accent-p"><div class="card-emoji">🧘</div><h3>Less stuff = less stress</h3><p>Every thing you own needs to be stored, cleaned, maintained, and eventually thrown away. Owning less is genuinely calming.</p></div>
+    </div>
+    <div class="quiz" id="ql1">
+      <div class="quiz-q">Maya buys a new gaming console and is thrilled for two weeks. Then she barely plays it. Jake uses that same money on a week-long hiking trip with his dad. A year later, who has something more valuable?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql1')">Maya — she still has the console, which is worth money</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','ql1')">Jake — the memory of that trip will last their whole lives and can never be taken away</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql1')">They're equal — both spent the same amount</button>
+      </div>
+      <div class="quiz-result" id="ql1-result"></div>
+    </div>
+  </div>
+
+  <!-- STORIES -->
+  <div class="tab-panel" id="life-stories">
+    <div class="sec-title">People who chose differently</div>
+    <div class="sec-sub">These are inspired by real types of people and real choices. None of them are wrong — but look at what each life actually felt like from the inside.</div>
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#FAEEDA;">🏠</div><div><div class="person-name">Marcus, 45 — the collector</div><div class="person-type">High income · lots of stuff · always busy</div></div></div>
+      <div class="person-body">Marcus earns a great salary and spends nearly all of it. He has a beautiful home with five bedrooms (just for him), three cars, a boat he uses twice a year, and a closet full of clothes with tags still on. He works 60 hours a week to pay for it all, takes very few vacations, and feels stressed about money despite earning a lot. When he looks around his home, he sees things — but when he looks at his calendar, he sees almost no time to enjoy them.</div>
+      <div class="person-quote" style="background:#FAEEDA;color:#4a2800;border-color:#FAC775;">"I kept thinking the next thing would make me happy. But I was always working to pay for the last thing I bought."</div>
+    </div>
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#EAF3DE;">🎒</div><div><div class="person-name">Priya, 38 — the adventurer</div><div class="person-type">Modest income · few things · incredibly rich experiences</div></div></div>
+      <div class="person-body">Priya earns a normal salary but saves 40% of everything she makes. She lives in a small, cozy apartment she loves. She owns one reliable car. Her wardrobe fits in one suitcase. But she has visited 30 countries, learned to scuba dive, speaks two languages, and takes three weeks off every year to explore somewhere new. She has six months of savings in the bank, no debt, and genuinely feels free. She doesn't feel poor — she feels rich in the ways that matter to her.</div>
+      <div class="person-quote" style="background:#EAF3DE;color:#033d2c;border-color:#9FE1CB;">"I realized early that owning less meant I could live more. My apartment is small but my life is enormous."</div>
+    </div>
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#E1F5EE;">🌿</div><div><div class="person-name">The Chen family — the balancers</div><div class="person-type">Two incomes · intentional spending · family first</div></div></div>
+      <div class="person-body">David and Lin earn together and made a deliberate choice early: live on 70% of what they earn and save the rest. They have a comfortable home (not the biggest they could afford), take one big family trip a year, and buy good-quality things — but not many of them. Their kids don't have every toy, but they've camped in national parks, learned instruments, and have parents who aren't constantly stressed. They're on track to be financially free by their mid-fifties.</div>
+      <div class="person-quote" style="background:#E1F5EE;color:#04342C;border-color:#9FE1CB;">"We chose a life we could afford to actually live in — not just look at from behind a pile of bills."</div>
+    </div>
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#EEEDFE;">⚡</div><div><div class="person-name">Jordan, 29 — the early retiree</div><div class="person-type">Average income · extreme saving · retired at 32</div></div></div>
+      <div class="person-body">Jordan discovered early that if you save and invest enough, your money eventually earns more than you spend — and you never have to work again unless you want to. Jordan lived cheaply in their twenties, drove an old car, cooked almost every meal, skipped the latest phones and gadgets. By 32, their investments generated enough income to live on. Now Jordan volunteers, travels slowly, learns things, and works on projects they love.</div>
+      <div class="person-quote" style="background:#EEEDFE;color:#2e1065;border-color:#AFA9EC;">"Every dollar I didn't spend in my twenties bought me a day of freedom in my thirties. That math felt worth it."</div>
+    </div>
+  </div>
+
+  <!-- SCIENCE -->
+  <div class="tab-panel" id="life-science">
+    <div class="sec-title">What does science actually say?</div>
+    <div class="sec-sub">Happiness researchers have spent decades trying to figure out what really makes people feel good long-term. The answers might surprise you.</div>
+    <div class="callout callout-blue"><strong>🔬 Real research:</strong> Psychologists at Cornell University studied thousands of people and found that experiences make people happier than things — both in the moment and for years afterward.</div>
+    <div class="card-grid">
+      <div class="card accent-l"><div class="card-emoji">🎢</div><h3>The happiness treadmill</h3><p>Scientists call it "hedonic adaptation." You buy something exciting, happiness spikes, then within weeks you're back to normal and want something new. You can never get off.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🌅</div><h3>Experiences get better over time</h3><p>Memories actually improve as you get older. You forget the cold sleeping bag on the camping trip and remember the stars. Objects just get older.</p></div>
+      <div class="card accent-p"><div class="card-emoji">🔗</div><h3>Experiences connect you to people</h3><p>Shared experiences — trips, adventures, learning together — build relationships in ways that objects never can.</p></div>
+      <div class="card accent-t"><div class="card-emoji">😰</div><h3>Debt causes real stress</h3><p>Financial stress is one of the biggest causes of anxiety, relationship problems, and poor health. Buying too much on credit affects your whole life.</p></div>
+      <div class="card accent-b"><div class="card-emoji">💰</div><h3>After a point, more money doesn't help much</h3><p>Happiness goes up with income — but mainly up to having "enough" for comfort and security. After that, more money makes surprisingly little difference.</p></div>
+      <div class="card accent-c"><div class="card-emoji">🤝</div><h3>Giving feels amazing</h3><p>Multiple studies show that spending money on other people makes people happier than spending the same amount on themselves.</p></div>
+    </div>
+    <div class="callout callout-green"><strong>🧠 The punchline from decades of research:</strong> The people who report the highest life satisfaction tend to have enough money to feel secure, strong relationships, meaningful experiences, and a sense of purpose. A full closet doesn't appear anywhere on that list.</div>
+    <div class="quiz" id="ql2">
+      <div class="quiz-q">Scientists found that people who get a new phone are very excited for about 2 weeks — then feel normal again and want something new. What do scientists call this pattern?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'correct','ql2')">The happiness treadmill (hedonic adaptation)</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql2')">The phone upgrade cycle</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql2')">Consumer joy theory</button>
+      </div>
+      <div class="quiz-result" id="ql2-result"></div>
+    </div>
+  </div>
+
+  <!-- DESIGN YOUR LIFE -->
+  <div class="tab-panel" id="life-design">
+    <div class="sec-title">Design your own life</div>
+    <div class="sec-sub">This isn't about what ads say is cool, or what your friends have. This is about what YOU actually want your life to feel like. Pick what matters most to you.</div>
+    <div class="callout callout-teal"><strong>✏️ Your turn:</strong> Tap the things below that actually matter to you. There are no wrong answers — this is your life sketch.</div>
+    <div class="value-picker" id="value-picker">
+      <div class="value-chip" onclick="toggleValue(this,'adventure')"><div class="value-chip-emoji">🏔️</div><div class="value-chip-label">Adventure</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'family')"><div class="value-chip-emoji">👨‍👩‍👧</div><div class="value-chip-label">Family time</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'stuff')"><div class="value-chip-emoji">🎮</div><div class="value-chip-label">Cool stuff</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'freedom')"><div class="value-chip-emoji">🕊️</div><div class="value-chip-label">Freedom</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'friends')"><div class="value-chip-emoji">👯</div><div class="value-chip-label">Friends</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'learning')"><div class="value-chip-emoji">📚</div><div class="value-chip-label">Learning</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'travel')"><div class="value-chip-emoji">✈️</div><div class="value-chip-label">Travel</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'giving')"><div class="value-chip-emoji">❤️</div><div class="value-chip-label">Helping others</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'art')"><div class="value-chip-emoji">🎨</div><div class="value-chip-label">Creating things</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'nature')"><div class="value-chip-emoji">🌿</div><div class="value-chip-label">Nature</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'calm')"><div class="value-chip-emoji">😌</div><div class="value-chip-label">Peace &amp; calm</div></div>
+      <div class="value-chip" onclick="toggleValue(this,'security')"><div class="value-chip-emoji">🔒</div><div class="value-chip-label">Feeling safe</div></div>
+    </div>
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:18px;min-height:90px;" id="life-preview-box">
+      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Your life sketch</div>
+      <div style="font-size:13px;color:var(--text-hint);font-style:italic;" id="life-preview-empty">Pick a few things above to see your life take shape...</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7;display:none;" id="life-preview-text"></div>
+    </div>
+  </div>
+
+  <!-- TRADEOFFS -->
+  <div class="tab-panel" id="life-tradeoffs">
+    <div class="sec-title">The honest tradeoffs</div>
+    <div class="sec-sub">Every choice has real costs and real benefits. Drag the sliders to see how your spending choices affect different parts of life.</div>
+    <div style="background:var(--surface2);border-radius:12px;padding:18px;margin-bottom:16px;border:1.5px solid var(--border);">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">The life tradeoff explorer</div>
+      <div class="slider-row"><label>Spending on stuff</label><input type="range" min="0" max="100" value="60" id="sl-stuff" oninput="updateTradeoff()"/><span id="sl-stuff-v">60%</span></div>
+      <div class="slider-row"><label>Experiences</label><input type="range" min="0" max="100" value="25" id="sl-exp" oninput="updateTradeoff()"/><span id="sl-exp-v">25%</span></div>
+      <div class="slider-row"><label>Saving</label><input type="range" min="0" max="100" value="15" id="sl-save" oninput="updateTradeoff()"/><span id="sl-save-v">15%</span></div>
+      <div class="outcome-grid">
+        <div class="outcome-box" style="background:#FAEEDA;"><div class="outcome-label" style="color:#78350f;">Day-to-day fun</div><div class="outcome-val" style="color:#B45309;" id="out-fun">62</div><div class="outcome-bar" style="background:#B45309;" id="bar-fun"></div></div>
+        <div class="outcome-box" style="background:#EAF3DE;"><div class="outcome-label" style="color:#064e3b;">Future freedom</div><div class="outcome-val" style="color:#047857;" id="out-free">18</div><div class="outcome-bar" style="background:#047857;" id="bar-free"></div></div>
+        <div class="outcome-box" style="background:#EEEDFE;"><div class="outcome-label" style="color:#2e1065;">Life satisfaction</div><div class="outcome-val" style="color:#5B21B6;" id="out-sat">46</div><div class="outcome-bar" style="background:#5B21B6;" id="bar-sat"></div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text-hint);margin-top:12px;text-align:center;" id="tradeoff-hint">Try moving saving up to see future freedom grow!</div>
+    </div>
+    <div class="callout callout-green"><strong>🎯 The sweet spot:</strong> Most people with the highest life satisfaction spend meaningfully on experiences and relationships, keep their fixed costs modest, and always save something — even if small — every single month.</div>
+    <div class="quiz" id="ql3">
+      <div class="quiz-q">Alex earns $100 a week and spends $95 on stuff, saving only $5. Sam earns $100 a week, spends $60, saves $25, and uses $15 on experiences. Five years later, who has more options in life?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql3')">Alex — they enjoyed more stuff every week</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','ql3')">Sam — they have savings, memories, and freedom that Alex doesn't</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','ql3')">They're the same — both earned the same amount</button>
+      </div>
+      <div class="quiz-result" id="ql3-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 3 — THE ADVERTISING WORLD
+     ════════════════════════════════════════════ -->
+<section class="chapter" id="ch-ads">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#1E1B4B,#312E81,#4C1D95);">
+    <div class="chap-hero-tag">Chapter 3 — Know who's watching you</div>
+    <div class="chap-hero-icons">📺 🎯 💡</div>
+    <h1>The Advertising World</h1>
+    <p>Every single day, companies spend billions of dollars trying to convince you to want things. Here's how to see through it — and think for yourself.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('ads','howads',this)"><span class="tab-icon">📣</span>How ads work</button>
+    <button class="tab-btn" onclick="showTab('ads','internet',this)"><span class="tab-icon">🌐</span>Internet trap</button>
+    <button class="tab-btn" onclick="showTab('ads','tricks',this)"><span class="tab-icon">🎩</span>Ad tricks</button>
+    <button class="tab-btn" onclick="showTab('ads','spotter',this)"><span class="tab-icon">🔍</span>Spot the ad</button>
+  </div>
+
+  <!-- HOW ADS WORK -->
+  <div class="tab-panel active" id="ads-howads">
+    <div class="sec-title">You are the product</div>
+    <div class="sec-sub">Companies don't just make things — they spend enormous amounts of money convincing you to want them. Understanding this is like getting a superpower.</div>
+    <div class="callout callout-purple"><strong>🧠 Big idea:</strong> In 2023, companies around the world spent over <strong>$700 billion</strong> on advertising. That's more than the economy of many countries — all going toward one goal: getting you to open your wallet.</div>
+    <div class="card-grid">
+      <div class="card accent-p"><div class="card-emoji">😊</div><h3>They sell feelings</h3><p>Ads rarely say "buy this thing." They say "buy this feeling" — happiness, coolness, belonging, excitement. The product is almost beside the point.</p></div>
+      <div class="card accent-c"><div class="card-emoji">👯</div><h3>Everyone has one</h3><p>If your friends all have something, you want it too. Advertisers use this deliberately. It's called social proof, and it's very powerful.</p></div>
+      <div class="card accent-l"><div class="card-emoji">⏰</div><h3>Fake urgency</h3><p>"Limited time only!" "Only 3 left!" This makes you feel like you must buy NOW before thinking carefully. It's a designed panic.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🌟</div><h3>Famous people</h3><p>When a famous athlete uses something, you feel like you'll be more like them if you buy it too. That's exactly what advertisers are counting on.</p></div>
+      <div class="card accent-b"><div class="card-emoji">🔁</div><h3>Repeat, repeat, repeat</h3><p>The more you see something, the more familiar it feels — and the more you trust it, even without thinking. Repetition is one of the oldest tricks.</p></div>
+      <div class="card accent-pk"><div class="card-emoji">🎨</div><h3>Pretty packaging</h3><p>Bright colors, fun fonts, cool characters — designed by experts to make you feel good before you even open the box.</p></div>
+    </div>
+    <div class="quiz" id="qa1">
+      <div class="quiz-q">A cereal box has a cartoon dragon on it and says "EPIC MORNING POWER!" What is the advertiser actually trying to do?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa1')">Tell you the cereal is nutritious</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qa1')">Make you feel excited so you want it without thinking</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa1')">Warn you it has a lot of sugar</button>
+      </div>
+      <div class="quiz-result" id="qa1-result"></div>
+    </div>
+  </div>
+
+  <!-- INTERNET TRAP -->
+  <div class="tab-panel" id="ads-internet">
+    <div class="sec-title">The internet knows you</div>
+    <div class="sec-sub">The internet isn't just a place to watch videos. It's a giant machine built to show you ads — and it's very, very good at it.</div>
+    <div class="callout callout-coral"><strong>🚨 Here's the truth:</strong> When you use free apps and free websites — you are not the customer. You are the <em>product</em>. Companies collect information about you and sell it to advertisers.</div>
+    <div class="inet-step"><div class="inet-bubble">👀</div><div><h4>Step 1: You browse and click</h4><p>Every video you watch, post you like, and search you type is being recorded, secretly, in the background.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🗃️</div><div><h4>Step 2: A profile is built about you</h4><p>Apps build a detailed profile: your age, what you like, how long you spend watching things, what makes you stop scrolling.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🤖</div><div><h4>Step 3: An algorithm finds your weak spots</h4><p>Computer programs figure out exactly what kind of content and ads make you keep watching — or make you want to buy something.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🎯</div><div><h4>Step 4: You get targeted ads</h4><p>Ads are shown specifically designed for someone exactly like you. They know your age, your interests, even your mood — and use all of it.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">💸</div><div><h4>Step 5: The app gets paid</h4><p>When you click an ad or buy something, the advertiser pays the app. The app makes money. You spend money. The cycle repeats.</p></div></div>
+    <div class="callout callout-green"><strong>🛡️ Your defense:</strong> Knowing this system exists is the first step. When you see something you want online, ask: "Did I want this before I saw the ad — or did the ad create that feeling?"</div>
+    <div class="quiz" id="qa2">
+      <div class="quiz-q">You use a free game app. Suddenly you see ads for the exact toys you were looking at yesterday on another website. How did that happen?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">A coincidence — the app guessed!</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qa2')">The apps share your data, so advertisers know what you looked at</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">Your parents told the app what you like</button>
+      </div>
+      <div class="quiz-result" id="qa2-result"></div>
+    </div>
+  </div>
+
+  <!-- AD TRICKS -->
+  <div class="tab-panel" id="ads-tricks">
+    <div class="sec-title">The advertiser's playbook</div>
+    <div class="sec-sub">Advertisers use the same tricks over and over. Once you know their moves, you can spot them everywhere. Tap each one to learn more.</div>
+    <div class="callout callout-amber"><strong>🎩 Remember:</strong> These tricks aren't accidents. They're carefully designed by very smart, very well-paid people whose entire job is to make you want things.</div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">1</div><div class="trick-title">🏷️ The "sale" trick — making you feel you're saving money</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">Stores often mark prices up first, then put them "on sale" so you think you're getting a deal. A shirt that costs $10 to make gets priced at $50, then "marked down" to $25. You feel like you saved $25 — but you actually just spent $25!<div class="trick-example"><strong>Real example:</strong> "Was $99.99 — NOW $49.99!" The original price was set high on purpose, just to make the sale price look amazing.</div></div>
+    </div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">2</div><div class="trick-title">😱 FOMO — fear of missing out</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">Advertisers know humans are wired to feel bad when others have something they don't. So they show happy, popular kids using a product — hinting you'll be left out if you don't have it too.<div class="trick-example"><strong>Real example:</strong> "Everyone's playing it — are you?" The most popular kid in school is shown with a certain backpack.</div></div>
+    </div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">3</div><div class="trick-title">⭐ Influencers — paid friends pretending to love things</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">Influencers on YouTube, TikTok, and Instagram are often paid thousands of dollars to say they love a product. They might not even use it in real life. They're supposed to say #ad — but it's often hidden in tiny text.<div class="trick-example"><strong>Real example:</strong> A popular gamer says "I only drink THIS energy drink!" — but off-camera they drink water. They got paid $50,000 to say that.</div></div>
+    </div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">4</div><div class="trick-title">🎮 Games designed to make you spend</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">Many free games are carefully designed to frustrate you at just the right moment — so you'll pay a little money to keep playing. The game itself is the ad. Game designers study psychology to find exactly when you're most likely to spend.<div class="trick-example"><strong>Real example:</strong> You're SO close to winning a level — but the game slows down and offers coins to finish. That moment was engineered on purpose.</div></div>
+    </div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">5</div><div class="trick-title">🔢 Tiny prices that add up forever</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">"$2.99 a month" sounds tiny. But that's $36 a year. Add up 5 subscriptions and you're paying $180 a year on things you might barely use. Companies love monthly pricing because it feels like almost nothing.<div class="trick-example"><strong>Real example:</strong> Streaming service + game subscription + music app + cloud storage = $200+/year without noticing.</div></div>
+    </div>
+    <div class="trick-card" onclick="toggleTrick(this)">
+      <div class="trick-header"><div class="trick-num">6</div><div class="trick-title">🆕 "New" doesn't mean "better"</div><span class="trick-arrow">▸</span></div>
+      <div class="trick-body">Companies release slightly updated versions of the same product every year — not because the old one is broken, but to make you feel yours is now outdated. This is called planned obsolescence.<div class="trick-example"><strong>Real example:</strong> A phone that works perfectly fine suddenly "needs" replacing because there's a new model with a slightly better camera. Your old one still works great!</div></div>
+    </div>
+  </div>
+
+  <!-- SPOT THE AD -->
+  <div class="tab-panel" id="ads-spotter">
+    <div class="sec-title">Can you spot the tricks?</div>
+    <div class="sec-sub">Here are real-life ad scenarios. Read each one and reveal the hidden trick being used. Once you can name a trick, it loses most of its power over you.</div>
+    <div class="ad-mock">
+      <div class="ad-badge">AD</div>
+      <div class="ad-text">🔥 <strong>FLASH SALE — 4 HOURS ONLY!</strong> Get the Mega Pro Game Controller for $29.99 (was $79.99). Only 2 left in stock! Don't miss out.</div>
+      <div class="ad-meta">Sponsored · GameZone Shop</div>
+      <button class="reveal-btn" onclick="revealAd(this)">Reveal the tricks ▾</button>
+      <div class="reveal-box"><strong>Tricks used:</strong><br>⏰ <strong>Fake urgency</strong> — "4 hours only" and "only 2 left" make you panic and buy without thinking.<br>🏷️ <strong>The sale trick</strong> — Was the original price really $79.99? Probably not.<br><em>What to do: Search the product elsewhere. Sleep on it.</em></div>
+    </div>
+    <div class="ad-mock">
+      <div class="ad-badge">AD</div>
+      <div class="ad-text">⭐ "I literally use this every single day — it changed my life!" — @CoolKidGamer (2.4M followers)</div>
+      <div class="ad-meta">Sponsored content #ad #partner (in tiny text at the bottom)</div>
+      <button class="reveal-btn" onclick="revealAd(this)">Reveal the tricks ▾</button>
+      <div class="reveal-box"><strong>Tricks used:</strong><br>⭐ <strong>Influencer trick</strong> — This person was likely paid to say this. The "#ad" tag is hidden in tiny text.<br>😊 <strong>They sell feelings</strong> — "Changed my life" sells transformation, not the actual product.<br><em>What to do: Look for the #ad tag. Ask — would this person use it if they weren't paid?</em></div>
+    </div>
+    <div class="ad-mock">
+      <div class="ad-badge">AD</div>
+      <div class="ad-text">🎮 <strong>You're SO close!</strong> Just 3 more coins to unlock the final level. Get 10 coins for only $0.99!</div>
+      <div class="ad-meta">In-game purchase prompt</div>
+      <button class="reveal-btn" onclick="revealAd(this)">Reveal the tricks ▾</button>
+      <div class="reveal-box"><strong>Tricks used:</strong><br>🎮 <strong>Designed frustration</strong> — The game was built to stop you at this exact moment. Not an accident.<br>🔢 <strong>Tiny price</strong> — $0.99 feels like nothing, but 10 times = $9.99 for a free game.<br><em>What to do: Step away. The level will still be there tomorrow — and so will your dollar.</em></div>
+    </div>
+    <div class="ad-mock">
+      <div class="ad-badge">AD</div>
+      <div class="ad-text">📱 <strong>New AirPhone 16 is here.</strong> Your old phone is now ancient history. Everyone's upgrading. Are you?</div>
+      <div class="ad-meta">Sponsored · PhoneBrand</div>
+      <button class="reveal-btn" onclick="revealAd(this)">Reveal the tricks ▾</button>
+      <div class="reveal-box"><strong>Tricks used:</strong><br>🆕 <strong>"New" trick</strong> — Your old phone probably works fine. They're making it feel outdated to sell a new one.<br>😱 <strong>FOMO</strong> — "Everyone's upgrading" makes you feel left behind if you don't.<br><em>What to do: Ask — does my current phone actually not work? If it works, you don't need a new one.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 4 — SMART SPENDING & BUDGETING
+     ════════════════════════════════════════════ -->
+<section class="chapter" id="ch-smart">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#312e81,#4338ca,#6366f1);">
+    <div class="chap-hero-tag">Chapter 4 — Your money, your choices</div>
+    <div class="chap-hero-icons">🛍️ 🏦 🎯</div>
+    <h1>Smart Spending, Saving &amp; Goals</h1>
+    <p>Now that you know how ads try to trick you — here's how to take control of your money, budget wisely, and save for the things that truly matter.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('smart','spending',this)"><span class="tab-icon">🛍️</span>Smart spending</button>
+    <button class="tab-btn" onclick="showTab('smart','jars',this)"><span class="tab-icon">🏦</span>Budget jars</button>
+    <button class="tab-btn" onclick="showTab('smart','goals',this)"><span class="tab-icon">🎯</span>My goals</button>
+  </div>
+
+  <!-- SMART SPENDING -->
+  <div class="tab-panel active" id="smart-spending">
+    <div class="sec-title">Needs vs. wants</div>
+    <div class="sec-sub">Before you spend, ask yourself one simple question: do I need this, or do I just want it right now?</div>
+    <div class="callout callout-purple"><strong>🧠 The golden rule:</strong> Before buying something, ask — "Did I want this before I saw it, or did seeing it create the want?" Waiting 24 hours often changes your mind completely.</div>
+    <div class="card-grid">
+      <div class="card accent-b"><div class="card-emoji">🏠</div><h3>Needs</h3><p>Food, shelter, clothes, school supplies — things you truly cannot do without. These come first, always.</p></div>
+      <div class="card accent-pk"><div class="card-emoji">🎮</div><h3>Wants</h3><p>Video games, toys, candy, new sneakers — fun stuff, but you can live without them! And they're often more fun when you've saved up for them.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🔍</div><h3>Compare prices</h3><p>Check if the same thing costs less somewhere else. Smart shoppers always compare before buying — a few minutes can save real money.</p></div>
+      <div class="card accent-l"><div class="card-emoji">⏳</div><h3>The 24-hour rule</h3><p>Wait a day before buying something you want. Still want it just as badly? Maybe it's worth it. Most times, the urge fades.</p></div>
+    </div>
+    <div class="quiz" id="qs1">
+      <div class="quiz-q">You see cool new headphones for $50 but you already have ones that work fine. What should you do?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Buy them right away — they look so cool!</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qs1')">Wait 24 hours and see if you still want them just as much</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Ask for them as a gift so you don't have to use your savings</button>
+      </div>
+      <div class="quiz-result" id="qs1-result"></div>
+    </div>
+    <div class="quiz" id="qs2">
+      <div class="quiz-q">Which of these is a NEED?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">A brand new video game 🎮</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qs2')">School supplies for class 📚</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">Extra candy at the checkout lane 🍬</button>
+      </div>
+      <div class="quiz-result" id="qs2-result"></div>
+    </div>
+  </div>
+
+  <!-- BUDGET JARS -->
+  <div class="tab-panel" id="smart-jars">
+    <div class="sec-title">The three-jar system</div>
+    <div class="sec-sub">The simplest way to manage your money: split it into three jars every time you get paid. Set your allowance and drag the sliders!</div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;">
+      <label style="font-size:13px;color:var(--text-muted);font-weight:600;">Weekly allowance:</label>
+      <div style="position:relative;display:flex;align-items:center;"><span style="position:absolute;left:10px;color:var(--text-muted);font-size:15px;font-weight:700;">$</span><input type="number" id="allowance" value="10" min="1" max="500" oninput="updateJars()" style="padding:8px 10px 8px 24px;border:1.5px solid var(--border);border-radius:9px;font-size:15px;font-weight:700;background:var(--surface2);color:var(--text);width:95px;"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">🐷</div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Save</div>
+        <div style="font-size:22px;font-weight:700;color:var(--text);" id="save-amt">$5.00</div>
+        <div style="font-size:11px;color:var(--text-hint);" id="save-pct-disp">50%</div>
+        <input type="range" id="save-pct" min="0" max="100" value="50" oninput="updateJars()" style="width:100%;margin-top:8px;accent-color:var(--green);"/>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">🛍️</div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Spend</div>
+        <div style="font-size:22px;font-weight:700;color:var(--text);" id="spend-amt">$3.00</div>
+        <div style="font-size:11px;color:var(--text-hint);" id="spend-pct-disp">30%</div>
+        <input type="range" id="spend-pct" min="0" max="100" value="30" oninput="updateJars()" style="width:100%;margin-top:8px;accent-color:var(--amber);"/>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">❤️</div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Give</div>
+        <div style="font-size:22px;font-weight:700;color:var(--text);" id="give-amt">$2.00</div>
+        <div style="font-size:11px;color:var(--text-hint);" id="give-pct-disp">20%</div>
+      </div>
+    </div>
+    <div class="callout callout-green"><strong>💡 Did you know?</strong> Most money experts say saving at least 20% of everything you earn is a great habit to start NOW, when you're young. The earlier you start, the more powerful it becomes.</div>
+    <div style="background:var(--surface2);border-radius:12px;padding:16px;border:1.5px solid var(--border);">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Watch your savings grow!</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">If you save your jar amount every week for a year...</div>
+      <div style="display:flex;align-items:flex-end;gap:5px;height:90px;" id="saving-chart"></div>
+      <div style="font-size:11px;color:var(--text-hint);text-align:center;margin-top:6px;">Monthly totals · Months 1–12</div>
+    </div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="tab-panel" id="smart-goals">
+    <div class="sec-title">My saving goals</div>
+    <div class="sec-sub">Pick something you really want. Figure out how much it costs. Start saving a little each week. Before you know it — you'll have it! And it'll feel AMAZING because you earned it.</div>
+    <div class="callout callout-amber"><strong>🎯 Why save for big things?</strong> Things you save up for feel way more special than impulse buys. Waiting builds patience — one of the most powerful skills in life.</div>
+    <div id="goals-list">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;">
+        <div class="flex-between" style="margin-bottom:4px;"><div style="font-size:14px;font-weight:700;color:var(--text);">🎮 New video game</div><span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:#EAF3DE;color:#166534;">In progress</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Goal: $60 · Saving $5/week</div>
+        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:58%;background:#4F46E5;border-radius:3px;"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);"><span>Saved: $35</span><span>12 weeks left!</span></div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;">
+        <div class="flex-between" style="margin-bottom:4px;"><div style="font-size:14px;font-weight:700;color:var(--text);">🚲 New bike</div><span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:#FAEEDA;color:#78350f;">Just started</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Goal: $150 · Saving $10/week</div>
+        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:13%;background:#D97706;border-radius:3px;"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);"><span>Saved: $20</span><span>13 weeks left!</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 5 — INVEST!
+     ════════════════════════════════════════════ -->
+<section class="chapter" id="ch-invest">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#0C444C,#0F6E56,#1D9E75);">
+    <div class="chap-hero-tag">Chapter 5 — Make your money work</div>
+    <div class="chap-hero-icons">📈 💼 🌱</div>
+    <h1>Investing — Make Your Money Grow</h1>
+    <p>Pick real stocks and bonds, build your own portfolio, track your progress with live charts, and compete with your sibling. You each start with $500 of play money!</p>
+  </div>
+
+  <!-- PLAYER SWITCH + PORTFOLIO HERO -->
+  <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:4px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">Choose your player</div>
+      <div class="player-switch">
+        <button class="player-btn active" onclick="switchPlayer(0)">🧒 Player 1</button>
+        <button class="player-btn" onclick="switchPlayer(1)">👧 Player 2</button>
+      </div>
+    </div>
+    <div class="port-hero">
+      <div><div class="ph-stat-label">Portfolio value</div><div class="ph-stat-val" id="h-total">$500.00</div><div class="ph-stat-change up-w" id="h-change">—</div></div>
+      <div><div class="ph-stat-label">Cash available</div><div class="ph-stat-val" id="h-cash">$500.00</div></div>
+      <div><div class="ph-stat-label">Holdings</div><div class="ph-stat-val" id="h-count">0</div><div class="ph-stat-change up-w" id="h-return">+$0.00 total gain</div></div>
+    </div>
+  </div>
+
+  <div class="tabs" style="border-radius:0;">
+    <button class="tab-btn active" onclick="showTab('invest','market',this)"><span class="tab-icon">🏪</span>Market</button>
+    <button class="tab-btn" onclick="showTab('invest','portfolio',this)"><span class="tab-icon">💼</span>Portfolio</button>
+    <button class="tab-btn" onclick="showTab('invest','charts',this)"><span class="tab-icon">📊</span>Charts</button>
+    <button class="tab-btn" onclick="showTab('invest','growth',this)"><span class="tab-icon">🌱</span>Growth sim</button>
+    <button class="tab-btn" onclick="showTab('invest','learn',this)"><span class="tab-icon">📚</span>Learn</button>
+    <button class="tab-btn" onclick="showTab('invest','news',this)"><span class="tab-icon">📰</span>News</button>
+  </div>
+
+  <!-- MARKET -->
+  <div class="tab-panel active" id="invest-market">
+    <div class="sec-title">Stock &amp; bond market</div>
+    <div class="sec-sub">Browse and buy. Tap any card to see details and purchase shares. Simulate a trading day to watch prices move!</div>
+    <div class="market-filter">
+      <button class="filter-btn active" onclick="filterMarket('all',this)">All</button>
+      <button class="filter-btn" onclick="filterMarket('stock',this)">Stocks 📈</button>
+      <button class="filter-btn" onclick="filterMarket('bond',this)">Bonds 📜</button>
+      <button class="filter-btn" onclick="filterMarket('fund',this)">Index funds 🗂️</button>
+    </div>
+    <div class="market-grid" id="market-grid"></div>
+    <button class="btn btn-green" onclick="simulateMarketDay()">🎲 Simulate a trading day</button>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="tab-panel" id="invest-portfolio">
+    <div class="sec-title">My holdings</div>
+    <div class="sec-sub">Everything you own. Tap a holding to buy more or sell shares.</div>
+    <div class="port-summary">
+      <div class="pstat"><div class="pstat-label">Amount invested</div><div class="pstat-val" id="p-invested">$0</div></div>
+      <div class="pstat"><div class="pstat-label">Gain / loss</div><div class="pstat-val" id="p-gain">$0</div><div class="pstat-sub" id="p-gainpct"></div></div>
+      <div class="pstat"><div class="pstat-label">Best performer</div><div class="pstat-val" style="font-size:14px;" id="p-best">—</div></div>
+    </div>
+    <div id="holdings-list"><div class="empty-state"><div class="es-emoji">📭</div>No holdings yet — head to the Market tab to buy your first stock or bond!</div></div>
+    <div id="alloc-section" class="hidden" style="margin-top:14px;">
+      <div class="chart-wrap">
+        <div class="chart-title" style="margin-bottom:14px;">Portfolio allocation</div>
+        <div style="display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:center;">
+          <canvas id="donut-chart" width="130" height="130"></canvas>
+          <div id="alloc-legend"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="tab-panel" id="invest-charts">
+    <div class="sec-title">Performance charts</div>
+    <div class="sec-sub">Every time you simulate a trading day or make a trade, these charts update. Watch your portfolio story unfold!</div>
+    <div class="chart-wrap">
+      <div class="chart-header">
+        <div class="chart-title">Total portfolio value over time</div>
+        <div class="period-btns">
+          <button class="period-btn active" onclick="setPeriod('all',this)">All time</button>
+          <button class="period-btn" onclick="setPeriod('10',this)">Last 10</button>
+          <button class="period-btn" onclick="setPeriod('5',this)">Last 5</button>
+        </div>
+      </div>
+      <canvas id="port-line" height="180"></canvas>
+      <div id="chart-empty-msg" style="text-align:center;font-size:13px;color:var(--text-hint);padding:16px 0;">Simulate trading days to see your chart grow!</div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-header"><div class="chart-title">Stocks vs bonds vs cash over time</div></div>
+      <canvas id="stacked-bar" height="150"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-header"><div class="chart-title">Individual stock % returns (your owned stocks)</div></div>
+      <canvas id="multi-line" height="160"></canvas>
+      <div id="multi-empty-msg" style="text-align:center;font-size:13px;color:var(--text-hint);padding:16px 0;">Buy some stocks to compare their performance here!</div>
+    </div>
+  </div>
+
+  <!-- GROWTH SIM -->
+  <div class="tab-panel" id="invest-growth">
+    <div class="sec-title">Compound growth simulator</div>
+    <div class="sec-sub">See what happens when you invest a little every month and let time do the work. This is the most powerful idea in all of investing!</div>
+    <div class="callout callout-teal"><strong>🌱 The magic of compounding:</strong> When your investments grow, that growth also starts to grow. Over many years, this creates an enormous snowball effect — even if you start very small.</div>
+    <div style="background:var(--surface2);border-radius:12px;padding:18px;margin-bottom:14px;border:1.5px solid var(--border);">
+      <div class="slider-row"><label>Starting amount</label><input type="range" min="0" max="1000" step="25" value="100" id="sim-start" oninput="updateSim()"/><span id="sim-start-v">$100</span></div>
+      <div class="slider-row"><label>Monthly addition</label><input type="range" min="0" max="500" step="5" value="20" id="sim-monthly" oninput="updateSim()"/><span id="sim-monthly-v">$20/mo</span></div>
+      <div class="slider-row"><label>Annual return</label><input type="range" min="1" max="15" step="0.5" value="7" id="sim-rate" oninput="updateSim()"/><span id="sim-rate-v">7%</span></div>
+      <div class="slider-row"><label>Years</label><input type="range" min="1" max="50" step="1" value="20" id="sim-years" oninput="updateSim()"/><span id="sim-years-v">20 yrs</span></div>
+      <div class="sim-result">
+        <div class="sim-box" style="background:#E1F5EE;"><div class="sim-label" style="color:#04342C;">End value</div><div class="sim-val" style="color:#0F6E56;" id="sim-end">$0</div></div>
+        <div class="sim-box" style="background:#EEEDFE;"><div class="sim-label" style="color:#2e1065;">You invested</div><div class="sim-val" style="color:#5B21B6;" id="sim-inv">$0</div></div>
+        <div class="sim-box" style="background:#FAEEDA;"><div class="sim-label" style="color:#78350f;">Growth earned</div><div class="sim-val" style="color:#B45309;" id="sim-growth">$0</div></div>
+        <div class="sim-box" style="background:#EAF3DE;"><div class="sim-label" style="color:#064e3b;">Return multiple</div><div class="sim-val" style="color:#047857;" id="sim-mult">0×</div></div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-header"><div class="chart-title">Invested money vs total value over time</div></div>
+      <canvas id="compound-chart" height="200"></canvas>
+    </div>
+    <div class="callout callout-amber"><strong>⏰ Start early!</strong> Waiting just 5 extra years to start investing can cut your ending value nearly in half. Time is the most powerful ingredient in the entire recipe.</div>
+  </div>
+
+  <!-- LEARN -->
+  <div class="tab-panel" id="invest-learn">
+    <div class="sec-title">What am I actually buying?</div>
+    <div class="sec-sub">Before you invest, understand what you're getting. Here are the three things you can buy in this market.</div>
+    <div class="callout callout-teal"><strong>💡 What is investing?</strong> Instead of spending money, you put it somewhere that can grow over time. It's like planting a money tree — you plant a seed (your money) and over time it grows into something much bigger. 🌳</div>
+    <div class="card-grid">
+      <div class="card accent-p"><div class="card-emoji">📈</div><h3>Stocks</h3><p>You buy a tiny piece of a company. If the company does well, your piece grows in value! If it struggles, it might shrink. Higher risk, higher potential reward.</p></div>
+      <div class="card accent-b"><div class="card-emoji">📜</div><h3>Bonds</h3><p>You lend money to a company or government and they pay you back with interest — like getting paid for helping! Steadier than stocks but grows more slowly.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🗂️</div><h3>Index funds</h3><p>A basket of many stocks at once. Less risky because you own a little of LOTS of companies! If one struggles, others might do great.</p></div>
+      <div class="card accent-l"><div class="card-emoji">⚖️</div><h3>Risk vs reward</h3><p>Stocks can go up fast but also down. Bonds are slower but steadier. Most smart investors own a mix of both!</p></div>
+    </div>
+    <div style="background:var(--surface2);border-radius:12px;padding:18px;border:1.5px solid var(--border);">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">Tap a company to learn about it:</div>
+      <div class="card-grid" id="learn-cards"></div>
+    </div>
+  </div>
+
+  <!-- NEWS -->
+  <div class="tab-panel" id="invest-news">
+    <div class="sec-title">Market news</div>
+    <div class="sec-sub">Real-world events affect stock prices every single day. Generate today's headlines and watch what happens to your holdings!</div>
+    <button class="btn btn-green" style="margin-bottom:14px;" onclick="generateNews()">📰 Generate today's market news</button>
+    <div id="news-list"><div class="empty-state"><div class="es-emoji">📰</div>Tap the button above to generate today's market headlines!</div></div>
+  </div>
+</section>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+      <div><div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;" id="m-ticker-label"></div><h3 id="m-name"></h3></div>
+      <div id="m-type-badge"></div>
+    </div>
+    <div class="modal-price" id="m-price"></div>
+    <div style="font-size:13px;margin-bottom:12px;" id="m-change-label"></div>
+    <canvas id="m-mini-chart" height="65" style="width:100%;margin-bottom:14px;display:block;"></canvas>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="shares-row">
+      <label>Shares:</label>
+      <input type="number" class="shares-input" id="m-shares" value="1" min="1" oninput="updateModalTotal()"/>
+      <div style="font-size:13px;color:var(--text-muted);">× <span id="m-unit-price" style="font-weight:700;"></span></div>
+    </div>
+    <div class="modal-total" id="m-total"></div>
+    <div class="modal-btns" id="m-btns"></div>
+  </div>
+</div>
+</main>
+
+<script>
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+var chapterMap = {money:'ch-money',life:'ch-life',ads:'ch-ads',smart:'ch-smart',invest:'ch-invest'};
+function showChapter(id) {
+  document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('active'));
+  document.getElementById(chapterMap[id]).classList.add('active');
+  document.querySelectorAll('#site-nav a').forEach(a=>a.classList.remove('active'));
+  document.querySelector('[data-ch="'+id+'"]').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='invest'){setTimeout(function(){renderMarket();updateHero();updateSim();},50);}
+  if(id==='smart'){setTimeout(updateJars,50);}
+}
+
+// ══════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════
+function showTab(chapter, tab, btn) {
+  var panels = btn.closest('section').querySelectorAll('.tab-panel');
+  panels.forEach(p=>p.classList.remove('active'));
+  var target = document.getElementById(chapter+'-'+tab);
+  if(target) target.classList.add('active');
+  btn.closest('.tabs').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(chapter==='invest'&&tab==='charts') updateCharts();
+  if(chapter==='invest'&&tab==='growth') setTimeout(updateSim,50);
+  if(chapter==='invest'&&tab==='learn') renderLearnCards();
+}
+
+// ══════════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════════
+function answer(btn, type, quizId) {
+  var opts = btn.closest('.quiz').querySelectorAll('.quiz-opt');
+  opts.forEach(o=>{o.setAttribute('disabled','');o.style.pointerEvents='none';});
+  btn.classList.add(type);
+  var result = document.getElementById(quizId+'-result');
+  result.classList.add('show');
+  if(type==='correct'){
+    result.style.cssText='background:#EAF3DE;color:#166534;border:1.5px solid #059669;border-radius:9px;';
+    result.textContent='✅ Exactly right! Great thinking!';
+  } else {
+    result.style.cssText='background:#FCEBEB;color:#991b1b;border:1.5px solid #b91c1c;border-radius:9px;';
+    result.textContent='❌ Not quite — give it another think!';
+  }
+}
+
+// ══════════════════════════════════════════════
+// TRICKS / REVEAL
+// ══════════════════════════════════════════════
+function toggleTrick(card) {
+  var body = card.querySelector('.trick-body');
+  var arrow = card.querySelector('.trick-arrow');
+  var open = body.classList.toggle('open');
+  arrow.textContent = open ? '▾' : '▸';
+}
+function revealAd(btn) {
+  var box = btn.nextElementSibling;
+  var open = box.classList.toggle('show');
+  btn.textContent = open ? 'Hide ▴' : 'Reveal the tricks ▾';
+}
+
+// ══════════════════════════════════════════════
+// CHAPTER 2 — LIFE DESIGNER
+// ══════════════════════════════════════════════
+var pickedValues = new Set();
+var valueMessages = {
+  adventure:"You love adventure! Your ideal life probably means collecting stories instead of stuff. Financial security gives you the freedom to say yes to that next great trip.",
+  family:"Family time is your real wealth. The best moments with the people you love cost almost nothing — but they require time, which money stress can steal.",
+  stuff:"You enjoy cool things — and that's okay! The key is making sure things you buy bring lasting joy, and that you're not working your whole life just to pay for them.",
+  freedom:"Freedom is your north star. The most direct path is spending less than you earn and saving the rest — so you can always choose what you do next.",
+  friends:"Friendships make life rich. The best friend experiences — adventures, conversations, memories — cost almost nothing and last forever.",
+  learning:"You're a learner! Knowledge compounds just like money — the more you gather, the more valuable you become and the more doors open.",
+  travel:"Travel feeds your soul. A life built on saving and modest spending is exactly the life that makes long-term travel possible.",
+  giving:"Helping others is your superpower. Research shows this makes you happier than almost anything you could buy for yourself.",
+  art:"You're a creator. The most meaningful creative work requires time more than money — and financial security is what buys you that time.",
+  nature:"Nature grounds you. It's one of the few things in life that's genuinely free and gets better the more you slow down.",
+  calm:"You value peace and calm. Financial stress is one of the biggest destroyers of calm — saving consistently is one of the best investments in your peace of mind.",
+  security:"Security matters deeply to you. Building a savings cushion, avoiding debt, and living within your means are the foundations of real security."
+};
+function toggleValue(el, key) {
+  el.classList.toggle('picked');
+  if(pickedValues.has(key)) pickedValues.delete(key); else pickedValues.add(key);
+  var empty = document.getElementById('life-preview-empty');
+  var text = document.getElementById('life-preview-text');
+  if(pickedValues.size===0){empty.style.display='';text.style.display='none';return;}
+  empty.style.display='none'; text.style.display='block';
+  text.innerHTML = Array.from(pickedValues).map(k=>'• '+valueMessages[k]).join('<br><br>');
+}
+
+// ══════════════════════════════════════════════
+// CHAPTER 2 — TRADEOFF SLIDERS
+// ══════════════════════════════════════════════
+function updateTradeoff() {
+  var stuff=parseInt(document.getElementById('sl-stuff').value);
+  var exp=parseInt(document.getElementById('sl-exp').value);
+  var save=parseInt(document.getElementById('sl-save').value);
+  document.getElementById('sl-stuff-v').textContent=stuff+'%';
+  document.getElementById('sl-exp-v').textContent=exp+'%';
+  document.getElementById('sl-save-v').textContent=save+'%';
+  var fun=Math.min(99,Math.round(stuff*0.45+exp*0.8+save*0.1));
+  var free=Math.min(99,Math.round(save*1.8+exp*0.2));
+  var sat=Math.min(99,Math.round(exp*0.9+save*0.7+stuff*0.12));
+  document.getElementById('out-fun').textContent=fun;
+  document.getElementById('out-free').textContent=free;
+  document.getElementById('out-sat').textContent=sat;
+  document.getElementById('bar-fun').style.width=fun+'%';
+  document.getElementById('bar-free').style.width=free+'%';
+  document.getElementById('bar-sat').style.width=sat+'%';
+  var hint='';
+  if(save<15) hint='Try moving saving up — watch what happens to future freedom!';
+  else if(exp<15) hint='Adding more experiences boosts life satisfaction a lot!';
+  else if(stuff>70) hint='High stuff spending keeps future freedom low. Try rebalancing!';
+  else hint='Nice balance! Life satisfaction and future freedom are both looking strong.';
+  document.getElementById('tradeoff-hint').textContent=hint;
+}
+updateTradeoff();
+
+// ══════════════════════════════════════════════
+// CHAPTER 4 — BUDGET JARS
+// ══════════════════════════════════════════════
+function updateJars() {
+  var el = document.getElementById('allowance'); if(!el) return;
+  var allowance = parseFloat(el.value)||10;
+  var savePct = parseInt(document.getElementById('save-pct').value);
+  var spendPct = parseInt(document.getElementById('spend-pct').value);
+  if(savePct+spendPct>100){spendPct=100-savePct;document.getElementById('spend-pct').value=spendPct;}
+  var givePct = 100-savePct-spendPct;
+  document.getElementById('save-amt').textContent='$'+(allowance*savePct/100).toFixed(2);
+  document.getElementById('spend-amt').textContent='$'+(allowance*spendPct/100).toFixed(2);
+  document.getElementById('give-amt').textContent='$'+(allowance*givePct/100).toFixed(2);
+  document.getElementById('save-pct-disp').textContent=savePct+'%';
+  document.getElementById('spend-pct-disp').textContent=spendPct+'%';
+  document.getElementById('give-pct-disp').textContent=givePct+'%';
+  renderSavingsBar(allowance*savePct/100*4.33);
+}
+function renderSavingsBar(monthSave) {
+  var chart = document.getElementById('saving-chart'); if(!chart) return;
+  chart.innerHTML='';
+  for(var i=1;i<=12;i++){
+    var val=monthSave*i, maxVal=monthSave*12;
+    var pct=maxVal>0?(val/maxVal)*100:4;
+    var bar=document.createElement('div');
+    bar.style.cssText='flex:1;background:'+(i%3===0?'#4338CA':'#6366F1')+';border-radius:4px 4px 0 0;min-height:4px;height:'+Math.max(pct*0.9,4)+'px;position:relative;transition:height 0.4s;';
+    if(i%4===0||i===12){var lbl=document.createElement('div');lbl.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-muted);white-space:nowrap;';lbl.textContent='$'+Math.round(val);bar.appendChild(lbl);}
+    chart.appendChild(bar);
+  }
+}
+
+// ══════════════════════════════════════════════
+// CHAPTER 5 — INVESTMENT ENGINE
+// ══════════════════════════════════════════════
+var SECURITIES = [
+  {ticker:'AAPL',name:'Apple',emoji:'📱',type:'stock',price:22.50,desc:'Makes iPhones, iPads, MacBooks, and the App Store. One of the most valuable companies ever built.',color:'#7C3AED'},
+  {ticker:'DIS',name:'Disney',emoji:'🏰',type:'stock',price:9.80,desc:'Movies, theme parks, Disney+, Marvel, Star Wars. Makes magic for the whole world.',color:'#D97706'},
+  {ticker:'NKE',name:'Nike',emoji:'👟',type:'stock',price:11.40,desc:'The world\'s biggest sportswear brand. "Just Do It." Shoes, clothes, and gear for athletes.',color:'#D85A30'},
+  {ticker:'MCD',name:'McDonald\'s',emoji:'🍔',type:'stock',price:31.20,desc:'Over 40,000 restaurants in 100+ countries. Billions of burgers served every day.',color:'#059669'},
+  {ticker:'GOOG',name:'Google',emoji:'🔍',type:'stock',price:19.70,desc:'The world\'s search engine, YouTube, Gmail, Maps, and Android. Used by almost everyone.',color:'#1E40AF'},
+  {ticker:'NFLX',name:'Netflix',emoji:'🎬',type:'stock',price:15.30,desc:'Streaming movies and shows to 260+ million people worldwide. Changed entertainment forever.',color:'#B91C1C'},
+  {ticker:'AMZN',name:'Amazon',emoji:'📦',type:'stock',price:26.80,desc:'Online shopping, Amazon Prime, and AWS cloud computing. Delivers almost anything, anywhere.',color:'#0F6E56'},
+  {ticker:'TSLA',name:'Tesla',emoji:'⚡',type:'stock',price:18.60,desc:'Electric cars, solar roofs, and energy batteries. Leading the shift from gas-powered vehicles.',color:'#533AB7'},
+  {ticker:'US10Y',name:'US Gov Bond',emoji:'🇺🇸',type:'bond',price:100.00,desc:'A loan to the US government. They pay you interest (~4.5%/year) and return your money after 10 years. Very safe!',color:'#1E40AF'},
+  {ticker:'CORP',name:'Corp Bond',emoji:'🏢',type:'bond',price:98.50,desc:'A loan to large companies. Slightly riskier than government bonds but pays a bit more interest.',color:'#0F6E56'},
+  {ticker:'SPY',name:'S&P 500 Fund',emoji:'🗂️',type:'fund',price:42.00,desc:'Owns a tiny piece of the 500 biggest US companies at once. When America\'s economy grows, so do you!',color:'#B45309'},
+  {ticker:'BOND',name:'Bond Fund',emoji:'📜',type:'fund',price:24.50,desc:'A basket of many bonds. Very steady, lower risk — perfect for balancing out your stocks.',color:'#0C447C'},
+];
+
+var players = [
+  {name:'Player 1',cash:500,portfolio:{},history:[{value:500,label:'Start',cash:500,stocks:0,bonds:0}],stockHistory:{}},
+  {name:'Player 2',cash:500,portfolio:{},history:[{value:500,label:'Start',cash:500,stocks:0,bonds:0}],stockHistory:{}}
+];
+var currentPlayer = 0;
+var currentFilter = 'all';
+var chartPeriod = 'all';
+var dayCount = 0;
+var modalTicker = null;
+var portLineChart=null, stackedChart=null, multiLineChart=null, compoundChartObj=null, donutChart=null;
+
+function P(){ return players[currentPlayer]; }
+function SEC(t){ return SECURITIES.find(s=>s.ticker===t); }
+
+function switchPlayer(idx){
+  currentPlayer=idx;
+  document.querySelectorAll('.player-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  updateHero(); renderMarket(); renderPortfolio();
+  if(portLineChart) updateCharts();
+}
+
+function portfolioTotal(){
+  var p=P(), total=p.cash;
+  Object.keys(p.portfolio).forEach(t=>{var h=p.portfolio[t],s=SEC(t);if(s&&h.shares>0)total+=s.price*h.shares;});
+  return total;
+}
+
+function updateHero(){
+  var p=P(), total=portfolioTotal(), gain=total-500;
+  var el=document.getElementById('h-total'); if(!el) return;
+  el.textContent='$'+total.toFixed(2);
+  document.getElementById('h-cash').textContent='$'+p.cash.toFixed(2);
+  document.getElementById('h-count').textContent=Object.keys(p.portfolio).filter(k=>p.portfolio[k].shares>0).length;
+  var chEl=document.getElementById('h-change');
+  chEl.textContent=(gain>=0?'▲ +$':'▼ -$')+Math.abs(gain).toFixed(2)+' from start';
+  chEl.className='ph-stat-change '+(gain>=0?'up-w':'down-w');
+  document.getElementById('h-return').textContent=(gain>=0?'+$':'-$')+Math.abs(gain).toFixed(2)+' total gain';
+  document.getElementById('h-return').className='ph-stat-change '+(gain>=0?'up-w':'down-w');
+}
+
+function filterMarket(type, btn){
+  currentFilter=type;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMarket();
+}
+
+function renderMarket(){
+  var p=P(), grid=document.getElementById('market-grid'); if(!grid) return;
+  grid.innerHTML='';
+  SECURITIES.filter(s=>currentFilter==='all'||s.type===currentFilter).forEach(s=>{
+    var h=p.portfolio[s.ticker], owned=h&&h.shares>0;
+    var chg=s.lastChange||0;
+    var div=document.createElement('div');
+    div.className='mcard'+(owned?' owned':'');
+    div.onclick=()=>openModal(s.ticker);
+    div.innerHTML='<div class="mc-top"><span class="mc-emoji">'+s.emoji+'</span><span class="mc-type type-'+s.type+'">'+s.type+'</span></div>'+
+      '<div class="mc-name">'+s.name+'</div>'+
+      '<div class="mc-ticker">'+s.ticker+(owned?' · '+h.shares+' owned':'')+'</div>'+
+      '<div class="mc-price">$'+s.price.toFixed(2)+'</div>'+
+      '<div class="mc-change '+(chg>=0?'up':'down')+'">'+(chg>=0?'▲ +':'▼ ')+Math.abs(chg).toFixed(2)+'%</div>'+
+      (owned?'<div class="owned-badge">✓ owned</div>':'')+
+      '<canvas id="mini-'+s.ticker+'" height="32" style="width:100%;margin-top:8px;display:block;"></canvas>';
+    grid.appendChild(div);
+    setTimeout(()=>drawSparkline('mini-'+s.ticker, s), 0);
+  });
+}
+
+function getSparkData(s){
+  var hist=P().stockHistory[s.ticker]||players[0].stockHistory[s.ticker]||[];
+  if(hist.length<2){var base=s.price*(0.96+Math.random()*0.08); hist=[];for(var i=0;i<10;i++)hist.push(+(base*(0.97+Math.random()*0.06)).toFixed(2));hist.push(s.price);}
+  return hist;
+}
+
+function drawSparkline(canvasId, s){
+  var el=document.getElementById(canvasId); if(!el) return;
+  var ctx=el.getContext('2d');
+  var w=el.offsetWidth||150, h=32;
+  el.width=w; el.height=h;
+  var data=getSparkData(s);
+  var mn=Math.min(...data), mx=Math.max(...data), rng=mx-mn||0.01;
+  var color=data[data.length-1]>=data[0]?'#059669':'#b91c1c';
+  ctx.beginPath();
+  data.forEach((v,i)=>{var x=i/(data.length-1)*w,y=h-(v-mn)/rng*(h-6)-3;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.stroke();
+}
+
+function openModal(ticker){
+  var s=SEC(ticker), p=P();
+  modalTicker=ticker;
+  document.getElementById('m-ticker-label').textContent=s.ticker+' · '+s.type;
+  document.getElementById('m-name').textContent=s.emoji+' '+s.name;
+  document.getElementById('m-price').textContent='$'+s.price.toFixed(2);
+  var chg=s.lastChange||0;
+  var ml=document.getElementById('m-change-label');
+  ml.textContent=(chg>=0?'▲ +':'▼ ')+Math.abs(chg).toFixed(2)+'% today';
+  ml.style.color=chg>=0?'#059669':'#b91c1c';
+  document.getElementById('m-desc').textContent=s.desc;
+  document.getElementById('m-type-badge').innerHTML='<span class="mc-type type-'+s.type+'" style="font-size:11px;">'+s.type+'</span>';
+  document.getElementById('m-shares').value=1;
+  document.getElementById('m-unit-price').textContent='$'+s.price.toFixed(2);
+  updateModalTotal();
+  var h=p.portfolio[ticker];
+  var canSell=h&&h.shares>0;
+  document.getElementById('m-btns').innerHTML='<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-green" onclick="buyStock()">Buy shares</button>'+(canSell?'<button class="btn" style="background:#b91c1c;color:white;border-color:#b91c1c;" onclick="sellStock()">Sell shares</button>':'');
+  drawModalMini(ticker);
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function drawModalMini(ticker){
+  var s=SEC(ticker), data=getSparkData(s);
+  var el=document.getElementById('m-mini-chart'); if(!el) return;
+  var ctx=el.getContext('2d'); el.width=el.offsetWidth||340; el.height=65;
+  var mn=Math.min(...data), mx=Math.max(...data), rng=mx-mn||0.01;
+  var color=data[data.length-1]>=data[0]?'#059669':'#b91c1c';
+  ctx.clearRect(0,0,el.width,el.height);
+  ctx.beginPath();
+  data.forEach((v,i)=>{var x=i/(data.length-1)*el.width,y=el.height-(v-mn)/rng*(el.height-10)-5;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+  ctx.lineTo(el.width,el.height); ctx.lineTo(0,el.height); ctx.closePath();
+  ctx.fillStyle=color+'25'; ctx.fill();
+}
+function updateModalTotal(){
+  if(!modalTicker) return;
+  var s=SEC(modalTicker), sh=parseInt(document.getElementById('m-shares').value)||1;
+  var cost=s.price*sh, p=P(), canAfford=cost<=p.cash;
+  document.getElementById('m-total').innerHTML='Total: <strong>$'+cost.toFixed(2)+'</strong> &nbsp;·&nbsp; Cash: <span style="color:'+(canAfford?'#059669':'#b91c1c');'font-weight:700;">$'+p.cash.toFixed(2)+'</span>';
+}
+function buyStock(){
+  var s=SEC(modalTicker), p=P();
+  var sh=parseInt(document.getElementById('m-shares').value)||1;
+  var cost=s.price*sh;
+  if(cost>p.cash){alert('Not enough cash! Need $'+cost.toFixed(2)+' but have $'+p.cash.toFixed(2));return;}
+  p.cash-=cost;
+  if(!p.portfolio[modalTicker])p.portfolio[modalTicker]={shares:0,avgPrice:s.price,costBasis:0};
+  var h=p.portfolio[modalTicker];
+  h.costBasis=(h.costBasis||0)+cost; h.shares+=sh; h.avgPrice=h.costBasis/h.shares;
+  recordHistory(); closeModal(); updateHero(); renderMarket(); renderPortfolio();
+}
+function sellStock(){
+  var s=SEC(modalTicker), p=P(), h=p.portfolio[modalTicker];
+  if(!h||h.shares<1){alert('You don\'t own any shares to sell!');return;}
+  var sh=Math.min(parseInt(document.getElementById('m-shares').value)||1,h.shares);
+  p.cash+=s.price*sh; h.shares-=sh; h.costBasis=h.avgPrice*h.shares;
+  recordHistory(); closeModal(); updateHero(); renderMarket(); renderPortfolio();
+}
+function closeModal(){ document.getElementById('modal-overlay').classList.add('hidden'); }
+function closeModalOutside(e){ if(e.target===document.getElementById('modal-overlay')) closeModal(); }
+
+function recordHistory(){
+  var p=P(); dayCount++;
+  var stocksVal=0, bondsVal=0;
+  Object.keys(p.portfolio).forEach(t=>{
+    var h=p.portfolio[t],s=SEC(t); if(!s||h.shares<1) return;
+    var v=s.price*h.shares;
+    if(s.type==='stock') stocksVal+=v; else bondsVal+=v;
+  });
+  p.history.push({value:parseFloat(portfolioTotal().toFixed(2)),label:'Day '+dayCount,cash:parseFloat(p.cash.toFixed(2)),stocks:parseFloat(stocksVal.toFixed(2)),bonds:parseFloat(bondsVal.toFixed(2))});
+  SECURITIES.forEach(s=>{
+    if(!p.stockHistory[s.ticker])p.stockHistory[s.ticker]=[];
+    p.stockHistory[s.ticker].push(parseFloat(s.price.toFixed(2)));
+    if(p.stockHistory[s.ticker].length>40)p.stockHistory[s.ticker].shift();
+  });
+}
+
+function simulateMarketDay(){
+  SECURITIES.forEach(s=>{
+    var vol=s.type==='bond'?0.006:s.type==='fund'?0.012:0.035;
+    var pct=(Math.random()*vol*2-vol*0.7);
+    s.lastChange=pct*100; s.price=Math.max(1,+(s.price*(1+pct)).toFixed(2));
+  });
+  recordHistory(); updateHero(); renderMarket(); renderPortfolio();
+  if(document.getElementById('invest-charts').classList.contains('active')) updateCharts();
+}
+
+function renderPortfolio(){
+  var p=P(), keys=Object.keys(p.portfolio).filter(k=>p.portfolio[k].shares>0);
+  var list=document.getElementById('holdings-list'); if(!list) return;
+  var alloc=document.getElementById('alloc-section');
+  if(keys.length===0){
+    list.innerHTML='<div class="empty-state"><div class="es-emoji">📭</div>No holdings yet — head to the Market tab to buy your first stock or bond!</div>';
+    alloc.classList.add('hidden');
+    ['p-invested','p-gain','p-best'].forEach(id=>{document.getElementById(id).textContent=id==='p-best'?'—':'$0';});
+    document.getElementById('p-gainpct').textContent=''; return;
+  }
+  var totalInv=0, totalVal=0, bestPct=-Infinity, bestName='—';
+  keys.forEach(t=>{var h=p.portfolio[t],s=SEC(t),v=s.price*h.shares;totalInv+=h.costBasis;totalVal+=v;var gp=(v-h.costBasis)/(h.costBasis||1)*100;if(gp>bestPct){bestPct=gp;bestName=s.emoji+' '+s.name;}});
+  var gain=totalVal-totalInv, gainPct=totalInv>0?gain/totalInv*100:0;
+  document.getElementById('p-invested').textContent='$'+totalInv.toFixed(2);
+  var gEl=document.getElementById('p-gain'); gEl.textContent=(gain>=0?'+':'')+gain.toFixed(2); gEl.style.color=gain>=0?'#059669':'#b91c1c';
+  document.getElementById('p-gainpct').textContent=(gainPct>=0?'+':'')+gainPct.toFixed(1)+'%';
+  document.getElementById('p-best').textContent=bestName;
+  list.innerHTML='';
+  keys.forEach(t=>{
+    var h=p.portfolio[t],s=SEC(t),v=s.price*h.shares,g=v-h.costBasis,gp=h.costBasis>0?g/h.costBasis*100:0;
+    var barW=Math.min(100,v/(totalVal||1)*100);
+    var d=document.createElement('div'); d.className='holding'; d.onclick=()=>openModal(t);
+    d.innerHTML='<div class="h-top"><div style="display:flex;gap:10px;align-items:center;"><span class="h-emoji">'+s.emoji+'</span><div><div class="h-name">'+s.name+'</div><div class="h-ticker">'+h.shares+' shares · avg $'+h.avgPrice.toFixed(2)+'</div></div></div><div><div class="h-val">$'+v.toFixed(2)+'</div><div class="h-gain '+(g>=0?'up':'down')+'">'+(g>=0?'+':'')+g.toFixed(2)+' ('+gp.toFixed(1)+'%)</div></div></div><div class="h-bar-wrap"><div class="h-bar-fill" style="width:'+barW+'%;background:'+s.color+';"></div></div>';
+    list.appendChild(d);
+  });
+  alloc.classList.remove('hidden');
+  drawDonut(keys);
+}
+
+function drawDonut(keys){
+  var p=P(), vals=[],colors=[],labels=[];
+  keys.forEach(t=>{var h=p.portfolio[t],s=SEC(t);vals.push(s.price*h.shares);colors.push(s.color);labels.push(s.name);});
+  var el=document.getElementById('donut-chart'); if(!el) return;
+  if(donutChart) donutChart.destroy();
+  donutChart=new Chart(el,{type:'doughnut',data:{labels,datasets:[{data:vals,backgroundColor:colors,borderWidth:3,borderColor:'#ffffff'}]},options:{responsive:false,cutout:'62%',plugins:{legend:{display:false}}}});
+  var leg=document.getElementById('alloc-legend'); leg.innerHTML='';
+  var tot=vals.reduce((a,b)=>a+b,0);
+  labels.forEach((l,i)=>{var pct=tot>0?vals[i]/tot*100:0;var row=document.createElement('div');row.className='alloc-row';row.innerHTML='<div class="alloc-dot" style="background:'+colors[i]+'"></div><div class="alloc-name">'+l+'</div><div class="alloc-pct">'+pct.toFixed(0)+'%</div><div class="alloc-bar-wrap"><div class="alloc-bar" style="width:'+pct+'%;background:'+colors[i]+'"></div></div>';leg.appendChild(row);});
+}
+
+function getHistSlice(){
+  var h=P().history;
+  if(chartPeriod==='5') return h.slice(-6);
+  if(chartPeriod==='10') return h.slice(-11);
+  return h;
+}
+function setPeriod(p,btn){
+  chartPeriod=p;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(portLineChart) drawPortLine();
+}
+
+function updateCharts(){
+  var p=P();
+  var empty=document.getElementById('chart-empty-msg');
+  if(p.history.length<2){if(empty)empty.style.display='block';return;}
+  if(empty)empty.style.display='none';
+  drawPortLine(); drawStackedBar(); drawMultiLine();
+}
+
+function drawPortLine(){
+  var slice=getHistSlice();
+  var labels=slice.map(d=>d.label), vals=slice.map(d=>d.value);
+  var el=document.getElementById('port-line'); if(!el) return;
+  if(portLineChart) portLineChart.destroy();
+  var color=vals[vals.length-1]>=vals[0]?'#059669':'#b91c1c';
+  portLineChart=new Chart(el,{type:'line',data:{labels,datasets:[{label:'Portfolio value',data:vals,borderColor:color,backgroundColor:color+'20',fill:true,tension:0.35,pointRadius:3,pointBackgroundColor:color}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+v.toFixed(0)}}}}});
+}
+function drawStackedBar(){
+  var h=P().history;
+  var el=document.getElementById('stacked-bar'); if(!el) return;
+  if(stackedChart) stackedChart.destroy();
+  stackedChart=new Chart(el,{type:'bar',data:{labels:h.map(d=>d.label),datasets:[{label:'Stocks',data:h.map(d=>+(d.stocks||0).toFixed(2)),backgroundColor:'#7C3AED'},{label:'Bonds/Funds',data:h.map(d=>+(d.bonds||0).toFixed(2)),backgroundColor:'#1E40AF'},{label:'Cash',data:h.map(d=>+(d.cash||0).toFixed(2)),backgroundColor:'#9FE1CB'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>'$'+v}}}}});
+}
+function drawMultiLine(){
+  var p=P();
+  var owned=Object.keys(p.stockHistory).filter(k=>p.stockHistory[k]&&p.stockHistory[k].length>1&&p.portfolio[k]&&p.portfolio[k].shares>0);
+  var el=document.getElementById('multi-line'); if(!el) return;
+  if(multiLineChart) multiLineChart.destroy();
+  var emptyMsg=document.getElementById('multi-empty-msg');
+  if(owned.length===0){if(emptyMsg)emptyMsg.style.display='block';return;}
+  if(emptyMsg)emptyMsg.style.display='none';
+  var maxLen=Math.max(...owned.map(k=>p.stockHistory[k].length));
+  var labels=Array.from({length:maxLen},(_,i)=>'Day '+i);
+  multiLineChart=new Chart(el,{type:'line',data:{labels,datasets:owned.map(k=>{var s=SEC(k),hist=p.stockHistory[k],base=hist[0];return{label:s.name,data:hist.map(v=>+((v/base-1)*100).toFixed(2)),borderColor:s.color,backgroundColor:'transparent',tension:0.35,pointRadius:2};})},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'}}}}});
+}
+
+// Growth Sim
+function updateSim(){
+  var el=document.getElementById('sim-start'); if(!el) return;
+  var start=parseFloat(el.value), monthly=parseFloat(document.getElementById('sim-monthly').value);
+  var rate=parseFloat(document.getElementById('sim-rate').value)/100, years=parseInt(document.getElementById('sim-years').value);
+  document.getElementById('sim-start-v').textContent='$'+start;
+  document.getElementById('sim-monthly-v').textContent='$'+monthly+'/mo';
+  document.getElementById('sim-rate-v').textContent=document.getElementById('sim-rate').value+'%';
+  document.getElementById('sim-years-v').textContent=years+' yrs';
+  var mr=rate/12, mo=years*12, val=start, inv=start;
+  var tVals=[start],tInv=[start],labels=['Now'];
+  for(var m=1;m<=mo;m++){val=val*(1+mr)+monthly;inv+=monthly;if(m%12===0){tVals.push(+val.toFixed(2));tInv.push(+inv.toFixed(2));labels.push('Yr '+(m/12));}}
+  document.getElementById('sim-end').textContent='$'+Math.round(val).toLocaleString();
+  document.getElementById('sim-inv').textContent='$'+Math.round(inv).toLocaleString();
+  document.getElementById('sim-growth').textContent='$'+Math.round(val-inv).toLocaleString();
+  document.getElementById('sim-mult').textContent=(val/inv).toFixed(1)+'×';
+  var cEl=document.getElementById('compound-chart'); if(!cEl) return;
+  if(compoundChartObj) compoundChartObj.destroy();
+  compoundChartObj=new Chart(cEl,{type:'line',data:{labels,datasets:[{label:'Total value',data:tVals,borderColor:'#0F6E56',backgroundColor:'#0F6E5620',fill:true,tension:0.4,pointRadius:2},{label:'Amount you invested',data:tInv,borderColor:'#D97706',backgroundColor:'transparent',borderDash:[5,5],tension:0.4,pointRadius:0}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
+}
+
+// Learn Cards
+function renderLearnCards(){
+  var el=document.getElementById('learn-cards'); if(!el) return;
+  el.innerHTML='';
+  SECURITIES.filter(s=>s.type==='stock').slice(0,6).forEach(s=>{
+    var d=document.createElement('div');
+    d.className='card'; d.style.cursor='pointer';
+    d.onclick=()=>openModal(s.ticker);
+    d.innerHTML='<div class="card-emoji">'+s.emoji+'</div><h3>'+s.name+'</h3><p style="font-size:11px;">'+s.desc+'</p>';
+    el.appendChild(d);
+  });
+}
+
+// News
+var newsPool=[
+  {ticker:'AAPL',bg:'#EEEDFE',tc:'#2e1065',headline:'Apple announces a surprise new product! 📱',body:'Investors are very excited about what\'s coming next.',impact:5.8},
+  {ticker:'DIS',bg:'#FAEEDA',tc:'#78350f',headline:'Disney+ subscriber numbers disappoint 😞',body:'Fewer new people signed up for streaming this quarter.',impact:-4.2},
+  {ticker:'TSLA',bg:'#E1F5EE',tc:'#04342C',headline:'Tesla shatters delivery record by 30%! ⚡',body:'More electric cars delivered than anyone predicted.',impact:9.1},
+  {ticker:'GOOG',bg:'#E6F1FB',tc:'#0d1f6e',headline:'New privacy rules target Google\'s ads 🔍',body:'Regulators announce tighter rules for online advertising.',impact:-3.5},
+  {ticker:'MCD',bg:'#EAF3DE',tc:'#166534',headline:'McDonald\'s posts record global sales! 🍔',body:'Hungry customers worldwide pushed profits to a new record.',impact:4.3},
+  {ticker:'US10Y',bg:'#E6F1FB',tc:'#0d1f6e',headline:'US Government pays bond interest on time 🇺🇸',body:'All bondholders receive their steady, reliable interest payment.',impact:0.4},
+  {ticker:'SPY',bg:'#FAEEDA',tc:'#78350f',headline:'Market dips on inflation worries 📉',body:'Investors worry prices are rising too fast across the economy.',impact:-2.8},
+  {ticker:'SPY',bg:'#EAF3DE',tc:'#166534',headline:'Economy grows faster than expected! 🚀',body:'Jobs report surprises everyone with strong, positive numbers.',impact:3.2},
+  {ticker:'NKE',bg:'#EEEDFE',tc:'#2e1065',headline:'Nike signs world\'s biggest soccer star 👟',body:'Huge endorsement deal sends investors running to buy shares.',impact:6.1},
+  {ticker:'AMZN',bg:'#E1F5EE',tc:'#04342C',headline:'Amazon Prime adds 10 million new members 📦',body:'More households subscribe than in any previous quarter ever.',impact:5.3},
+  {ticker:'NFLX',bg:'#FCEBEB',tc:'#991b1b',headline:'Netflix password-sharing crackdown pays off 🎬',body:'New rule brings in millions of new paying subscribers.',impact:7.2},
+  {ticker:'AMZN',bg:'#FAEEDA',tc:'#78350f',headline:'Amazon warehouse workers strike in 3 cities 📦',body:'Delivery delays expected as workers demand better pay.',impact:-3.1},
+];
+function generateNews(){
+  var list=document.getElementById('news-list'); if(!list) return;
+  list.innerHTML='';
+  var picked=newsPool.slice().sort(()=>Math.random()-0.5).slice(0,4);
+  picked.forEach(n=>{
+    var s=SEC(n.ticker);
+    var div=document.createElement('div'); div.className='news-item';
+    var pct=n.impact/100;
+    if(s){s.price=Math.max(1,+(s.price*(1+pct)).toFixed(2));s.lastChange=n.impact;}
+    div.innerHTML='<div class="news-ticker" style="background:'+n.bg+';color:'+n.tc+';">'+n.ticker+(s?' '+s.emoji:'')+'</div>'+
+      '<div class="news-headline">'+n.headline+'</div>'+
+      '<div class="news-body">'+n.body+'</div>'+
+      '<div class="news-impact '+(n.impact>=0?'up':'down')+'" style="margin-top:8px;font-weight:700;">Price impact: '+(n.impact>=0?'+':'')+n.impact.toFixed(1)+'%</div>';
+    list.appendChild(div);
+  });
+  recordHistory(); updateHero(); renderMarket(); renderPortfolio();
+  if(document.getElementById('invest-charts').classList.contains('active')) updateCharts();
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function(){
+  updateJars();
+  updateHero();
+  renderMarket();
+  setTimeout(updateSim, 100);
+  setTimeout(updateTradeoff, 100);
+});
+</script>
+</body>
+</html>
