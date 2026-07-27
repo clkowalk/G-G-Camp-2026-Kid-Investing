@@ -340,7 +340,55 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
 .empty-state { text-align:center; padding:36px 16px; color:var(--text-hint); font-size:14px; }
 .empty-state .es-emoji { font-size:40px; margin-bottom:10px; }
 
-/* ── RESPONSIVE ── */
+/* ── TWO-PLAYER GAMES ── */
+.game-section { background:var(--surface); border:2px solid var(--border); border-radius:16px; overflow:hidden; margin:32px 0 0; }
+.game-header { padding:20px 22px 16px; border-bottom:1.5px solid var(--border); }
+.game-eyebrow { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; opacity:0.6; margin-bottom:6px; }
+.game-title { font-size:20px; font-weight:700; margin-bottom:4px; }
+.game-desc { font-size:13px; opacity:0.8; line-height:1.6; }
+.game-body { padding:20px 22px; }
+.scoreboard { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+.score-card { border-radius:12px; padding:14px; text-align:center; border:2px solid transparent; transition:all 0.2s; }
+.score-card.active-player { border-color:rgba(255,255,255,0.5); transform:scale(1.02); }
+.score-player { font-size:13px; font-weight:700; margin-bottom:4px; }
+.score-pts { font-size:32px; font-weight:700; }
+.score-label { font-size:10px; opacity:0.7; text-transform:uppercase; letter-spacing:0.5px; }
+.turn-banner { background:var(--surface2); border-radius:10px; padding:12px 16px; text-align:center; font-size:14px; font-weight:700; color:var(--text); margin-bottom:16px; border:1.5px solid var(--border); }
+.gq-box { background:var(--surface2); border-radius:12px; padding:18px; margin-bottom:14px; border:1.5px solid var(--border); }
+.gq-category { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.gq-question { font-size:15px; font-weight:700; color:var(--text); margin-bottom:16px; line-height:1.45; }
+.gq-opts { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.gq-opt { border-radius:10px; padding:12px 10px; cursor:pointer; font-size:13px; font-weight:600; text-align:center; border:2px solid var(--border); background:var(--surface); color:var(--text); transition:all 0.15s; line-height:1.3; }
+.gq-opt:hover:not([disabled]) { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.gq-opt.opt-correct { background:#EAF3DE; border-color:#059669; color:#166534; }
+.gq-opt.opt-wrong { background:#FCEBEB; border-color:#b91c1c; color:#991b1b; }
+.gq-feedback { font-size:13px; padding:12px 15px; border-radius:9px; margin-top:12px; display:none; font-weight:600; line-height:1.5; }
+.gq-feedback.show { display:block; }
+.game-progress { display:flex; gap:5px; margin-bottom:16px; }
+.prog-dot { flex:1; height:6px; border-radius:3px; background:var(--border); transition:all 0.3s; }
+.prog-dot.done { background:var(--green); }
+.prog-dot.current { background:var(--amber); }
+.game-result { text-align:center; padding:28px 20px; display:none; }
+.game-result.show { display:block; }
+.result-trophy { font-size:56px; margin-bottom:12px; }
+.result-title { font-size:22px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.result-sub { font-size:14px; color:var(--text-muted); margin-bottom:20px; line-height:1.6; }
+.result-scores { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+.result-score-box { border-radius:12px; padding:16px; text-align:center; }
+.play-again-btn { padding:11px 28px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; border:none; color:white; transition:all 0.15s; }
+
+/* WORD SCRAMBLE */
+.scramble-word { font-size:36px; font-weight:700; letter-spacing:8px; text-align:center; padding:18px; background:var(--surface2); border-radius:12px; margin-bottom:14px; color:var(--text); border:2px dashed var(--border); }
+.scramble-input { width:100%; padding:12px 16px; font-size:18px; font-weight:700; border:2px solid var(--border); border-radius:10px; text-align:center; letter-spacing:3px; text-transform:uppercase; background:var(--surface); color:var(--text); margin-bottom:10px; }
+.scramble-hint { font-size:12px; color:var(--text-muted); text-align:center; margin-bottom:14px; }
+.scramble-submit { width:100%; padding:12px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; border:none; color:white; background:var(--green); }
+
+/* TRUE / FALSE BUZZER */
+.buzzer-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+.buzzer-btn { border-radius:12px; padding:20px 10px; font-size:16px; font-weight:700; cursor:pointer; border:none; color:white; transition:all 0.15s; }
+.buzzer-btn:hover { filter:brightness(1.1); transform:scale(1.02); }
+.buzzer-btn:active { transform:scale(0.97); }
+</style>
 @media(max-width:600px) {
   .site-nav { display:none; }
   .chap-hero h1 { font-size:22px; }
@@ -358,8 +406,9 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     <nav class="site-nav" id="site-nav">
       <a onclick="showChapter('life')" data-ch="life" class="active">🌱 Your Life</a>
       <a onclick="showChapter('money')" data-ch="money">💰 What is Money?</a>
+      <a onclick="showChapter('earn')" data-ch="earn">💼 Making Money</a>
       <a onclick="showChapter('ads')" data-ch="ads">📣 Advertising</a>
-      <a onclick="showChapter('smart')" data-ch="smart">🛍️ Smart Spending</a>
+      <a onclick="showChapter('smart')" data-ch="smart">🛍️ Spending &amp; Saving</a>
       <a onclick="showChapter('invest')" data-ch="invest">📈 Invest!</a>
     </nav>
   </div>
@@ -509,10 +558,51 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     </table>
     <div class="card-grid">
       <div class="card accent-g"><div class="card-emoji">🩺</div><h3>Specialization</h3><p>Doctors doctor. Farmers farm. Teachers teach. Money lets everyone get paid for doing what they're best at.</p></div>
-      <div class="card accent-t"><div class="card-emoji">🌍</div><h3>Global trade</h3><p>A toy made in one country, with parts from five others, sold in yours — money makes that possible worldwide.</p></div>
+      <div class="card accent-t"><div class="card-emoji">🌍</div><h3>Global trade</h3><p>A toy made in one country, with parts from five others, sold in yours — money makes that possible. Countries that trade together rarely fight each other.</p></div>
       <div class="card accent-p"><div class="card-emoji">⏳</div><h3>Saving for the future</h3><p>Work hard now, use that effort later — for school, emergencies, adventures, or retirement. Barter could never do this.</p></div>
       <div class="card accent-l"><div class="card-emoji">⚖️</div><h3>Fair exchange</h3><p>When everyone uses the same currency, trades are transparent. You always know the price before you commit.</p></div>
     </div>
+
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1a4d7a,#1e6091);color:white;border-radius:14px;padding:24px;margin-bottom:18px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-30px;width:150px;height:150px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+      <div style="font-size:13px;font-weight:700;opacity:0.65;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">The bigger picture</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:10px;line-height:1.3;">Money helps make the world a safer, more cooperative place</div>
+      <div style="font-size:13px;opacity:0.85;line-height:1.7;">When people and nations can trade fairly and easily with money, something remarkable happens — they start to depend on each other. And when you depend on someone, you have a reason to get along with them.</div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;">
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#E6F1FB;color:#1E40AF;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🤝</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">Trade builds relationships between nations</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">Think about two neighboring countries. If they trade nothing with each other, they're strangers — and strangers can become enemies. But if Country A buys wheat from Country B, and Country B buys cars from Country A, suddenly they need each other. Hurting each other means hurting themselves. Money-powered trade turns strangers into partners.<br><br>This is one reason why economists say that <strong>countries that trade heavily with each other almost never go to war</strong>. The cost of fighting is too high when you depend on each other for food, energy, medicine, and technology.</div>
+      </div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#EAF3DE;color:#166534;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🌐</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">A single product can connect a dozen countries</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">Your smartphone was designed in the United States, uses chips made in Taiwan, rare minerals mined in Congo, glass made in Japan, and was assembled in China — then shipped to a store near you. Every step of that chain involves money changing hands across borders. Every country involved has a reason to cooperate and keep things running peacefully. Money makes that web of cooperation possible.</div>
+      </div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#FAEEDA;color:#B45309;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🌱</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">Trade lifts people out of poverty</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">When a poor country can sell its goods to rich countries for fair money, its people earn more, build schools, and improve their lives. Over the last 30 years, global trade powered by shared currencies and financial systems helped lift more than a billion people out of extreme poverty — the fastest reduction in human suffering in all of history. Money, trade, and cooperation did that together.</div>
+      </div>
+      <div style="padding:18px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#EEEDFE;color:#5B21B6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">☮️</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">The opposite is also true — fairness matters</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">Trade only builds peace and cooperation when it's <em>fair</em>. When one country cheats, manipulates its currency, or takes advantage of another, resentment builds and cooperation breaks down. This is why fair money systems, honest prices, and mutual respect in trade aren't just economic ideas — they're a foundation for a more peaceful world.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue"><strong>🕊️ The big idea:</strong> Money isn't just about buying things. At its best, it's a tool that lets people cooperate — across cities, across countries, and across cultures — in ways that make life better for everyone involved. When people trade, they build trust. When they build trust, they build peace.</div>
+
     <div class="callout callout-green"><strong>🧠 The big takeaway:</strong> Money is a tool — like a hammer or a calculator. It can build a wonderful life, or be wasted on things that don't matter. Learning to use it well is one of the most powerful skills you'll ever have — and that's what this whole course is about!</div>
     <div class="quiz" id="qm4">
       <div class="quiz-q">Why can a doctor today just focus on being a doctor, instead of also growing food and making clothes?</div>
@@ -523,7 +613,28 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
       </div>
       <div class="quiz-result" id="qm4-result"></div>
     </div>
+    <div class="quiz" id="qm5">
+      <div class="quiz-q">Two countries trade a lot with each other — one sells wheat, the other sells machinery. Why are these countries unlikely to go to war with each other?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm5')">Because they signed a peace treaty long ago</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qm5')">Because they speak the same language</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qm5')">Because they depend on each other — fighting would hurt both of them, so cooperation makes more sense than conflict</button>
+      </div>
+      <div class="quiz-result" id="qm5-result"></div>
+    </div>
+
+  <!-- TWO-PLAYER GAME: MONEY -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#78350F,#B45309);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 1 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">💰 The Money Masters Showdown!</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Think you understand money? Prove it! Take turns answering — each player gets 4 questions. Winner earns the title of Official Money Brain of the Household. 🧠</div>
+      </div>
+      <div class="game-body" id="game-money"></div>
+    </div>
   </div>
+
 </section>
 
 <!-- ════════════════════════════════════════════
@@ -535,6 +646,13 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     <div class="chap-hero-icons">🏔️ 🏠 ✨</div>
     <h1>What kind of life do you want?</h1>
     <p>Before anyone tries to sell you something, it helps to know what you actually want your life to look like. This is your chance to figure that out.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;flex-wrap:wrap;">
+      <div style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:700;white-space:nowrap;">❤️ Health creates time</div>
+      <div style="font-size:18px;opacity:0.5;">→</div>
+      <div style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:700;white-space:nowrap;">⏳ Time creates wealth</div>
+      <div style="font-size:18px;opacity:0.5;">→</div>
+      <div style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:700;white-space:nowrap;">🔓 Wealth creates freedom</div>
+    </div>
   </div>
 
   <div class="tabs">
@@ -688,14 +806,347 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
       <div class="quiz-result" id="ql3-result"></div>
     </div>
   </div>
+
+  <!-- TWO-PLAYER GAME: YOUR LIFE -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#064E3B,#047857);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 2 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">🌱 The Good Life Game!</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Stuff vs experiences, happiness vs stress — what do you really know about living well? Take turns! Each player gets 4 questions. Loser has to do the dishes. 🍽️ (just kidding... unless?)</div>
+      </div>
+      <div class="game-body" id="game-life"></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ════════════════════════════════════════════
-     CHAPTER 3 — THE ADVERTISING WORLD
+     CHAPTER 3 — MAKING MONEY
+     ════════════════════════════════════════════ -->
+<section class="chapter" id="ch-earn">
+  <div class="chap-hero" style="background:linear-gradient(135deg,#1e3a5f,#1e5f74,#1a7a5e);">
+    <div class="chap-hero-tag">Chapter 3 — Where money comes from</div>
+    <div class="chap-hero-icons">👷 🎓 💡</div>
+    <h1>Making Money — Work, Skills &amp; Purpose</h1>
+    <p>Before you can save, spend, or invest — you need to earn. Here's everything you need to know about jobs, skills, and building a life you're proud of.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('earn','noble',this)"><span class="tab-icon">🤝</span>All work matters</button>
+    <button class="tab-btn" onclick="showTab('earn','paydiff',this)"><span class="tab-icon">💵</span>Why pay differs</button>
+    <button class="tab-btn" onclick="showTab('earn','jobhobby',this)"><span class="tab-icon">🎨</span>Job vs hobby</button>
+    <button class="tab-btn" onclick="showTab('earn','training',this)"><span class="tab-icon">🎓</span>Skills &amp; training</button>
+    <button class="tab-btn" onclick="showTab('earn','formula',this)"><span class="tab-icon">🏆</span>The formula</button>
+  </div>
+
+  <!-- ALL WORK IS NOBLE -->
+  <div class="tab-panel active" id="earn-noble">
+    <div class="sec-title">All work is noble</div>
+    <div class="sec-sub">Every job that helps other people has dignity and value — no matter what it pays. The person who picks up your trash makes your street livable. The nurse who takes care of a sick child is a hero. The teacher who explains something clearly can change a whole life. Work matters.</div>
+
+    <div class="callout callout-green"><strong>🌍 The big truth:</strong> Society runs because millions of people show up every day and do their jobs with care — whether they're making $12 an hour or $120,000 a year. Every single one of those jobs matters to someone.</div>
+
+    <div class="card-grid">
+      <div class="card accent-g">
+        <div class="card-emoji">🧹</div>
+        <h3>The janitor</h3>
+        <p>Keeps schools, hospitals, and offices clean so everyone else can work safely. Without this job, every other job gets harder and sicker.</p>
+      </div>
+      <div class="card accent-b">
+        <div class="card-emoji">🚛</div>
+        <h3>The truck driver</h3>
+        <p>Moves the food, medicine, and supplies that every store and hospital needs. If trucks stopped for one week, life would get very hard very fast.</p>
+      </div>
+      <div class="card accent-l">
+        <div class="card-emoji">👩‍🍳</div>
+        <h3>The cook</h3>
+        <p>Feeds hundreds of people every day. A great cook can make someone's birthday unforgettable. Food made with care is one of life's deepest pleasures.</p>
+      </div>
+      <div class="card accent-p">
+        <div class="card-emoji">👮</div>
+        <h3>The firefighter</h3>
+        <p>Runs into burning buildings to save strangers. One of the most dangerous jobs there is — done not for high pay, but out of dedication to others.</p>
+      </div>
+      <div class="card accent-t">
+        <div class="card-emoji">👩‍🏫</div>
+        <h3>The teacher</h3>
+        <p>Shapes the minds of an entire generation. Every scientist, doctor, engineer, and artist was once a kid sitting in a classroom with a great teacher.</p>
+      </div>
+      <div class="card accent-c">
+        <div class="card-emoji">🧑‍🌾</div>
+        <h3>The farmer</h3>
+        <p>Grows the food that feeds the world. Works in heat, cold, and rain so that the rest of us can eat every single day without thinking about it.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-amber"><strong>🧠 Something to think about:</strong> Have you ever been rude to a waiter, a cashier, or a janitor? Or seen someone treat them poorly? Every person working a job deserves the same basic respect — because showing up and doing your job well is always something to be proud of.</div>
+
+    <div class="quiz" id="qe1">
+      <div class="quiz-q">A garbage collector and a lawyer both show up to work every day and do their jobs with care. Which one is doing something noble?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe1')">The lawyer — they went to school much longer</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qe1')">Both of them — all honest work done with care has dignity and value</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe1')">Neither — they're just doing it for the money</button>
+      </div>
+      <div class="quiz-result" id="qe1-result"></div>
+    </div>
+  </div>
+
+  <!-- WHY PAY DIFFERS -->
+  <div class="tab-panel" id="earn-paydiff">
+    <div class="sec-title">Why some jobs pay more than others</div>
+    <div class="sec-sub">Pay isn't about how hard you work or how important you are to the world — it's about three specific things. Understanding them helps you make smarter choices about your own future.</div>
+
+    <div class="callout callout-purple"><strong>💡 Important:</strong> High pay doesn't mean more important to society. A firefighter saves lives for less than many office workers earn. But understanding why pay differs helps you plan your own path.</div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+      <!-- Factor 1 -->
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#EEEDFE;color:#5B21B6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🦄</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">1. Scarcity of skills — how rare are you?</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:12px;">When very few people can do something, whoever needs it done has to pay more to attract the rare person who can. It's simple supply and demand — if there are 10 million people who can flip burgers but only 500 people in the country who can perform a certain surgery, the surgeon commands a much higher price.</div>
+        <div class="card-grid" style="margin-bottom:0;">
+          <div class="card" style="border-left:3px solid #7C3AED;"><div class="card-emoji">👩‍⚕️</div><h3>Brain surgeon</h3><p>Fewer than 5,000 in the US. Years of training. Pays $400k–$800k/year.</p></div>
+          <div class="card" style="border-left:3px solid #D97706;"><div class="card-emoji">✈️</div><h3>Airline pilot</h3><p>Requires thousands of flight hours and rare licensing. Pays $100k–$300k/year.</p></div>
+          <div class="card" style="border-left:3px solid #059669;"><div class="card-emoji">🧑‍💻</div><h3>AI engineer</h3><p>Brand new skill, huge demand, very few experts. Pays $150k–$500k/year right now.</p></div>
+          <div class="card" style="border-left:3px solid #6B7280;"><div class="card-emoji">🧹</div><h3>Cleaner</h3><p>Many people can do this job. Important work, but low scarcity means lower pay: $25k–$35k/year.</p></div>
+        </div>
+      </div>
+      <!-- Factor 2 -->
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#FAEEDA;color:#B45309;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚖️</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">2. Stakes &amp; responsibility — what happens if you get it wrong?</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:12px;">Jobs where a mistake can cost lives, destroy a company, or harm millions of people tend to pay more — because the person doing them carries enormous responsibility. Higher stakes = higher pay.</div>
+        <div class="card-grid" style="margin-bottom:0;">
+          <div class="card" style="border-left:3px solid #B91C1C;"><div class="card-emoji">💊</div><h3>Pharmacist</h3><p>A wrong dose can kill. Extreme accuracy required. Pays $120k–$140k/year.</p></div>
+          <div class="card" style="border-left:3px solid #1E40AF;"><div class="card-emoji">⚖️</div><h3>Judge</h3><p>Decisions affect people's freedom and lives. Pays $170k–$250k/year.</p></div>
+          <div class="card" style="border-left:3px solid #D97706;"><div class="card-emoji">🏗️</div><h3>Structural engineer</h3><p>If a bridge design fails, people die. Pays $85k–$160k/year.</p></div>
+          <div class="card" style="border-left:3px solid #6B7280;"><div class="card-emoji">📦</div><h3>Package sorter</h3><p>Mistakes mean a late delivery, not a disaster. Pays $35k–$50k/year.</p></div>
+        </div>
+      </div>
+      <!-- Factor 3 -->
+      <div style="padding:18px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#E1F5EE;color:#0F6E56;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📚</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">3. Training &amp; investment — how much did it cost to get here?</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:12px;">When someone spends 8 years in medical school and takes on $300,000 in student loans to become a doctor, they need to earn enough to pay that back AND be rewarded for those years of sacrifice. Longer training usually (but not always) leads to higher pay.</div>
+        <div class="card-grid" style="margin-bottom:0;">
+          <div class="card accent-g"><div class="card-emoji">🎓</div><h3>4 years of college</h3><p>Opens many professional doors. Most jobs paying $50k+ expect this baseline.</p></div>
+          <div class="card accent-b"><div class="card-emoji">🏥</div><h3>8+ years (doctor)</h3><p>Medical school, residency, fellowship. Often $200k–$600k/year at the end.</p></div>
+          <div class="card accent-l"><div class="card-emoji">🔧</div><h3>Trade school (2 years)</h3><p>Electricians, plumbers, HVAC. Often $60k–$120k/year — and always in demand!</p></div>
+          <div class="card accent-p"><div class="card-emoji">🎯</div><h3>Self-taught skills</h3><p>Some people teach themselves coding, design, or business. No degree needed — skill is what matters.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-green"><strong>🔑 The takeaway:</strong> To earn more, you generally need to do one or more of three things — develop a rare skill, take on more responsibility, or invest serious time in training. All three are things you can choose to do.</div>
+
+    <div class="quiz" id="qe2">
+      <div class="quiz-q">There are millions of people who could work as a cashier, but only a few hundred people in the world who can play violin at the level of a world-famous concert soloist. Why might the violinist earn more for a performance?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'correct','qe2')">Because their skill is extremely rare — far fewer people can do it, so it's worth more</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe2')">Because music is more important than commerce</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe2')">Because cashiers don't work as hard</button>
+      </div>
+      <div class="quiz-result" id="qe2-result"></div>
+    </div>
+  </div>
+
+  <!-- JOB VS HOBBY -->
+  <div class="tab-panel" id="earn-jobhobby">
+    <div class="sec-title">What's a job — and what's a hobby?</div>
+    <div class="sec-sub">This is one of the most important distinctions in adult life. Getting it wrong can lead to either a miserable career or a broke passion project. Getting it right can lead to a deeply fulfilling life.</div>
+
+    <div class="story-pair">
+      <div class="story-card gold-top">
+        <div style="font-size:28px;margin-bottom:8px;">💼</div>
+        <div class="story-name">A job</div>
+        <span class="story-tag tag-amber">Pays the bills</span>
+        <div class="story-body">A job is work you do in exchange for money. It pays for your home, food, health care, and the life you want to live. You might love it, like it, or just tolerate it — but it has to pay enough to live on. That's the whole point.</div>
+        <div class="story-detail">A job doesn't have to be your deepest passion. It has to be something you can do well, that someone will pay you for, and that gives you enough income to build the life you want.</div>
+      </div>
+      <div class="story-card green-top">
+        <div style="font-size:28px;margin-bottom:8px;">🎨</div>
+        <div class="story-name">A hobby</div>
+        <span class="story-tag tag-green">Feeds your soul</span>
+        <div class="story-body">A hobby is something you do for the joy of doing it — painting, gaming, writing poetry, building Legos, playing guitar. You don't need to be paid. You don't need to be good enough for anyone else. You just love it.</div>
+        <div class="story-detail">Hobbies are incredibly valuable. They give you rest, creativity, identity, and joy. The mistake is assuming every hobby should become a job — sometimes that ruins both.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber"><strong>⚠️ The danger of "follow your passion":</strong> Adults often tell kids "just follow your passion!" That's lovely advice — but if your passion is playing video games, painting watercolors, or hiking, you might struggle to earn a living from it. A better question is: <em>"What am I good at, that the world needs, that I can also enjoy doing?"</em></div>
+
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px;">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">Real examples of the job vs. hobby line:</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:1px;">
+          <div style="background:var(--surface2);padding:8px 12px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">The passion</div>
+          <div style="background:var(--surface2);padding:8px 12px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">As a hobby</div>
+          <div style="background:var(--surface2);padding:8px 12px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">As a career</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;">🎮 Gaming</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Pure fun, no pressure, just enjoyment</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Very few make it as streamers; game design is a real career with training</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;">🎵 Music</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Play for joy; share with friends</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Music teacher, session musician, sound engineer, composer — real, paid careers</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;">🌿 Nature &amp; outdoors</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Hiking, gardening, birdwatching</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Park ranger, environmental scientist, landscape architect, wildlife biologist</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;">🍳 Cooking</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Cook for family and friends, experiment at home</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Chef, food scientist, restaurant owner, culinary teacher</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;">✏️ Drawing &amp; art</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Create freely with no pressure to be "good enough"</div>
+          <div style="background:var(--surface);padding:10px 12px;font-size:12px;color:var(--text-muted);">Graphic designer, architect, animator, art director, illustrator</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-teal"><strong>✨ The sweet spot:</strong> The happiest workers tend to be people who found work that overlaps with something they're naturally good at, that the world genuinely needs, and that they can enjoy most days — even if it's not their deepest passion. That overlap is worth searching for.</div>
+
+    <div class="quiz" id="qe3">
+      <div class="quiz-q">Mia loves painting. She paints every weekend and it brings her joy. She also works as a graphic designer at a company — using her art skills to create logos and websites. Which is her hobby and which is her job?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'correct','qe3')">Weekend painting = hobby; graphic design = job — both involve art, but one pays bills and one feeds her soul</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe3')">Both are hobbies because she loves art</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe3')">Both are jobs because they both use the same skills</button>
+      </div>
+      <div class="quiz-result" id="qe3-result"></div>
+    </div>
+  </div>
+
+  <!-- SKILLS & TRAINING -->
+  <div class="tab-panel" id="earn-training">
+    <div class="sec-title">High-skill jobs — the investment of effort</div>
+    <div class="sec-sub">Some jobs pay a lot because they require years of sacrifice, hard work, and stress to get there. Here's an honest look at what that path actually costs — and what it offers in return.</div>
+
+    <div class="callout callout-blue"><strong>🎓 The honest truth:</strong> High-paying skilled jobs are genuinely hard. They require years of study, exhausting training, high stress, and often difficult decisions. The pay reflects all of that — not just the skill, but the years of sacrifice it took to build it.</div>
+
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#FCEBEB;">👩‍⚕️</div><div><div class="person-name">The surgeon's path</div><div class="person-type">~15 years of training after high school · High stress · High reward</div></div></div>
+      <div class="person-body">4 years of college → 4 years of medical school → 5–7 years of residency (working 80-hour weeks for resident pay) → possible fellowship → finally practicing. By the time they're fully independent, many surgeons are in their mid-thirties and have hundreds of thousands in student debt. The pay is high — but so is the cost to get there, the responsibility, and the toll it can take on their personal life.</div>
+      <div class="person-quote" style="background:#FCEBEB;color:#7f1d1d;border-color:#fca5a5;">Reward: $300k–$600k/year. Cost: 15 years of training, enormous debt, and a career where your mistakes can cost a life.</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#EAF3DE;">🔌</div><div><div class="person-name">The electrician's path</div><div class="person-type">~5 years of training · Skilled trade · Steady demand</div></div></div>
+      <div class="person-body">2 years of trade school or apprenticeship → 3–4 years of on-the-job training as an apprentice electrician → licensed journeyman → eventually master electrician. No college debt. Earning money while learning. Always needed — because buildings always need power. A master electrician who runs their own business can earn $80k–$130k/year with a great lifestyle.</div>
+      <div class="person-quote" style="background:#EAF3DE;color:#166534;border-color:#86efac;">Reward: $60k–$130k/year. Cost: 5 years of training, physical work, but no mountain of college debt.</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#EEEDFE;">🧑‍💻</div><div><div class="person-name">The software engineer's path</div><div class="person-type">4 years college OR self-taught · High demand · Remote-friendly</div></div></div>
+      <div class="person-body">Some go the college route (4-year computer science degree). Others teach themselves through online courses, coding bootcamps, and building projects over 1–2 years. Either path can work. The tech industry cares more about what you can build than where you went to school. Entry-level developers can earn $70k–$100k, and experienced engineers at top companies earn $200k–$500k+.</div>
+      <div class="person-quote" style="background:#EEEDFE;color:#2e1065;border-color:#c4b5fd;">Reward: $80k–$400k+. Cost: 1–4 years of intense learning, but one of the most flexible and in-demand careers in history.</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-header"><div class="person-avatar" style="background:#FAEEDA;">🧑‍🏫</div><div><div class="person-name">The teacher's path</div><div class="person-type">4 years college + certification · Vital · Undervalued by pay</div></div></div>
+      <div class="person-body">4 years of college, education courses, student teaching (working for free), then certification. Teachers typically earn $40k–$75k/year — modest pay for one of the most important jobs in society. They shape every child they teach, work evenings and weekends preparing lessons, and often spend their own money on classroom supplies. They do it because they believe in it.</div>
+      <div class="person-quote" style="background:#FAEEDA;color:#78350f;border-color:#fcd34d;">Reward: $40k–$75k/year — and the satisfaction of knowing you helped shape hundreds of lives. Cost: 4 years of training, and accepting that society doesn't always pay fairly for importance.</div>
+    </div>
+
+    <div class="callout callout-amber"><strong>⚠️ High pay ≠ easy life:</strong> Many very high-paying jobs come with enormous stress — emergency surgeons who make life-or-death calls at 3am, lawyers who work 80-hour weeks, CEOs who are responsible for thousands of employees. The money is real, but so is the cost. Always understand the full picture before chasing a salary.</div>
+  </div>
+
+  <!-- THE FORMULA -->
+  <div class="tab-panel" id="earn-formula">
+    <div class="sec-title">The formula for a great financial life</div>
+    <div class="sec-sub">This is simple enough to remember forever — and powerful enough to change your whole life if you actually do it.</div>
+
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1a7a5e);color:white;border-radius:16px;padding:28px 24px;margin-bottom:22px;text-align:center;">
+      <div style="font-size:13px;opacity:0.7;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">The three-step formula</div>
+      <div style="font-size:22px;font-weight:700;line-height:1.5;margin-bottom:6px;">Make as much as you can.</div>
+      <div style="font-size:13px;opacity:0.6;margin-bottom:16px;">Develop rare skills. Work hard. Be excellent at what you do.</div>
+      <div style="font-size:22px;font-weight:700;line-height:1.5;margin-bottom:6px;">Save as much as you can.</div>
+      <div style="font-size:13px;opacity:0.6;margin-bottom:16px;">Live below your means. Invest the rest. Let time do the work.</div>
+      <div style="font-size:22px;font-weight:700;line-height:1.5;margin-bottom:6px;">Give away as much as you can.</div>
+      <div style="font-size:13px;opacity:0.6;">Support people and causes that matter. Leave the world better than you found it.</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card accent-b">
+        <div class="card-emoji">💪</div>
+        <h3>Make as much as you can</h3>
+        <p>This means developing real skills, working hard, being reliable, and finding work the world genuinely values. Not just chasing money — but becoming genuinely excellent at something useful.</p>
+      </div>
+      <div class="card accent-g">
+        <div class="card-emoji">🐷</div>
+        <h3>Save as much as you can</h3>
+        <p>Earning a lot means nothing if you spend it all. The goal is to live well on less than you earn — and let the rest grow. A person earning $60k who saves 30% will end up wealthier than someone earning $120k who saves nothing.</p>
+      </div>
+      <div class="card accent-l">
+        <div class="card-emoji">❤️</div>
+        <h3>Give away as much as you can</h3>
+        <p>Once your needs and future are taken care of, generosity is one of the most powerful things you can do — for others, and for your own happiness. Research consistently shows that givers report higher life satisfaction.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px;">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">Two people, same income — very different outcomes:</div>
+      <div class="story-pair" style="margin-bottom:0;">
+        <div class="story-card gold-top">
+          <div class="story-name">Alex — earns $80k/year</div>
+          <span class="story-tag tag-amber">Spends it all</span>
+          <div class="story-body">Nice apartment, new car, lots of dining out, latest gadgets, vacations on credit. Life looks great from the outside. At age 50: almost no savings, still working, stressed about retirement.</div>
+        </div>
+        <div class="story-card green-top">
+          <div class="story-name">Sam — earns $80k/year</div>
+          <span class="story-tag tag-green">Saves 25%, gives 10%</span>
+          <div class="story-body">Comfortable home, reliable car, cooks at home often, takes one good trip a year. Saves $20k/year, invests it well, gives $8k/year to causes they love. At age 50: financially free, has options, fulfilled.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-green"><strong>🌱 Start now — even tiny:</strong> You don't need a job to start practicing this formula. Even with your allowance: make it (do chores, help neighbors), save part of it (your jar!), and give some away. The habit starts today, not when you're grown up.</div>
+
+    <div class="quiz" id="qe4">
+      <div class="quiz-q">Jordan earns $50,000 a year and saves $15,000 of it every year. Riley earns $100,000 a year but spends it all. After 20 years of investing, who is likely to be in better financial shape?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe4')">Riley — they earned twice as much every year</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qe4')">Jordan — consistent saving and investing beats high income with zero savings every time</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qe4')">They'll be exactly equal — income is what matters most</button>
+      </div>
+      <div class="quiz-result" id="qe4-result"></div>
+    </div>
+  </div>
+
+  <!-- TWO-PLAYER GAME: MAKING MONEY -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#1e3a5f,#1e5f74);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 3 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">💼 So You Want to Be Rich?</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Jobs, skills, hobbies, and the secret formula for earning — let's see who actually paid attention! 4 questions each. Whoever wins gets to pick dinner. (Tell your grandparent we said so.)</div>
+      </div>
+      <div class="game-body" id="game-earn"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════════
+     CHAPTER 4 — THE ADVERTISING WORLD
      ════════════════════════════════════════════ -->
 <section class="chapter" id="ch-ads">
   <div class="chap-hero" style="background:linear-gradient(135deg,#1E1B4B,#312E81,#4C1D95);">
-    <div class="chap-hero-tag">Chapter 3 — Know who's watching you</div>
+    <div class="chap-hero-tag">Chapter 4 — Know who's watching you</div>
     <div class="chap-hero-icons">📺 🎯 💡</div>
     <h1>The Advertising World</h1>
     <p>Every single day, companies spend billions of dollars trying to convince you to want things. Here's how to see through it — and think for yourself.</p>
@@ -703,9 +1154,12 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
 
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('ads','howads',this)"><span class="tab-icon">📣</span>How ads work</button>
+    <button class="tab-btn" onclick="showTab('ads','brain',this)"><span class="tab-icon">🧠</span>Your brain</button>
     <button class="tab-btn" onclick="showTab('ads','internet',this)"><span class="tab-icon">🌐</span>Internet trap</button>
     <button class="tab-btn" onclick="showTab('ads','tricks',this)"><span class="tab-icon">🎩</span>Ad tricks</button>
     <button class="tab-btn" onclick="showTab('ads','spotter',this)"><span class="tab-icon">🔍</span>Spot the ad</button>
+    <button class="tab-btn" onclick="showTab('ads','athletes',this)"><span class="tab-icon">🏆</span>Athletes &amp; ads</button>
+    <button class="tab-btn" onclick="showTab('ads','challenge',this)"><span class="tab-icon">⚡</span>Your challenge</button>
   </div>
 
   <!-- HOW ADS WORK -->
@@ -721,6 +1175,12 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
       <div class="card accent-b"><div class="card-emoji">🔁</div><h3>Repeat, repeat, repeat</h3><p>The more you see something, the more familiar it feels — and the more you trust it, even without thinking. Repetition is one of the oldest tricks.</p></div>
       <div class="card accent-pk"><div class="card-emoji">🎨</div><h3>Pretty packaging</h3><p>Bright colors, fun fonts, cool characters — designed by experts to make you feel good before you even open the box.</p></div>
     </div>
+    <div style="background:linear-gradient(135deg,#1E1B4B,#312E81);color:white;border-radius:14px;padding:22px 24px;margin-bottom:18px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-20px;width:130px;height:130px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+      <div style="font-size:11px;font-weight:700;opacity:0.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Something to remember</div>
+      <div style="font-size:22px;font-weight:700;line-height:1.4;margin-bottom:14px;font-style:italic;">"Confidence comes from inside."</div>
+      <div style="font-size:13px;opacity:0.85;line-height:1.7;">When you wear a shirt with a giant logo on it, you are doing a company's advertising for them — and paying <em>them</em> for the privilege. Companies charge <strong>more</strong> for logo clothing because it turns you into a free advertisement that other people see all day long. Real confidence and style come from knowing who you are — not from which brand name is printed on your chest. The most powerful thing you can wear is your own identity.</div>
+    </div>
     <div class="quiz" id="qa1">
       <div class="quiz-q">A cereal box has a cartoon dragon on it and says "EPIC MORNING POWER!" What is the advertiser actually trying to do?</div>
       <div class="quiz-opts">
@@ -732,25 +1192,97 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     </div>
   </div>
 
-  <!-- INTERNET TRAP -->
-  <div class="tab-panel" id="ads-internet">
-    <div class="sec-title">The internet knows you</div>
-    <div class="sec-sub">The internet isn't just a place to watch videos. It's a giant machine built to show you ads — and it's very, very good at it.</div>
-    <div class="callout callout-coral"><strong>🚨 Here's the truth:</strong> When you use free apps and free websites — you are not the customer. You are the <em>product</em>. Companies collect information about you and sell it to advertisers.</div>
-    <div class="inet-step"><div class="inet-bubble">👀</div><div><h4>Step 1: You browse and click</h4><p>Every video you watch, post you like, and search you type is being recorded, secretly, in the background.</p></div></div>
-    <div class="inet-step"><div class="inet-bubble">🗃️</div><div><h4>Step 2: A profile is built about you</h4><p>Apps build a detailed profile: your age, what you like, how long you spend watching things, what makes you stop scrolling.</p></div></div>
-    <div class="inet-step"><div class="inet-bubble">🤖</div><div><h4>Step 3: An algorithm finds your weak spots</h4><p>Computer programs figure out exactly what kind of content and ads make you keep watching — or make you want to buy something.</p></div></div>
-    <div class="inet-step"><div class="inet-bubble">🎯</div><div><h4>Step 4: You get targeted ads</h4><p>Ads are shown specifically designed for someone exactly like you. They know your age, your interests, even your mood — and use all of it.</p></div></div>
-    <div class="inet-step"><div class="inet-bubble">💸</div><div><h4>Step 5: The app gets paid</h4><p>When you click an ad or buy something, the advertiser pays the app. The app makes money. You spend money. The cycle repeats.</p></div></div>
-    <div class="callout callout-green"><strong>🛡️ Your defense:</strong> Knowing this system exists is the first step. When you see something you want online, ask: "Did I want this before I saw the ad — or did the ad create that feeling?"</div>
-    <div class="quiz" id="qa2">
-      <div class="quiz-q">You use a free game app. Suddenly you see ads for the exact toys you were looking at yesterday on another website. How did that happen?</div>
-      <div class="quiz-opts">
-        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">A coincidence — the app guessed!</button>
-        <button class="quiz-opt" onclick="answer(this,'correct','qa2')">The apps share your data, so advertisers know what you looked at</button>
-        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">Your parents told the app what you like</button>
+  <!-- YOUR BRAIN -->
+  <div class="tab-panel" id="ads-brain">
+    <div class="sec-title">Your ancient brain in a modern world</div>
+    <div class="sec-sub">Your brain is an extraordinary machine — shaped by 200,000 years of evolution to keep you alive in the wild. The problem is that social media and tech companies have figured out exactly how to hack it.</div>
+
+    <div style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:white;border-radius:14px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,0.04);border-radius:50%;"></div>
+      <div style="font-size:13px;font-weight:700;opacity:0.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">The mismatch</div>
+      <div style="font-size:18px;font-weight:700;line-height:1.4;margin-bottom:12px;">Your brain evolved for the savanna. It's now living in a smartphone.</div>
+      <div style="font-size:13px;opacity:0.8;line-height:1.7;">For hundreds of thousands of years, humans survived by being excellent hunters and gatherers. Our brains were fine-tuned by evolution to notice movement, remember faces, crave novelty, fear missing out, and seek reward. Those instincts kept us alive. Today, tech companies exploit every single one of them — on purpose.</div>
+    </div>
+
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">How your hunter-gatherer brain gets exploited:</div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;">
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">👁️</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">The movement detector — why you can't stop scrolling</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Then:</strong> Our ancestors' eyes were wired to instantly notice anything that moved — a predator in the grass, a bird taking flight, prey nearby. This snap-attention reflex kept them alive.<br><br><strong>Now:</strong> Social media feeds are designed to keep moving — auto-playing videos, animated thumbnails, constantly refreshing content. Your ancient movement detector fires over and over, making it nearly <em>impossible</em> to look away. Your brain thinks it might be missing something important. It's not. But it doesn't know that.</div>
+          </div>
+        </div>
       </div>
-      <div class="quiz-result" id="qa2-result"></div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🎰</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">The reward system — why likes feel so good</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Then:</strong> When our ancestors found food, killed prey, or were accepted by their tribe, their brains released a chemical called <strong>dopamine</strong> — a flood of pleasure that said "do that again!" This kept them eating, bonding, and surviving.<br><br><strong>Now:</strong> Every like, comment, share, and notification triggers a tiny dopamine hit. App designers — some of whom are former casino engineers — carefully designed this. The "pull to refresh" feature was modeled directly after a slot machine lever. You pull it hoping for a reward. Sometimes you get one. That unpredictability is what makes it most addictive.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">😱</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">The threat scanner — why bad news spreads faster than good</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Then:</strong> Ignoring a threat — a lion, a rival tribe, a storm — could get you killed. So our brains evolved to pay <em>far more</em> attention to frightening, negative, or outrage-inducing things than to calm, happy, neutral things. Scientists call this "negativity bias."<br><br><strong>Now:</strong> Social media algorithms know that outrage, fear, and shocking content makes people click, comment, and share more. So they deliberately show you more of it — not because it's true or important, but because it keeps you engaged longer. Your ancient threat scanner is being triggered dozens of times a day by content designed to feel urgent. Most of it isn't.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#FCEBEB;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">👥</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">The tribe instinct — why exclusion feels like physical pain</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Then:</strong> Being cast out from your tribe 50,000 years ago meant almost certain death. So our brains evolved to treat social rejection as a genuine emergency — nearly as painful as physical injury. Belonging was survival.<br><br><strong>Now:</strong> When a post gets no likes, when you're left out of a group chat, when you see photos of friends having fun without you — your ancient tribal brain registers it as a genuine threat to your survival. It floods you with anxiety. App designers know this. Features like follower counts, like tallies, and "seen" receipts are deliberately designed to trigger this fear — and keep you coming back to manage it.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🆕</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">The novelty craver — why you can't stop checking your phone</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Then:</strong> Noticing something new — a different plant, an unfamiliar animal, a new path — could mean new food, new opportunity, or new danger. Our brains evolved to get a small reward from discovering anything new. Curiosity was a survival advantage.<br><br><strong>Now:</strong> Every time you check your phone, there <em>might</em> be something new. A message. A notification. A story. That "might be" is enough to trigger your novelty craving. Studies show people check their phones over 90 times a day on average — not because anything has changed, but because the craving for novelty never fully turns off.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:18px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🤖</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">AI knows you better than you know yourself</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;"><strong>Now:</strong> Today's recommendation algorithms have watched millions of people with brains just like yours. They know, with frightening precision, exactly which type of content will make you feel curious, angry, sad, excited, or validated — and they serve it to you in that exact sequence to keep you watching. This isn't science fiction. It's how YouTube, TikTok, and Instagram work right now, today, every time you open the app.<br><br><strong>The only protection</strong> is knowing it's happening — and choosing to be the one who decides what you pay attention to, instead of letting an algorithm decide for you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber"><strong>⚠️ This is not an accident:</strong> The people who built these systems hired neuroscientists, behavioral psychologists, and former casino designers specifically to make their apps as hard to put down as possible. Some of Silicon Valley's own tech executives don't let their own children use the products they built. That tells you something important.</div>
+
+    <div class="quiz" id="qbrain1">
+      <div class="quiz-q">Why does the "pull to refresh" feature on social media apps work like a slot machine?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qbrain1')">Because both are colorful and fun to use</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qbrain1')">Because unpredictable rewards — sometimes you get something exciting, sometimes nothing — trigger the strongest dopamine response in the brain</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qbrain1')">Because it was designed by the same company that makes slot machines</button>
+      </div>
+      <div class="quiz-result" id="qbrain1-result"></div>
+    </div>
+
+    <div class="quiz" id="qbrain2">
+      <div class="quiz-q">Your brain evolved to treat social rejection as an emergency — almost as painful as physical injury. How do social media apps exploit this?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qbrain2')">They don't — social media is designed to make everyone feel included</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qbrain2')">Features like like counts, follower numbers, and "seen" receipts deliberately trigger your fear of being left out — keeping you anxious and coming back</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qbrain2')">They use bright colors to make rejection feel less painful</button>
+      </div>
+      <div class="quiz-result" id="qbrain2-result"></div>
     </div>
   </div>
 
@@ -818,6 +1350,193 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
       <div class="reveal-box"><strong>Tricks used:</strong><br>🆕 <strong>"New" trick</strong> — Your old phone probably works fine. They're making it feel outdated to sell a new one.<br>😱 <strong>FOMO</strong> — "Everyone's upgrading" makes you feel left behind if you don't.<br><em>What to do: Ask — does my current phone actually not work? If it works, you don't need a new one.</em></div>
     </div>
   </div>
+
+  <!-- ATHLETES & ADS -->
+  <div class="tab-panel" id="ads-athletes">
+    <div class="sec-title">How TV and advertising made athletes rich</div>
+    <div class="sec-sub">A hundred years ago, even the greatest athletes in the world earned modest wages. Then television arrived, then cable, then the internet — and advertising money flooded into sports. Here's what happened to salaries.</div>
+
+    <div class="callout callout-purple"><strong>📺 The connection:</strong> Advertisers pay TV networks to show ads during games. The more people watch, the more advertisers pay. The more advertisers pay, the more money leagues have. The more money leagues have, the more they can pay their players. <strong>Every dollar of athlete salary traces back to someone watching an ad.</strong></div>
+
+    <!-- SPORT SELECTOR -->
+    <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;" id="sport-selector">
+      <button class="filter-btn active" onclick="showSport('baseball',this)">⚾ Baseball</button>
+      <button class="filter-btn" onclick="showSport('basketball',this)">🏀 Basketball</button>
+      <button class="filter-btn" onclick="showSport('soccer',this)">⚽ Soccer</button>
+    </div>
+
+    <!-- BASEBALL -->
+    <div id="sport-baseball">
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div class="chart-title">⚾ Baseball — highest paid player salary (inflation-adjusted to 2024 $)</div>
+        </div>
+        <canvas id="chart-baseball" height="220"></canvas>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;" id="baseball-cards"></div>
+    </div>
+
+    <!-- BASKETBALL -->
+    <div id="sport-basketball" class="hidden">
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div class="chart-title">🏀 Basketball — highest paid player salary (inflation-adjusted to 2024 $)</div>
+        </div>
+        <canvas id="chart-basketball" height="220"></canvas>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;" id="basketball-cards"></div>
+    </div>
+
+    <!-- SOCCER -->
+    <div id="sport-soccer" class="hidden">
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div class="chart-title">⚽ Soccer — highest paid player salary (inflation-adjusted to 2024 $)</div>
+        </div>
+        <canvas id="chart-soccer" height="220"></canvas>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;" id="soccer-cards"></div>
+    </div>
+
+    <!-- TV TIMELINE -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;">
+      <div style="padding:14px 18px;border-bottom:1.5px solid var(--border);font-size:14px;font-weight:700;color:var(--text);">📺 The media milestones that changed everything</div>
+      <div style="padding:18px;">
+        <div class="timeline" style="margin-bottom:0;">
+          <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1920s–1940s</div><div class="tl-title">Radio broadcasts begin</div><div class="tl-body">For the first time, people could follow games they couldn't attend. Radio ads brought in money, but reach was limited and salaries stayed modest.</div></div>
+          <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1950s–1960s</div><div class="tl-title">Television arrives — everything changes</div><div class="tl-body">Millions of families gathered around TV sets to watch games. Advertisers realized they could reach enormous audiences during broadcasts. The first big TV deals were signed and salaries began to rise.</div></div>
+          <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1970s</div><div class="tl-title">Free agency — players gain power</div><div class="tl-body">In baseball and then other sports, players won the right to negotiate with any team — not just the one that drafted them. Teams had to compete to sign the best players, bidding salaries upward fast.</div></div>
+          <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1980s</div><div class="tl-title">Cable TV explodes — ESPN launches</div><div class="tl-body">ESPN (1979) and cable sports networks meant games could be broadcast 24/7 to paying subscribers. Ad revenue multiplied. Michael Jordan's arrival in the NBA (1984) combined with cable TV to create the first truly global sports superstars.</div></div>
+          <div class="tl-item"><div class="tl-dot filled"></div><div class="tl-year">1990s–2000s</div><div class="tl-title">Billion-dollar TV deals</div><div class="tl-body">TV networks paid billions for the rights to broadcast major leagues. The NFL, NBA, MLB and top soccer leagues signed deals worth hundreds of millions per year. That money went straight into player salaries.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2010s–today</div><div class="tl-title">Streaming, social media &amp; global audiences</div><div class="tl-body">Netflix, Amazon, Apple and YouTube now bid for sports rights alongside traditional TV. A soccer match can be watched simultaneously by 500 million people worldwide. Messi and LeBron have more social media followers than most countries have citizens — and advertisers pay accordingly.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber"><strong>🤔 Something to think about:</strong> Is a basketball player really worth $50 million a year? Not in terms of what they do for society — teachers, nurses, and firefighters do more essential work for far less. But in terms of how many eyeballs they attract, how many jerseys they sell, and how many people tune in to watch ads during their games — to advertisers, they're worth every penny. Advertising doesn't pay for importance. It pays for <em>attention</em>.</div>
+
+    <div class="quiz" id="qads5">
+      <div class="quiz-q">Babe Ruth was one of the greatest baseball players ever, but earned the equivalent of about $1–2 million a year in today's money. Modern players earn $30–50 million. What is the MAIN reason for this huge difference?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qads5')">Modern players are much better athletes than Ruth was</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qads5')">The cost of living has gone up a lot since the 1920s</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qads5')">Television and advertising created billions in revenue — and players eventually won the right to share in it</button>
+      </div>
+      <div class="quiz-result" id="qads5-result"></div>
+    </div>
+  </div>
+
+  <!-- INTERNET TRAP -->
+  <div class="tab-panel" id="ads-internet">
+    <div class="sec-title">The internet knows you</div>
+    <div class="sec-sub">The internet isn't just a place to watch videos. It's a giant machine built to show you ads — and it's very, very good at it.</div>
+    <div class="callout callout-coral"><strong>🚨 Here's the truth:</strong> When you use free apps and free websites — you are not the customer. You are the <em>product</em>. Companies collect information about you and sell it to advertisers.</div>
+    <div class="inet-step"><div class="inet-bubble">👀</div><div><h4>Step 1: You browse and click</h4><p>Every video you watch, post you like, and search you type is being recorded, secretly, in the background.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🗃️</div><div><h4>Step 2: A profile is built about you</h4><p>Apps build a detailed profile: your age, what you like, how long you spend watching things, what makes you stop scrolling.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🤖</div><div><h4>Step 3: An algorithm finds your weak spots</h4><p>Computer programs figure out exactly what kind of content and ads make you keep watching — or make you want to buy something.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">🎯</div><div><h4>Step 4: You get targeted ads</h4><p>Ads are shown specifically designed for someone exactly like you. They know your age, your interests, even your mood — and use all of it.</p></div></div>
+    <div class="inet-step"><div class="inet-bubble">💸</div><div><h4>Step 5: The app gets paid</h4><p>When you click an ad or buy something, the advertiser pays the app. The app makes money. You spend money. The cycle repeats.</p></div></div>
+    <div class="callout callout-green"><strong>🛡️ Your defense:</strong> Knowing this system exists is the first step. When you see something you want online, ask: "Did I want this before I saw the ad — or did the ad create that feeling?"</div>
+    <div class="quiz" id="qa2">
+      <div class="quiz-q">You use a free game app. Suddenly you see ads for the exact toys you were looking at yesterday on another website. How did that happen?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">A coincidence — the app guessed!</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qa2')">The apps share your data, so advertisers know what you looked at</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qa2')">Your parents told the app what you like</button>
+      </div>
+      <div class="quiz-result" id="qa2-result"></div>
+    </div>
+  </div>
+
+  <!-- YOUR CHALLENGE -->
+  <div class="tab-panel" id="ads-challenge">
+    <div style="background:linear-gradient(135deg,#0f3460,#162447,#1a1a2e);color:white;border-radius:16px;padding:28px 24px;margin-bottom:22px;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-50px;right:-40px;width:180px;height:180px;background:rgba(255,255,255,0.04);border-radius:50%;"></div>
+      <div style="position:absolute;bottom:-40px;left:-30px;width:140px;height:140px;background:rgba(255,255,255,0.03);border-radius:50%;"></div>
+      <div style="font-size:40px;margin-bottom:14px;">⚡</div>
+      <div style="font-size:13px;font-weight:700;opacity:0.6;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Your most important challenge</div>
+      <div style="font-size:24px;font-weight:700;line-height:1.35;margin-bottom:14px;">Know yourself before the algorithm does.</div>
+      <div style="font-size:14px;opacity:0.8;line-height:1.7;max-width:520px;margin:0 auto;">Social media and AI will spend your entire life trying to tell you who you are, what you want, and what you should care about. Your only real defense is to figure those things out for yourself — first.</div>
+    </div>
+
+    <div class="callout callout-purple"><strong>🧠 Why this matters:</strong> An algorithm that knows what makes you click, what makes you angry, what makes you feel good — and shows you more of it every day — is quietly shaping your beliefs, your desires, and your sense of self. If you don't know who you are, something else will decide for you.</div>
+
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">The challenge: spend time on these questions</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;" id="challenge-list">
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#EEEDFE;color:#5B21B6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🪞</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 1: Know your values</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">What do you actually care about — not what your feed says you should care about? Kindness? Adventure? Creating things? Helping people? Write them down. When you know your values, you can spot when an app is trying to sell you a different set.</div>
+        </div>
+      </div>
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#E1F5EE;color:#0F6E56;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🌱</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 2: Develop a real interest — offline</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">Learn to play an instrument. Build something. Draw. Cook. Garden. Read books. Write stories. Volunteer somewhere. These are things that grow you — skills and experiences that belong entirely to you and can never be taken away. An algorithm cannot replicate the satisfaction of getting genuinely good at something real.</div>
+        </div>
+      </div>
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#FAEEDA;color:#B45309;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🤫</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 3: Practice being bored</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">This sounds strange, but it's one of the most powerful things you can do. Boredom is where your best ideas come from. When you're never bored — because your phone always fills the gap — you never have the mental space to think your own thoughts, dream your own dreams, or figure out what you actually want. Try sitting with nothing for 10 minutes. See what comes up.</div>
+        </div>
+      </div>
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#E6F1FB;color:#1E40AF;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">❓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 4: Ask "why" before you want something</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">The next time you feel a strong desire for something — a product, an experience, a certain kind of life — stop and ask: where did this want come from? Did I want this before I saw an ad, a post, or an influencer? Or was it created for me? Tracing your desires back to their source is one of the most powerful habits you can build.</div>
+        </div>
+      </div>
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#FCEBEB;color:#B91C1C;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📵</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 5: Choose your inputs</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">You are, in large part, the sum of what you pay attention to. If you fill your mind with outrage, comparison, and endless product ads — that's what grows inside you. Deliberately choose some of what goes in: books, conversations, nature, music, mentors, ideas. You get to be the editor of your own mind. Exercise that right.</div>
+        </div>
+      </div>
+      <div class="challenge-item" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#EAF3DE;color:#166534;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🤝</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Challenge 6: Build real relationships</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">The most important thing your tribal brain actually needs is genuine human connection — not followers, not likes, not a curated online identity. A few real friendships, built on honesty and shared experience, will give you something no algorithm ever can: the feeling of being truly known.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#064E3B,#047857);color:white;border-radius:14px;padding:22px 24px;margin-bottom:18px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;opacity:0.8;">The bottom line</div>
+      <div style="font-size:16px;font-weight:700;line-height:1.5;margin-bottom:12px;">"The most rebellious thing you can do in a world designed to distract you — is to pay attention to your own life."</div>
+      <div style="font-size:13px;opacity:0.75;line-height:1.65;">Advertisers, algorithms, and AI will spend billions trying to tell you what to want, who to be, and what to buy. The answer to all of it is the same: know yourself so well that none of it sticks. That knowledge — of your own values, your own talents, your own direction — is the most valuable thing you will ever own. And nobody can sell it to you. You have to build it yourself.</div>
+    </div>
+
+    <div class="quiz" id="qchallenge1">
+      <div class="quiz-q">An AI algorithm has watched thousands of hours of what you like, click on, and share. It now knows your habits better than most of your friends do. What is the BEST way to protect yourself from being controlled by it?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qchallenge1')">Delete all your apps immediately</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qchallenge1')">Only use apps made by companies you trust</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qchallenge1')">Know your own values, interests, and goals so clearly that you can recognize when something is trying to shape them for you — and choose your own path instead</button>
+      </div>
+      <div class="quiz-result" id="qchallenge1-result"></div>
+    </div>
+  </div>
+
+  <!-- TWO-PLAYER GAME: ADVERTISING -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#1E1B4B,#4C1D95);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 4 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">🕵️ Spot the Sneaky Ad!</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Advertisers spent BILLIONS trying to trick your brain. Time to prove you're smarter than a multibillion-dollar marketing department. Each player gets 4 questions. No pressure. 😅</div>
+      </div>
+      <div class="game-body" id="game-ads"></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ════════════════════════════════════════════
@@ -825,44 +1544,192 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
      ════════════════════════════════════════════ -->
 <section class="chapter" id="ch-smart">
   <div class="chap-hero" style="background:linear-gradient(135deg,#312e81,#4338ca,#6366f1);">
-    <div class="chap-hero-tag">Chapter 4 — Your money, your choices</div>
+    <div class="chap-hero-tag">Chapter 5 — Your money, your choices</div>
     <div class="chap-hero-icons">🛍️ 🏦 🎯</div>
-    <h1>Smart Spending, Saving &amp; Goals</h1>
-    <p>Now that you know how ads try to trick you — here's how to take control of your money, budget wisely, and save for the things that truly matter.</p>
+    <h1>Spending, Saving &amp; Goals</h1>
+    <p>Now that you know how ads try to trick you — here's how to take control of your money, save first, spend smart, and build toward the things that truly matter.</p>
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('smart','spending',this)"><span class="tab-icon">🛍️</span>Smart spending</button>
+    <button class="tab-btn active" onclick="showTab('smart','spending',this)"><span class="tab-icon">💰</span>Spending &amp; saving</button>
     <button class="tab-btn" onclick="showTab('smart','jars',this)"><span class="tab-icon">🏦</span>Budget jars</button>
     <button class="tab-btn" onclick="showTab('smart','goals',this)"><span class="tab-icon">🎯</span>My goals</button>
   </div>
 
-  <!-- SMART SPENDING -->
+  <!-- SPENDING & SAVING -->
   <div class="tab-panel active" id="smart-spending">
-    <div class="sec-title">Needs vs. wants</div>
-    <div class="sec-sub">Before you spend, ask yourself one simple question: do I need this, or do I just want it right now?</div>
+
+    <!-- PAY YOURSELF FIRST HERO -->
+    <div style="background:linear-gradient(135deg,#064E3B,#065F46,#047857);color:white;border-radius:14px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+      <div style="font-size:13px;font-weight:700;opacity:0.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">The most important money rule</div>
+      <div style="font-size:24px;font-weight:700;line-height:1.3;margin-bottom:12px;">Pay yourself first.</div>
+      <div style="font-size:13px;opacity:0.85;line-height:1.7;">The moment money arrives — from an allowance, a job, a gift — the very first thing you do is set aside your savings. Not what's left over at the end. <strong>First.</strong> Then you live on what remains. This one habit, done consistently, is the foundation of every healthy financial life.</div>
+    </div>
+
+    <!-- THE ORDER -->
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">The right order to pay with every dollar you earn:</div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+      <div style="padding:16px 18px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#EAF3DE;color:#047857;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">🐷 Pay yourself — save first</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Decide on a percentage — 10%, 20%, whatever you can — and move it to savings the moment the money arrives. Before anything else. Before snacks, before games, before anything. This is the money that builds your future. Treat it like a bill you owe to yourself.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#E6F1FB;color:#1E40AF;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">🏠 Pay your obligations — needs and bills</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Rent, food, utilities, phone plan, school supplies — the things that aren't optional. These come second, because they keep your life running. As a kid, your parents cover most of these. As an adult, these become your fixed costs — and the key is to keep them modest so your savings can stay high.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#EEEDFE;color:#5B21B6;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">❤️ Give something away</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Even a small amount — to a cause, a person, a community. Research shows this is one of the most reliable ways to feel good about money. Generosity is a habit, and like saving, it's easier to build when you start young.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;display:flex;align-items:center;gap:14px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#FAEEDA;color:#B45309;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">🎮 Spend the rest — freely and without guilt</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Whatever is left after savings, bills, and giving — that's yours to enjoy. Guilt-free. The beauty of paying yourself first is that you don't have to stress about every purchase, because the important things are already handled. Your lifestyle is built around what remains — not the other way around.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE KEY INSIGHT -->
+    <div class="callout callout-amber"><strong>🔑 The big insight most people miss:</strong> Almost everyone does this backwards. They pay their bills, spend on what they want, and save whatever's left over — which is usually nothing. Paying yourself <em>first</em> flips the equation: your savings happen automatically, and your lifestyle adjusts to fit the rest. Same income. Completely different outcome.</div>
+
+    <!-- TWO PEOPLE COMPARISON -->
+    <div class="story-pair" style="margin-bottom:20px;">
+      <div class="story-card gold-top">
+        <div style="font-size:26px;margin-bottom:8px;">😰</div>
+        <div class="story-name">The "save what's left" approach</div>
+        <span class="story-tag tag-amber">Most common — least effective</span>
+        <div class="story-body">Earns $100. Pays bills: $40. Buys things they want: $55. Checks bank at end of month. Saves the remaining: $5.<br><br>After a year: $60 saved. After 10 years: almost nothing grown. One emergency wipes it out.</div>
+        <div class="story-detail">The problem: spending always expands to fill the available space. "What's left" is almost always less than expected.</div>
+      </div>
+      <div class="story-card green-top">
+        <div style="font-size:26px;margin-bottom:8px;">😌</div>
+        <div class="story-name">The "pay yourself first" approach</div>
+        <span class="story-tag tag-green">Less common — far more powerful</span>
+        <div class="story-body">Earns $100. Saves immediately: $20. Pays bills: $40. Spends freely on whatever remains: $40.<br><br>After a year: $1,040 saved (with growth). After 10 years: a meaningful financial cushion.</div>
+        <div class="story-detail">The beauty: the lifestyle adjusts naturally to the $40 left over. You never miss what you never had available to spend.</div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-bottom:6px;">The spending hierarchy — not all spending is equal</div>
+    <div class="sec-sub">Once your savings are handled, how you spend the rest matters enormously. Some spending makes you richer over time. Some just feels good for a moment. Here's the map.</div>
     <div class="callout callout-purple"><strong>🧠 The golden rule:</strong> Before buying something, ask — "Did I want this before I saw it, or did seeing it create the want?" Waiting 24 hours often changes your mind completely.</div>
     <div class="card-grid">
-      <div class="card accent-b"><div class="card-emoji">🏠</div><h3>Needs</h3><p>Food, shelter, clothes, school supplies — things you truly cannot do without. These come first, always.</p></div>
-      <div class="card accent-pk"><div class="card-emoji">🎮</div><h3>Wants</h3><p>Video games, toys, candy, new sneakers — fun stuff, but you can live without them! And they're often more fun when you've saved up for them.</p></div>
-      <div class="card accent-g"><div class="card-emoji">🔍</div><h3>Compare prices</h3><p>Check if the same thing costs less somewhere else. Smart shoppers always compare before buying — a few minutes can save real money.</p></div>
+      <div class="card accent-b"><div class="card-emoji">🏠</div><h3>Needs</h3><p>Food, shelter, clothes, school supplies — things you truly cannot do without. These come first among spending, always.</p></div>
+      <div class="card accent-pk"><div class="card-emoji">🎮</div><h3>Wants</h3><p>Video games, toys, candy, new sneakers — fun stuff you can live without! They're often more satisfying when you've saved up for them.</p></div>
+      <div class="card accent-g"><div class="card-emoji">🔍</div><h3>Compare prices</h3><p>Check if the same thing costs less somewhere else. Smart shoppers always compare — a few minutes can save real money.</p></div>
       <div class="card accent-l"><div class="card-emoji">⏳</div><h3>The 24-hour rule</h3><p>Wait a day before buying something you want. Still want it just as badly? Maybe it's worth it. Most times, the urge fades.</p></div>
     </div>
+
+    <!-- INVEST IN YOURSELF -->
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1e5f74,#1a7a5e);color:white;border-radius:14px;padding:24px;margin-bottom:18px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-30px;width:150px;height:150px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+      <div style="font-size:13px;font-weight:700;opacity:0.65;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">The smartest spending of all</div>
+      <div style="font-size:21px;font-weight:700;line-height:1.35;margin-bottom:10px;">Spending on yourself is investing in yourself.</div>
+      <div style="font-size:13px;opacity:0.85;line-height:1.7;">When you spend money to improve your skills, knowledge, or capabilities — that money doesn't disappear. It multiplies. Every dollar spent on learning, training, or building a skill can come back to you as <strong>higher earning power</strong> for the rest of your life. That's not spending. That's the best investment you can make.</div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;">
+      <div style="padding:14px 18px;border-bottom:1.5px solid var(--border);font-size:15px;font-weight:700;color:var(--text);">The three kinds of spending — ranked by lasting value:</div>
+
+      <!-- TIER 1 -->
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);background:var(--green-light);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏆</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Tier 1 — Best use of money</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;">Investing in your own capabilities</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">This is spending that <strong>increases your ability to earn money</strong> in the future. When you spend on education, skills, training, or anything that makes you more capable — you're buying a return that keeps paying you back for years or decades. A course that teaches you to code might cost $200 and lead to a career earning $100,000+ a year. That's a 500× return. No stock does that.</div>
+            <div class="card-grid" style="margin-bottom:0;">
+              <div class="card" style="border-left:3px solid var(--green);"><div class="card-emoji">📚</div><h3>Education & courses</h3><p>Books, online courses, tutoring, school — knowledge is the one thing nobody can ever take away from you.</p></div>
+              <div class="card" style="border-left:3px solid var(--green);"><div class="card-emoji">🎸</div><h3>Learning a skill</h3><p>Music, coding, a language, cooking, a sport — skills compound over time and open doors you can't even imagine yet.</p></div>
+              <div class="card" style="border-left:3px solid var(--green);"><div class="card-emoji">💪</div><h3>Health & fitness</h3><p>A healthy body gives you more energy, clearer thinking, and fewer sick days — which directly improves everything you do.</p></div>
+              <div class="card" style="border-left:3px solid var(--green);"><div class="card-emoji">🤝</div><h3>Mentors & communities</h3><p>Spending to meet inspiring people, join a great team, or access a community of learners can change your whole trajectory.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2 -->
+      <div style="padding:18px;border-bottom:1.5px solid var(--border);">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--amber-light);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🌅</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Tier 2 — Good use of money</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;">Experiences and relationships</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">Spending on experiences — travel, adventures, concerts, great meals with people you love — creates memories that last a lifetime and genuinely contribute to happiness. Research consistently shows experiences beat stuff. The catch: experiences don't improve your ability to <em>earn</em> money, so they're not quite as powerful as investing in your capabilities. Still — a life of pure saving with no experiences isn't much of a life either. Balance matters.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3 -->
+      <div style="padding:18px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--surface2);border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📦</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Tier 3 — Lowest lasting value</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;">Stuff and things</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">Most physical stuff — gadgets, clothes, toys, collectibles — brings a short burst of excitement and then just sits there. It doesn't improve your skills, it doesn't create lasting memories, and it often loses value over time. That doesn't mean you should never buy things you enjoy — it just means this should come after Tier 1 and Tier 2 in your thinking, not before.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-teal"><strong>🔑 The key question:</strong> Before spending money on anything, ask — "Will this make me more capable, create a lasting memory, or just sit in a drawer?" The answer won't always be clear-cut — and that's fine. But asking the question changes how you think about every dollar.</div>
+
+    <!-- REAL EXAMPLES -->
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">Real examples — same money, very different outcomes:</div>
+    <div class="story-pair" style="margin-bottom:20px;">
+      <div class="story-card gold-top">
+        <div style="font-size:24px;margin-bottom:8px;">📦</div>
+        <div class="story-name">Jordan spends $200 on stuff</div>
+        <span class="story-tag tag-amber">Tier 3 spending</span>
+        <div class="story-body">Buys a new gaming headset, some clothes, and a few apps. Excited for two weeks. A year later, the headset is collecting dust, the clothes barely get worn, and the apps get deleted.</div>
+        <div class="story-detail">Value in one year: maybe $40 at a garage sale. Earning power increase: zero.</div>
+      </div>
+      <div class="story-card green-top">
+        <div style="font-size:24px;margin-bottom:8px;">🎸</div>
+        <div class="story-name">Sam spends $200 on guitar lessons</div>
+        <span class="story-tag tag-green">Tier 1 spending</span>
+        <div class="story-body">Takes 10 guitar lessons. Learns the basics. Keeps practicing because it's fun. Three years later plays at family events, teaches a friend for extra money, and has a skill that makes people smile their whole life.</div>
+        <div class="story-detail">Value in one year: lifelong skill + joy + potential income. Earning power increase: real.</div>
+      </div>
+    </div>
+
     <div class="quiz" id="qs1">
-      <div class="quiz-q">You see cool new headphones for $50 but you already have ones that work fine. What should you do?</div>
+      <div class="quiz-q">You just got $50 for your birthday. What should you do FIRST, before anything else?</div>
       <div class="quiz-opts">
-        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Buy them right away — they look so cool!</button>
-        <button class="quiz-opt" onclick="answer(this,'correct','qs1')">Wait 24 hours and see if you still want them just as much</button>
-        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Ask for them as a gift so you don't have to use your savings</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Buy that game you've been wanting — you can save whatever's left</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qs1')">Set aside your savings amount first — then use the rest however you like</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs1')">Put it all in savings and don't spend any of it</button>
       </div>
       <div class="quiz-result" id="qs1-result"></div>
     </div>
-    <div class="quiz" id="qs2">
-      <div class="quiz-q">Which of these is a NEED?</div>
+    <div class="quiz" id="qs3">
+      <div class="quiz-q">Riley spends $300 on new clothes. Morgan spends $300 on a coding course. A year later, who got more value from their $300?</div>
       <div class="quiz-opts">
-        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">A brand new video game 🎮</button>
-        <button class="quiz-opt" onclick="answer(this,'correct','qs2')">School supplies for class 📚</button>
-        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">Extra candy at the checkout lane 🍬</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs3')">Riley — clothes last years and look great</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qs3')">Morgan — coding skills can lead to a career earning thousands every month</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs3')">They're equal — both spent $300</button>
+      </div>
+      <div class="quiz-result" id="qs3-result"></div>
+    </div>
+    <div class="quiz" id="qs2">
+      <div class="quiz-q">Alex earns $20/week and saves "whatever's left" — usually $1 or $2. Sam also earns $20/week but automatically saves $5 the moment they get paid, then spends the rest. After one year, who has more saved?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">Alex — they have more to spend each week so they enjoy life more</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qs2')">Sam — $5 saved every week reliably adds up to $260, while Alex's "leftovers" rarely materialize</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qs2')">They save the same — income is the same so savings must be too</button>
       </div>
       <div class="quiz-result" id="qs2-result"></div>
     </div>
@@ -927,6 +1794,19 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
       </div>
     </div>
   </div>
+
+  <!-- TWO-PLAYER GAME: SPENDING & SAVING -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#312e81,#6366f1);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 5 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">🐷 Battle of the Piggy Banks!</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Needs vs wants, pay yourself first, the 24-hour rule — let's find out who's the budgeting boss! 4 questions each. Winner gets bragging rights AND a high-five. 🙌</div>
+      </div>
+      <div class="game-body" id="game-smart"></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ════════════════════════════════════════════
@@ -934,7 +1814,7 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
      ════════════════════════════════════════════ -->
 <section class="chapter" id="ch-invest">
   <div class="chap-hero" style="background:linear-gradient(135deg,#0C444C,#0F6E56,#1D9E75);">
-    <div class="chap-hero-tag">Chapter 5 — Make your money work</div>
+    <div class="chap-hero-tag">Chapter 6 — Make your money work</div>
     <div class="chap-hero-icons">📈 💼 🌱</div>
     <h1>Investing — Make Your Money Grow</h1>
     <p>Pick real stocks and bonds, build your own portfolio, track your progress with live charts, and compete with your sibling. You each start with $500 of play money!</p>
@@ -957,16 +1837,17 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
   </div>
 
   <div class="tabs" style="border-radius:0;">
-    <button class="tab-btn active" onclick="showTab('invest','market',this)"><span class="tab-icon">🏪</span>Market</button>
+    <button class="tab-btn active" onclick="showTab('invest','learn',this)"><span class="tab-icon">📚</span>Learn</button>
+    <button class="tab-btn" onclick="showTab('invest','history',this)"><span class="tab-icon">📉</span>10-yr history</button>
+    <button class="tab-btn" onclick="showTab('invest','market',this)"><span class="tab-icon">🏪</span>Market</button>
     <button class="tab-btn" onclick="showTab('invest','portfolio',this)"><span class="tab-icon">💼</span>Portfolio</button>
     <button class="tab-btn" onclick="showTab('invest','charts',this)"><span class="tab-icon">📊</span>Charts</button>
     <button class="tab-btn" onclick="showTab('invest','growth',this)"><span class="tab-icon">🌱</span>Growth sim</button>
-    <button class="tab-btn" onclick="showTab('invest','learn',this)"><span class="tab-icon">📚</span>Learn</button>
     <button class="tab-btn" onclick="showTab('invest','news',this)"><span class="tab-icon">📰</span>News</button>
   </div>
 
   <!-- MARKET -->
-  <div class="tab-panel active" id="invest-market">
+  <div class="tab-panel" id="invest-market">
     <div class="sec-title">Stock &amp; bond market</div>
     <div class="sec-sub">Browse and buy. Tap any card to see details and purchase shares. Simulate a trading day to watch prices move!</div>
     <div class="market-filter">
@@ -1031,6 +1912,12 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
   <div class="tab-panel" id="invest-growth">
     <div class="sec-title">Compound growth simulator</div>
     <div class="sec-sub">See what happens when you invest a little every month and let time do the work. This is the most powerful idea in all of investing!</div>
+    <div style="background:linear-gradient(135deg,#0C444C,#0F6E56);color:white;border-radius:14px;padding:22px 24px;margin-bottom:18px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-20px;width:120px;height:120px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+      <div style="font-size:32px;margin-bottom:12px;opacity:0.6;">"</div>
+      <div style="font-size:18px;font-weight:600;line-height:1.55;margin-bottom:14px;font-style:italic;">To turn $100 into $110 is work. To turn $100 million into $110 million is inevitable.</div>
+      <div style="font-size:12px;opacity:0.75;font-weight:600;letter-spacing:0.5px;">— Edgar Bronfman Sr., billionaire businessman</div>
+    </div>
     <div class="callout callout-teal"><strong>🌱 The magic of compounding:</strong> When your investments grow, that growth also starts to grow. Over many years, this creates an enormous snowball effect — even if you start very small.</div>
     <div style="background:var(--surface2);border-radius:12px;padding:18px;margin-bottom:14px;border:1.5px solid var(--border);">
       <div class="slider-row"><label>Starting amount</label><input type="range" min="0" max="1000" step="25" value="100" id="sim-start" oninput="updateSim()"/><span id="sim-start-v">$100</span></div>
@@ -1051,20 +1938,111 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     <div class="callout callout-amber"><strong>⏰ Start early!</strong> Waiting just 5 extra years to start investing can cut your ending value nearly in half. Time is the most powerful ingredient in the entire recipe.</div>
   </div>
 
-  <!-- LEARN -->
-  <div class="tab-panel" id="invest-learn">
+  <!-- LEARN — FIRST TAB, ACTIVE -->
+  <div class="tab-panel active" id="invest-learn">
     <div class="sec-title">What am I actually buying?</div>
-    <div class="sec-sub">Before you invest, understand what you're getting. Here are the three things you can buy in this market.</div>
-    <div class="callout callout-teal"><strong>💡 What is investing?</strong> Instead of spending money, you put it somewhere that can grow over time. It's like planting a money tree — you plant a seed (your money) and over time it grows into something much bigger. 🌳</div>
-    <div class="card-grid">
-      <div class="card accent-p"><div class="card-emoji">📈</div><h3>Stocks</h3><p>You buy a tiny piece of a company. If the company does well, your piece grows in value! If it struggles, it might shrink. Higher risk, higher potential reward.</p></div>
-      <div class="card accent-b"><div class="card-emoji">📜</div><h3>Bonds</h3><p>You lend money to a company or government and they pay you back with interest — like getting paid for helping! Steadier than stocks but grows more slowly.</p></div>
-      <div class="card accent-g"><div class="card-emoji">🗂️</div><h3>Index funds</h3><p>A basket of many stocks at once. Less risky because you own a little of LOTS of companies! If one struggles, others might do great.</p></div>
-      <div class="card accent-l"><div class="card-emoji">⚖️</div><h3>Risk vs reward</h3><p>Stocks can go up fast but also down. Bonds are slower but steadier. Most smart investors own a mix of both!</p></div>
+    <div class="sec-sub">Before you put a single dollar into anything, understand exactly what you're getting. Here's everything you need to know about stocks, bonds, and mutual funds — in plain English.</div>
+
+    <div class="callout callout-teal"><strong>💡 What is investing?</strong> Instead of spending money, you put it somewhere it can grow over time. It's like planting a money tree — you plant a seed (your money) and over time, with patience, it grows into something much bigger. 🌳</div>
+
+    <!-- STOCKS -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-left:4px solid #7C3AED;border-radius:12px;padding:20px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="font-size:28px;">📈</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Stocks — owning a piece of a company</div>
+          <div style="font-size:11px;font-weight:700;color:#7C3AED;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;">Higher risk · Higher potential reward</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:14px;">When a company wants to raise money to grow, it sells tiny slices of itself to the public. Each slice is called a <strong>share</strong> (or stock). If you buy one share of Apple, you literally own a tiny fraction of everything Apple owns — its buildings, its patents, its future profits.<br><br>If Apple does well and grows, your share becomes worth more. If Apple struggles, your share might be worth less. This is the basic bargain: you share in the company's success <em>and</em> its risk.</div>
+      <div class="card-grid" style="margin-bottom:12px;">
+        <div class="card" style="border-left:3px solid #7C3AED;"><div class="card-emoji">💰</div><h3>How you make money</h3><p>The share price rises as the company grows. You can sell for more than you paid. Some companies also pay <strong>dividends</strong> — regular cash payments to shareholders.</p></div>
+        <div class="card" style="border-left:3px solid #B91C1C;"><div class="card-emoji">⚡</div><h3>The risk</h3><p>Share prices can fall — sometimes dramatically. A company can even go bankrupt. You could lose some or all of what you invested.</p></div>
+        <div class="card" style="border-left:3px solid #059669;"><div class="card-emoji">🕐</div><h3>The time horizon</h3><p>Stocks are best held for many years. The stock market goes up and down constantly, but over 10–20 years it has historically always grown.</p></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:9px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.6;"><strong>Real example:</strong> If you had bought $1,000 of Nvidia stock in 2015, it would have grown to over $80,000 by 2024. But there were years it fell 50% or more along the way — you needed patience to hold through those drops and see the reward.</div>
     </div>
+
+    <!-- BONDS -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-left:4px solid #1E40AF;border-radius:12px;padding:20px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="font-size:28px;">📜</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Bonds — lending your money and getting paid back with interest</div>
+          <div style="font-size:11px;font-weight:700;color:#1E40AF;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;">Lower risk · Steadier, predictable returns</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:14px;">When a government or company needs to borrow money, it can issue a <strong>bond</strong>. You buy the bond — which means you're lending them your money. In return, they promise to pay you a fixed interest rate every year, and to give you all your money back at the end of a set period (called the <strong>maturity date</strong>).<br><br>Think of it like being the bank. The borrower pays you interest, just like you'd pay interest on a loan.</div>
+      <div class="card-grid" style="margin-bottom:12px;">
+        <div class="card" style="border-left:3px solid #1E40AF;"><div class="card-emoji">🏛️</div><h3>Government bonds</h3><p>The US Treasury sells bonds to fund government operations. These are considered the safest investment in the world — the US government has never failed to pay back a bond.</p></div>
+        <div class="card" style="border-left:3px solid #0F6E56;"><div class="card-emoji">🏢</div><h3>Corporate bonds</h3><p>Companies borrow money by issuing bonds too. Riskier than government bonds (companies can go bankrupt), but they pay higher interest to compensate.</p></div>
+        <div class="card" style="border-left:3px solid #059669;"><div class="card-emoji">💵</div><h3>How you make money</h3><p>You earn interest payments (called the <strong>coupon</strong>) regularly — usually twice a year. At the end, you get all your money back. Very predictable.</p></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:9px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.6;"><strong>Real example:</strong> A 10-year US Treasury bond today pays about 4–5% per year. If you invest $1,000, you'd earn ~$40–50/year in interest, and get your $1,000 back in 10 years. Not exciting — but rock solid and safe.</div>
+    </div>
+
+    <!-- MUTUAL FUNDS / INDEX FUNDS -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-left:4px solid #B45309;border-radius:12px;padding:20px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="font-size:28px;">🗂️</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Mutual funds &amp; index funds — a basket of investments</div>
+          <div style="font-size:11px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;">Diversified · Good for beginners · Set it and forget it</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:14px;">Instead of buying one company's stock and hoping it does well, a <strong>mutual fund</strong> pools money from thousands of investors and buys many different stocks, bonds, or both. You own a tiny piece of the whole basket.<br><br>An <strong>index fund</strong> is a special type of mutual fund that simply tracks a market index — like the S&amp;P 500, which is the 500 biggest US companies. Instead of a manager trying to pick winners, it just owns all of them. This keeps costs very low.</div>
+      <div class="card-grid" style="margin-bottom:12px;">
+        <div class="card" style="border-left:3px solid #B45309;"><div class="card-emoji">🧺</div><h3>Diversification</h3><p>If one company in the fund fails, the other 499 cushion the blow. Spreading risk across many investments is called <strong>diversification</strong> — the closest thing to a free lunch in investing.</p></div>
+        <div class="card" style="border-left:3px solid #7C3AED;"><div class="card-emoji">💤</div><h3>Passive investing</h3><p>Index funds require almost no decisions. Buy a little every month, ignore the daily news, and let the market do its work over decades. Warren Buffett recommends this for most people.</p></div>
+        <div class="card" style="border-left:3px solid #059669;"><div class="card-emoji">📊</div><h3>The S&amp;P 500 track record</h3><p>The S&amp;P 500 index has returned an average of ~10% per year over the last 100 years — through wars, recessions, pandemics, and crashes. It always eventually recovered and hit new highs.</p></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:9px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.6;"><strong>Real example:</strong> $10,000 invested in an S&amp;P 500 index fund in 2014 would be worth over $34,000 by 2024 — without picking a single stock, just owning all 500 companies at once.</div>
+    </div>
+
+    <!-- RISK SPECTRUM -->
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">The risk &amp; reward spectrum:</div>
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:4px;">
+        <div style="font-size:11px;font-weight:700;color:#059669;">← SAFER / LOWER RETURN</div>
+        <div style="font-size:11px;font-weight:700;color:#B91C1C;">RISKIER / HIGHER RETURN →</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
+        <div style="background:#E6F1FB;border-radius:8px;padding:10px 8px;text-align:center;"><div style="font-size:16px;margin-bottom:4px;">🏛️</div><div style="font-size:10px;font-weight:700;color:#1E40AF;">Gov Bonds</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">4–5%/yr</div></div>
+        <div style="background:#EAF3DE;border-radius:8px;padding:10px 8px;text-align:center;"><div style="font-size:16px;margin-bottom:4px;">🏢</div><div style="font-size:10px;font-weight:700;color:#059669;">Corp Bonds</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">5–7%/yr</div></div>
+        <div style="background:#FAEEDA;border-radius:8px;padding:10px 8px;text-align:center;"><div style="font-size:16px;margin-bottom:4px;">🗂️</div><div style="font-size:10px;font-weight:700;color:#B45309;">Index Fund</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">~10%/yr avg</div></div>
+        <div style="background:#EEEDFE;border-radius:8px;padding:10px 8px;text-align:center;"><div style="font-size:16px;margin-bottom:4px;">🏬</div><div style="font-size:10px;font-weight:700;color:#5B21B6;">Blue-chip stocks</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">varies widely</div></div>
+        <div style="background:#FCEBEB;border-radius:8px;padding:10px 8px;text-align:center;"><div style="font-size:16px;margin-bottom:4px;">🚀</div><div style="font-size:10px;font-weight:700;color:#B91C1C;">Growth stocks</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">high risk/reward</div></div>
+      </div>
+    </div>
+
     <div style="background:var(--surface2);border-radius:12px;padding:18px;border:1.5px solid var(--border);">
-      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">Tap a company to learn about it:</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">Tap a company in the market to learn about it:</div>
       <div class="card-grid" id="learn-cards"></div>
+    </div>
+  </div>
+
+  <!-- 10-YEAR HISTORY TAB -->
+  <div class="tab-panel" id="invest-history">
+    <div class="sec-title">10-year historical performance</div>
+    <div class="sec-sub">How have these investments actually performed over the last decade? This chart uses approximate real-world data to show annual returns from 2015 to 2024. Past performance doesn't guarantee future results — but history is a great teacher.</div>
+    <div class="callout callout-amber"><strong>📌 Note:</strong> These figures are approximate and adjusted for illustration. Prices shown are indexed to a $100 starting value in 2015 so all investments can be compared on the same scale.</div>
+    <div class="chart-wrap">
+      <div class="chart-header">
+        <div class="chart-title">$100 invested in 2015 — value by year (2015–2024)</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;" id="hist-toggles"></div>
+      </div>
+      <canvas id="hist-chart" height="260"></canvas>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:18px;" id="hist-cards"></div>
+    <div class="callout callout-purple"><strong>🧠 Key lesson:</strong> Notice how dramatically different investments behave. Some are smooth and slow (bonds), some are explosive but volatile (Nvidia, Rocket Lab). The S&amp;P 500 falls somewhere in between — growing steadily over time while absorbing the shocks of individual company ups and downs. This is the power of diversification.</div>
+    <div class="quiz" id="qhist1">
+      <div class="quiz-q">Looking at the 10-year chart, which investment would have been the most stressful to hold — with the biggest drops along the way — even if it ended up highest?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'wrong','qhist1')">US Treasury Bond — because it pays the least interest</button>
+        <button class="quiz-opt" onclick="answer(this,'correct','qhist1')">High-growth stocks like Nvidia or Rocket Lab — they can drop 50–70% before recovering to new highs</button>
+        <button class="quiz-opt" onclick="answer(this,'wrong','qhist1')">McDonald's — because fast food is an unpredictable business</button>
+      </div>
+      <div class="quiz-result" id="qhist1-result"></div>
     </div>
   </div>
 
@@ -1075,6 +2053,19 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
     <button class="btn btn-green" style="margin-bottom:14px;" onclick="generateNews()">📰 Generate today's market news</button>
     <div id="news-list"><div class="empty-state"><div class="es-emoji">📰</div>Tap the button above to generate today's market headlines!</div></div>
   </div>
+
+  <!-- TWO-PLAYER GAME: INVESTING -->
+  <div style="padding:0 0 8px;">
+    <div class="game-section" style="background:linear-gradient(135deg,#0C444C,#1D9E75);margin-top:28px;">
+      <div class="game-header">
+        <div class="game-eyebrow" style="color:rgba(255,255,255,0.65);">Chapter 6 — Two-player showdown!</div>
+        <div class="game-title" style="color:white;">📈 Wall Street Wizards!</div>
+        <div class="game-desc" style="color:rgba(255,255,255,0.82);">Stocks, bonds, index funds, and the magic of compounding — you read it all. Now prove it! 4 questions each. Winner gets to manage the family's pretend $500 portfolio. 💼</div>
+      </div>
+      <div class="game-body" id="game-invest"></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- MODAL OVERLAY -->
@@ -1103,7 +2094,7 @@ mc-mini { height:32px; width:100%; margin-top:7px; display:block; }
 // ══════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════
-var chapterMap = {money:'ch-money',life:'ch-life',ads:'ch-ads',smart:'ch-smart',invest:'ch-invest'};
+var chapterMap = {money:'ch-money',life:'ch-life',earn:'ch-earn',ads:'ch-ads',smart:'ch-smart',invest:'ch-invest'};
 function showChapter(id) {
   document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('active'));
   document.getElementById(chapterMap[id]).classList.add('active');
@@ -1127,6 +2118,8 @@ function showTab(chapter, tab, btn) {
   if(chapter==='invest'&&tab==='charts') updateCharts();
   if(chapter==='invest'&&tab==='growth') setTimeout(updateSim,50);
   if(chapter==='invest'&&tab==='learn') renderLearnCards();
+  if(chapter==='invest'&&tab==='history') setTimeout(renderHistChart,50);
+  if(chapter==='ads'&&tab==='athletes') setTimeout(()=>renderAthleteChart(currentSport),50);
 }
 
 // ══════════════════════════════════════════════
@@ -1265,6 +2258,9 @@ var SECURITIES = [
   {ticker:'CORP',name:'Corp Bond',emoji:'🏢',type:'bond',price:98.50,desc:'A loan to large companies. Slightly riskier than government bonds but pays a bit more interest.',color:'#0F6E56'},
   {ticker:'SPY',name:'S&P 500 Fund',emoji:'🗂️',type:'fund',price:42.00,desc:'Owns a tiny piece of the 500 biggest US companies at once. When America\'s economy grows, so do you!',color:'#B45309'},
   {ticker:'BOND',name:'Bond Fund',emoji:'📜',type:'fund',price:24.50,desc:'A basket of many bonds. Very steady, lower risk — perfect for balancing out your stocks.',color:'#0C447C'},
+  {ticker:'ASML',name:'ASML',emoji:'🔬',type:'stock',price:38.20,desc:'A Dutch company that makes the machines that make computer chips. Nearly every chip in the world — including the one in your phone — is made using ASML equipment. A monopoly in one of the most critical technologies on Earth.',color:'#FF6B00'},
+  {ticker:'NVDA',name:'Nvidia',emoji:'🖥️',type:'stock',price:97.50,desc:'Makes the powerful graphics chips (GPUs) used in gaming, AI, and data centers. Nvidia\'s chips power nearly all modern AI systems, making it one of the most valuable companies in history.',color:'#76B900'},
+  {ticker:'RKLB',name:'Rocket Lab',emoji:'🚀',type:'stock',price:8.40,desc:'A small rocket company that launches satellites into orbit. Cheaper and more frequent launches than big competitors. A high-risk, high-potential bet on the future of space.',color:'#FF4444'},
 ];
 
 var players = [
@@ -1598,6 +2594,433 @@ function generateNews(){
 }
 
 // ══════════════════════════════════════════════
+// ATHLETE SALARY CHARTS
+// ══════════════════════════════════════════════
+var athleteData = {
+  baseball: {
+    players: [
+      {name:'Babe Ruth',year:1930,salary:1800000,team:'NY Yankees',note:'The first true superstar — earned $80k/year (~$1.8M today). No TV, no cable, just radio and newspapers.'},
+      {name:'Joe DiMaggio',year:1949,salary:2200000,team:'NY Yankees',note:'Post-war era hero. Radio audiences grew. Earned $100k/year (~$2.2M today).'},
+      {name:'Willie Mays',year:1963,salary:2100000,team:'SF Giants',note:'Early TV era. Earned $105k/year. Baseball was still the dominant American sport.'},
+      {name:'Catfish Hunter',year:1975,salary:3600000,team:'NY Yankees',note:'First free agent superstar. Earned $3.75M over 5 years — free agency changed everything.'},
+      {name:'Nolan Ryan',year:1980,salary:4200000,team:'Houston Astros',note:'First player to earn $1M/year. Cable TV deals beginning to flow into the game.'},
+      {name:'Kirby Puckett',year:1990,salary:5600000,team:'Minnesota Twins',note:'$3M/year salary. ESPN bringing baseball to living rooms nationwide every night.'},
+      {name:'Ken Griffey Jr.',year:1996,salary:8200000,team:'Seattle Mariners',note:'$8.5M/year. A new generation of superstars commanding major TV-driven contracts.'},
+      {name:'Alex Rodriguez',year:2001,salary:25200000,team:'Texas Rangers',note:'$252M over 10 years — the biggest contract in sports history at the time. Cable TV at its peak.'},
+      {name:'Alex Rodriguez',year:2008,salary:33000000,team:'NY Yankees',note:'$275M extension. Baseball\'s TV deals worth hundreds of millions per year by now.'},
+      {name:'Mike Trout',year:2019,salary:37116666,team:'LA Angels',note:'$426.5M over 12 years — record at signing. Streaming era begins adding new revenue.'},
+      {name:'Manny Machado',year:2024,salary:43333333,team:'San Diego Padres',note:'$350M over 11 years. Global streaming and social media make stars worth more than ever.'},
+    ],
+    color:'#1e40af',
+    bgColor:'#dbeafe',
+  },
+  basketball: {
+    players: [
+      {name:'Julius Erving',year:1976,salary:2800000,team:'Philadelphia 76ers',note:'"Dr. J" earned ~$600k/year (~$2.8M today). The ABA-NBA merger brought new money but TV deals were still modest.'},
+      {name:'Kareem Abdul-Jabbar',year:1981,salary:3100000,team:'LA Lakers',note:'~$1M/year (~$3.1M today). Cable TV and ESPN launching — the timing was perfect for the Showtime Lakers.'},
+      {name:'Magic Johnson',year:1984,salary:4200000,team:'LA Lakers',note:'$25M over 25 years — unusual deal. Magic + Bird transformed NBA\'s TV appeal dramatically.'},
+      {name:'Michael Jordan',year:1992,salary:6900000,team:'Chicago Bulls',note:'~$4M/year salary (~$6.9M today). His ENDORSEMENTS (Nike, Gatorade) were already worth far more — showing ads\' true power.'},
+      {name:'Michael Jordan',year:1997,salary:34700000,team:'Chicago Bulls',note:'$33M for one season — the Bulls\' championship run on NBC drew record TV ratings. Jordan proved stars = ratings = money.'},
+      {name:'Kevin Garnett',year:1997,salary:28600000,team:'Minnesota Timberwolves',note:'$126M over 6 years. The new NBA TV deal created a salary explosion across the league.'},
+      {name:'Shaquille O\'Neal',year:2004,salary:30600000,team:'Miami Heat',note:'~$30M/year. NBA global expansion — games broadcast in 200+ countries.'},
+      {name:'LeBron James',year:2013,salary:19067920,team:'Miami Heat',note:'~$19M — deliberately below market to help team win. His social media reach was already worth billions to advertisers.'},
+      {name:'Stephen Curry',year:2017,salary:34682550,team:'Golden State Warriors',note:'$201M over 5 years. NBA\'s new $24B TV deal with ESPN/Turner changed everything overnight.'},
+      {name:'LeBron James',year:2023,salary:47607350,team:'LA Lakers',note:'$97.1M over 2 years. Streaming wars (Amazon, Apple, Netflix) now competing for sports rights — bidding salaries even higher.'},
+    ],
+    color:'#b45309',
+    bgColor:'#fef3c7',
+  },
+  soccer: {
+    players: [
+      {name:'Pelé',year:1958,salary:420000,team:'Santos FC',note:'The greatest ever earned roughly $150k/year in 1960s Brazil (~$420k today). Soccer was massive in South America but TV deals were tiny.'},
+      {name:'Pelé',year:1975,salary:2800000,team:'NY Cosmos',note:'Pelé\'s move to the US Cosmos paid $7M over 3 years — massive for the era. Soccer\'s first attempt to crack American TV audiences.'},
+      {name:'Diego Maradona',year:1984,salary:3200000,team:'Napoli',note:'~$1.2M/year (~$3.2M today). Italian Serie A becoming the world\'s richest league, fueled by Berlusconi\'s Fininvest TV network.'},
+      {name:'Ronaldo (R9)',year:1997,salary:5800000,team:'FC Barcelona',note:'~$4M/year (~$5.8M today). Champions League TV rights selling for hundreds of millions across Europe.'},
+      {name:'Zinedine Zidane',year:2001,salary:11200000,team:'Real Madrid',note:'€46M transfer fee — a world record. Real Madrid\'s "Galácticos" strategy built entirely around global TV and commercial appeal.'},
+      {name:'Ronaldinho',year:2006,salary:16200000,team:'FC Barcelona',note:'~$12M/year. YouTube era beginning — highlight clips going viral worldwide, expanding soccer\'s global advertising market.'},
+      {name:'Cristiano Ronaldo',year:2009,salary:21400000,team:'Real Madrid',note:'€94M world record transfer. Sky Sports, beIN, and dozens of global broadcasters competing for Premier League and Champions League rights.'},
+      {name:'Lionel Messi',year:2017,salary:80000000,team:'FC Barcelona',note:'~€71M/year (~$80M today) — the highest soccer salary ever at the time. La Liga\'s global TV deals worth over $1 billion/year.'},
+      {name:'Cristiano Ronaldo',year:2023,salary:200000000,team:'Al Nassr',note:'~$200M/year from Saudi Arabia — the oil-rich nation using sports to build its global TV and tourism brand. Sports as national advertising.'},
+      {name:'Lionel Messi',year:2024,salary:60000000,team:'Inter Miami',note:'~$60M/year in MLS — bringing global TV audiences and Apple TV+ subscribers to American soccer for the first time.'},
+    ],
+    color:'#059669',
+    bgColor:'#d1fae5',
+  }
+};
+
+var athleteCharts = {};
+var currentSport = 'baseball';
+
+function showSport(sport, btn) {
+  currentSport = sport;
+  document.querySelectorAll('#sport-selector .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['baseball','basketball','soccer'].forEach(s=>{
+    var el=document.getElementById('sport-'+s);
+    if(el) el.classList.toggle('hidden', s!==sport);
+  });
+  setTimeout(()=>renderAthleteChart(sport), 50);
+}
+
+function renderAthleteChart(sport) {
+  var data = athleteData[sport];
+  var el = document.getElementById('chart-'+sport);
+  if(!el) return;
+  if(athleteCharts[sport]) athleteCharts[sport].destroy();
+
+  var labels = data.players.map(p=>p.name+'\n('+p.year+')');
+  var values = data.players.map(p=>p.salary);
+
+  athleteCharts[sport] = new Chart(el, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Annual salary (2024 $)',
+        data: values,
+        backgroundColor: data.players.map((p,i)=>{
+          var alpha = 0.5 + (i/data.players.length)*0.5;
+          return data.color + Math.round(alpha*255).toString(16).padStart(2,'0');
+        }),
+        borderColor: data.color,
+        borderWidth: 1.5,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => '$' + ctx.parsed.y.toLocaleString(),
+            afterLabel: ctx => data.players[ctx.dataIndex].team
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { font: { size: 10 }, maxRotation: 35 } },
+        y: {
+          ticks: {
+            callback: v => v >= 1000000 ? '$'+(v/1000000).toFixed(0)+'M' : '$'+v.toLocaleString()
+          }
+        }
+      }
+    }
+  });
+
+  renderAthleteCards(sport);
+}
+
+function renderAthleteCards(sport) {
+  var data = athleteData[sport];
+  var container = document.getElementById(sport+'-cards');
+  if(!container) return;
+  container.innerHTML = '';
+  // Show first, middle, and last as milestone cards
+  var milestones = [data.players[0], data.players[Math.floor(data.players.length/2)], data.players[data.players.length-1]];
+  milestones.forEach(p=>{
+    var div = document.createElement('div');
+    div.style.cssText='background:var(--surface);border:1.5px solid var(--border);border-left:4px solid '+data.color+';border-radius:12px;padding:14px;';
+    div.innerHTML='<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">'+p.year+'</div>'+
+      '<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">'+p.name+'</div>'+
+      '<div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">'+p.team+'</div>'+
+      '<div style="font-size:20px;font-weight:700;color:'+data.color+';margin-bottom:8px;">$'+(p.salary/1000000).toFixed(1)+'M/yr</div>'+
+      '<div style="font-size:11px;color:var(--text-muted);line-height:1.55;">'+p.note+'</div>';
+    container.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════════
+// 10-YEAR HISTORICAL CHART
+// ══════════════════════════════════════════════
+// All values indexed: $100 invested Jan 2015 → value at end of each year
+// Sources: approximate real-world annual returns, adjusted for illustration
+var HIST_YEARS = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+var HIST_DATA = {
+  'US Treasury Bond': {
+    color:'#2563EB', emoji:'🇺🇸', type:'bond',
+    values:[100, 101.8, 103.5, 101.2, 107.4, 119.8, 113.5, 96.8, 99.2, 104.1],
+    summary:'Slow and steady. Barely moved for years, then fell when interest rates rose in 2022. But it never crashed dramatically — the most stable option.',
+    endVal:104
+  },
+  'S&P 500 (SPY)': {
+    color:'#D97706', emoji:'🗂️', type:'fund',
+    values:[100, 109.5, 133.5, 127.8, 168.2, 199.1, 256.0, 209.8, 265.2, 314.0],
+    summary:'Steady long-term growth through every crisis. Dropped in 2018 and crashed in 2022, but always recovered to new highs. The gold standard for patient investors.',
+    endVal:314
+  },
+  'Nike (NKE)': {
+    color:'#38BDF8', emoji:'👟', type:'stock',
+    values:[100, 108.2, 134.4, 130.1, 175.3, 218.0, 260.5, 188.4, 202.1, 152.0],
+    summary:'Strong through 2021, then struggled with inventory issues and slower growth. A reminder that even great brands go through tough patches.',
+    endVal:152
+  },
+  "McDonald's (MCD)": {
+    color:'#16A34A', emoji:'🍔', type:'stock',
+    values:[100, 115.3, 145.8, 162.4, 201.2, 198.5, 238.0, 231.5, 272.4, 256.0],
+    summary:'One of the most consistent performers — people eat burgers in good times and bad. Slower than tech but remarkably resilient through every market downturn.',
+    endVal:256
+  },
+  'ASML': {
+    color:'#4ADE80', emoji:'🔬', type:'stock',
+    values:[100, 118.4, 162.0, 158.5, 278.3, 378.0, 618.5, 420.0, 628.0, 720.0],
+    summary:'The monopoly on chip-making machines became one of the decade\'s best performers. Volatile — dropped hard in 2018 and 2022 — but its unique position in the chip supply chain made it extraordinary.',
+    endVal:720
+  },
+  'Rocket Lab (RKLB)': {
+    color:'#DC2626', emoji:'🚀', type:'stock',
+    values:[100, 100, 100, 100, 100, 100, 310.0, 108.0, 162.0, 420.0],
+    summary:'Went public in 2021. Very volatile — a small company in a risky industry. Dropped dramatically after listing, then surged as launch success rate grew. High risk, potentially high reward.',
+    endVal:420
+  },
+  'Nvidia (NVDA)': {
+    color:'#7C3AED', emoji:'🖥️', type:'stock',
+    values:[100, 228.0, 582.0, 348.0, 756.0, 1362.0, 2714.0, 1104.0, 2920.0, 8150.0],
+    summary:'The most dramatic stock of the decade. Rose over 80× from 2015 to 2024 — powered by gaming, crypto, and then the AI explosion. But it also dropped 65% in 2022 before its historic recovery.',
+    endVal:8150
+  },
+};
+
+var histChartObj = null;
+var hiddenHistLines = new Set();
+
+function renderHistChart() {
+  var el = document.getElementById('hist-chart'); if(!el) return;
+  if(histChartObj) histChartObj.destroy();
+
+  var datasets = Object.entries(HIST_DATA).map(([name, d]) => ({
+    label: d.emoji + ' ' + name,
+    data: d.values,
+    borderColor: d.color,
+    backgroundColor: 'transparent',
+    borderWidth: 2.5,
+    tension: 0.35,
+    pointRadius: 3,
+    pointBackgroundColor: d.color,
+    hidden: hiddenHistLines.has(name),
+  }));
+
+  histChartObj = new Chart(el, {
+    type: 'line',
+    data: { labels: HIST_YEARS, datasets },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.parsed.y.toFixed(0),
+          }
+        }
+      },
+      scales: {
+        y: {
+          ticks: { callback: v => '$' + v.toLocaleString() },
+          title: { display: true, text: 'Value of $100 invested in 2015' }
+        }
+      }
+    }
+  });
+
+  renderHistToggles();
+  renderHistCards();
+}
+
+function renderHistToggles() {
+  var container = document.getElementById('hist-toggles'); if(!container) return;
+  container.innerHTML = '';
+  Object.entries(HIST_DATA).forEach(([name, d]) => {
+    var btn = document.createElement('button');
+    btn.style.cssText = 'font-size:10px;font-weight:700;padding:3px 9px;border-radius:14px;cursor:pointer;border:2px solid '+d.color+';transition:all 0.15s;white-space:nowrap;';
+    var isHidden = hiddenHistLines.has(name);
+    btn.style.background = isHidden ? 'transparent' : d.color;
+    btn.style.color = isHidden ? d.color : 'white';
+    btn.textContent = d.emoji + ' ' + name.split(' ')[0];
+    btn.onclick = function() {
+      if(hiddenHistLines.has(name)) hiddenHistLines.delete(name);
+      else hiddenHistLines.add(name);
+      renderHistChart();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function renderHistCards() {
+  var container = document.getElementById('hist-cards'); if(!container) return;
+  container.innerHTML = '';
+  Object.entries(HIST_DATA).forEach(([name, d]) => {
+    var gain = d.endVal - 100;
+    var div = document.createElement('div');
+    div.style.cssText = 'background:var(--surface);border:1.5px solid var(--border);border-left:4px solid '+d.color+';border-radius:11px;padding:14px;';
+    div.innerHTML =
+      '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px;">'+d.emoji+' '+name+'</div>'+
+      '<div style="font-size:22px;font-weight:700;color:'+d.color+';">$'+d.endVal.toLocaleString()+'</div>'+
+      '<div style="font-size:11px;color:'+( gain>=0?'#059669':'#b91c1c')+';font-weight:700;margin-bottom:6px;">'+(gain>=0?'▲ +':'▼ ')+(gain).toFixed(0)+'% over 10 years</div>'+
+      '<div style="font-size:11px;color:var(--text-muted);line-height:1.5;">'+d.summary+'</div>';
+    container.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════════
+// TWO-PLAYER QUIZ ENGINE + ALL GAME DATA
+// ══════════════════════════════════════════════
+function TwoPlayerQuiz(cfg) {
+  this.id=cfg.id; this.questions=cfg.questions; this.scores=[0,0];
+  this.currentQ=0; this.currentPlayer=0; this.perPlayer=cfg.perPlayer||4;
+  this.totalQ=this.perPlayer*2; this.answered=false;
+  this.names=['Player 1 🧒','Player 2 👧'];
+  this.colors=[['#1e3a8a','#dbeafe'],['#7c2d12','#fef3c7']];
+}
+TwoPlayerQuiz.prototype.shuffle=function(q){
+  // Build indexed options, shuffle them, track where the correct answer lands
+  var indexed=q.opts.map(function(o,i){return{text:o,orig:i};});
+  for(var i=indexed.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var tmp=indexed[i];indexed[i]=indexed[j];indexed[j]=tmp;
+  }
+  var newCorrect=indexed.findIndex(function(o){return o.orig===q.correct;});
+  return{opts:indexed.map(function(o){return o.text;}),correct:newCorrect};
+};
+TwoPlayerQuiz.prototype.render=function(){
+  var el=document.getElementById(this.id);if(!el)return;
+  var q=this.questions[this.currentQ%this.questions.length];
+  var turn=this.currentPlayer;
+  // Shuffle options fresh each render; store shuffled state for pick()
+  var shuffled=this.shuffle(q);
+  this.currentShuffled=shuffled;
+  var dots='';
+  for(var i=0;i<this.totalQ;i++){var cls=i<this.currentQ?'done':i===this.currentQ?'current':'';dots+='<div class="prog-dot '+cls+'"></div>';}
+  var opts='';
+  var self=this;
+  shuffled.opts.forEach(function(o,i){opts+='<button class="gq-opt" onclick="window.tpgames[\''+self.id+'\'].pick('+i+')" id="'+self.id+'-opt'+i+'">'+o+'</button>';});
+  el.innerHTML=
+    '<div class="scoreboard">'+
+      '<div class="score-card '+(turn===0?'active-player':'')+'" style="background:'+this.colors[0][1]+';border-color:'+(turn===0?this.colors[0][0]:'transparent')+'"><div class="score-player" style="color:'+this.colors[0][0]+'">'+this.names[0]+'</div><div class="score-pts" style="color:'+this.colors[0][0]+'">'+this.scores[0]+'</div><div class="score-label" style="color:'+this.colors[0][0]+'">pts</div></div>'+
+      '<div class="score-card '+(turn===1?'active-player':'')+'" style="background:'+this.colors[1][1]+';border-color:'+(turn===1?this.colors[1][0]:'transparent')+'"><div class="score-player" style="color:'+this.colors[1][0]+'">'+this.names[1]+'</div><div class="score-pts" style="color:'+this.colors[1][0]+'">'+this.scores[1]+'</div><div class="score-label" style="color:'+this.colors[1][0]+'">pts</div></div>'+
+    '</div>'+
+    '<div class="turn-banner">'+this.names[turn]+'\'s turn — Question '+(this.currentQ+1)+' of '+this.totalQ+'</div>'+
+    '<div class="game-progress">'+dots+'</div>'+
+    '<div class="gq-box">'+
+      '<div class="gq-category" style="color:'+this.colors[turn][0]+'">'+q.cat+'</div>'+
+      '<div class="gq-question">'+q.q+'</div>'+
+      '<div class="gq-opts">'+opts+'</div>'+
+      '<div class="gq-feedback" id="'+this.id+'-fb"></div>'+
+    '</div>';
+};
+TwoPlayerQuiz.prototype.pick=function(idx){
+  if(this.answered)return;
+  this.answered=true;
+  var q=this.questions[this.currentQ%this.questions.length];
+  var shuffled=this.currentShuffled; // use the shuffled correct index
+  var correct=idx===shuffled.correct;
+  var opts=document.querySelectorAll('#'+this.id+' .gq-opt');
+  opts.forEach(function(o,i){o.disabled=true;if(i===shuffled.correct)o.classList.add('opt-correct');});
+  if(!correct)opts[idx].classList.add('opt-wrong');
+  var fb=document.getElementById(this.id+'-fb');fb.classList.add('show');
+  if(correct){this.scores[this.currentPlayer]++;fb.style.cssText='background:#EAF3DE;border:1.5px solid #059669;color:#166534;border-radius:9px;';fb.innerHTML='✅ '+q.right;}
+  else{fb.style.cssText='background:#FCEBEB;border:1.5px solid #b91c1c;color:#991b1b;border-radius:9px;';fb.innerHTML='❌ '+q.wrong;}
+  var self=this;
+  setTimeout(function(){
+    self.currentQ++; self.answered=false;
+    if(self.currentQ>=self.perPlayer&&self.currentPlayer===0)self.currentPlayer=1;
+    if(self.currentQ>=self.totalQ)self.showResult();else self.render();
+  },2000);
+};
+TwoPlayerQuiz.prototype.showResult=function(){
+  var el=document.getElementById(this.id);if(!el)return;
+  var s0=this.scores[0],s1=this.scores[1],trophy,title,sub;
+  if(s0>s1){trophy='🏆';title=this.names[0]+' wins!';sub='Incredible brain power! Player 2 — study up and demand a rematch!';}
+  else if(s1>s0){trophy='🏆';title=this.names[1]+' wins!';sub='Unstoppable! Player 1 — better hit the books before the next round!';}
+  else{trophy='🤝';title="It's a tie!";sub="You're equally brilliant! Or equally confused. Honestly impossible to tell. Try again!";}
+  el.innerHTML='<div class="game-result show"><div class="result-trophy">'+trophy+'</div><div class="result-title">'+title+'</div><div class="result-sub">'+sub+'</div><div class="result-scores"><div class="result-score-box" style="background:'+this.colors[0][1]+'"><div style="font-size:13px;font-weight:700;color:'+this.colors[0][0]+'">'+this.names[0]+'</div><div style="font-size:28px;font-weight:700;color:'+this.colors[0][0]+'">'+s0+'/'+this.perPlayer+'</div></div><div class="result-score-box" style="background:'+this.colors[1][1]+'"><div style="font-size:13px;font-weight:700;color:'+this.colors[1][0]+'">'+this.names[1]+'</div><div style="font-size:28px;font-weight:700;color:'+this.colors[1][0]+'">'+s1+'/'+this.perPlayer+'</div></div></div><button class="play-again-btn" style="background:var(--green);" onclick="window.tpgames[\''+this.id+'\'].restart()">🔄 Play again!</button></div>';
+};
+TwoPlayerQuiz.prototype.restart=function(){this.scores=[0,0];this.currentQ=0;this.currentPlayer=0;this.answered=false;this.render();};
+
+window.tpgames={};
+
+// GAME 1: MONEY
+window.tpgames['game-money']=new TwoPlayerQuiz({id:'game-money',perPlayer:4,questions:[
+  {cat:'🐔 Barter Problems',q:'Mae has wheat and wants a chicken. The chicken farmer only wants pots. Mae has no pots. What is this frustrating problem called?',opts:['A cooking problem 🍳','The double coincidence of wants 🤯','A chicken allergy 🐔','Very bad luck'],correct:1,right:'"Double coincidence of wants" — both people have to want EXACTLY what the other has. That\'s what makes barter so painful!',wrong:'It\'s the "double coincidence of wants" — both people need to want what the other has at the SAME time. Incredibly annoying!'},
+  {cat:'🐚 Money History',q:'Which of these did ancient people really use as money?',opts:['Pokémon cards 🃏','Signed selfies of famous people 🤳','Cowrie shells 🐚','Ancient Roblox coins 🎮'],correct:2,right:'History wizard! Cowrie shells were used as currency across Africa and Asia for thousands of years!',wrong:'No Pokémon back then! Cowrie shells were the real deal — used as money for over 3,000 years!'},
+  {cat:'💵 Why Money Works',q:'A dollar bill is just paper with ink. Why is it worth anything?',opts:['The government hid gold inside each one 🥇','It tastes slightly sweet 👅','Everyone in society agrees to trust and accept it 🤝','It has a really nice smell'],correct:2,right:'Exactly! Money is a shared agreement — millions of people all trust it, so it works. It\'s like the world\'s biggest pinky promise!',wrong:'It\'s not gold, taste, or smell! Money works because everyone AGREES it has value. The biggest pinky promise in history!'},
+  {cat:'✂️ Money Properties',q:'Which of these would make absolutely TERRIBLE money?',opts:['Gold coins 🥇','A fresh fish 🐟','A $10 bill 💵','A small metal coin'],correct:1,right:'A fish rots in days, smells terrible, and you can\'t split it in half for change. Gold wins every time!',wrong:'A fresh fish is the worst money ever invented! Rots. Smells. Can\'t make change. Imagine paying your rent in salmon. 🐟'},
+  {cat:'🌍 Big Ideas',q:'Countries that trade a lot with each other are unlikely to go to war. Why?',opts:['They both love soccer ⚽','Fighting would hurt them both — they need each other! 🤝','Their armies are too tired from shipping packages','The UN takes away their snacks if they fight'],correct:1,right:'Trade creates peace! When countries depend on each other economically, conflict is too costly. Well done!',wrong:'It\'s the money! When you NEED another country for food, cars, and medicine — attacking them means hurting yourself. Trade = peace!'},
+  {cat:'🔧 Properties',q:'What does it mean that money is "portable"?',opts:['It can run away from you 🏃','You can carry lots of value easily in your pocket 👜','It works on any computer 💻','It has little legs'],correct:1,right:'Exactly! Imagine carrying 50 chickens to the market instead of a wallet. Portability changed everything!',wrong:'Portable means easy to carry! Imagine paying for shoes with 20 bags of grain. A wallet is WAY better.'},
+  {cat:'📜 History',q:'Which country invented paper money over 1,300 years ago?',opts:['The United States 🇺🇸','Ancient Egypt 🇪🇬','China 🇨🇳','Canada 🍁'],correct:2,right:'China invented paper money around 700 CE — over a thousand years before the US even existed!',wrong:'China! They invented paper money around 700 CE. Merchants were tired of hauling heavy coins, so banks gave them paper "receipts" instead.'},
+  {cat:'💡 Big Picture',q:'Money lets a doctor JUST be a doctor without also farming and building houses. Why?',opts:['Doctors are too important for farming 👨‍⚕️','Money lets them trade their skills for everything else they need 💰','The government brings them free food','Hospitals have tiny kitchens'],correct:1,right:'Money enables specialization! Doctors earn money, then use it to buy food, houses, everything. Everyone does what they\'re best at!',wrong:'Money lets everyone specialize! A doctor earns money and buys food — they don\'t need to grow it. Everyone does what they\'re best at.'},
+]});
+
+// GAME 2: YOUR LIFE
+window.tpgames['game-life']=new TwoPlayerQuiz({id:'game-life',perPlayer:4,questions:[
+  {cat:'📦 Stuff vs Experiences',q:'Maya bought a new game and was excited for 2 weeks. Jake spent the same money on a camping trip with his dad. A year later, who has something more valuable?',opts:['Maya — she still has the game 🎮','Jake — the memory lasts forever 🏕️','They\'re equal — same price!','Neither — both wasted their money'],correct:1,right:'Experience wins! Memories actually get BETTER over time. The game just sits there collecting dust.',wrong:'Experiences beat stuff every time! Memories last forever and get better as you retell them. The game will just sit in a drawer.'},
+  {cat:'🎢 Brain Science',q:'You get a new phone and feel amazing! Two weeks later you feel... normal. What do scientists call this?',opts:['The phone sadness syndrome 😢','Hedonic adaptation (the happiness treadmill) 🎢','Buyer\'s regret disorder','Normal Tuesday feelings'],correct:1,right:'"Hedonic adaptation" — you get used to new things quickly. Then you need something NEWER to feel good again. The treadmill never stops!',wrong:'Scientists call it "hedonic adaptation" — you adapt to new things super fast, then want something new again. It\'s a treadmill!'},
+  {cat:'❤️ Health Rule',q:'Finish this sentence: Health creates time, time creates wealth, wealth creates ___.',opts:['more health 💪','stress 😰','freedom 🔓','a really nice car 🚗'],correct:2,right:'Freedom! That\'s the whole chain — health → time → wealth → freedom. The most important equation in life!',wrong:'Freedom! Health → time → wealth → FREEDOM. Look after your body, and everything else becomes more possible.'},
+  {cat:'🧘 Simple vs Stuffed',q:'Which life tends to have LESS financial stress?',opts:['Big house, new car every year, lots of subscriptions 🏡','Modest home, fewer things, big savings each month 🎒','Doesn\'t matter — stress is random','The life with the most gadgets'],correct:1,right:'Simple living = less stress! Fewer things to pay for means more freedom and less anxiety. Spacious feels better than stuffed.',wrong:'A simpler life with lower costs means less financial pressure. Fewer bills = more peace. The research is very clear!'},
+  {cat:'🔬 What Science Found',q:'Research shows spending money on OTHER people makes you happier than spending on yourself. What does this tell us?',opts:['Scientists are wrong about this one 🤔','Humans need connection more than they need stuff 🤝','You should give away ALL your money','Other people have better taste in shopping'],correct:1,right:'Giving genuinely makes us happier! Human brains are wired for connection — helping others triggers real joy.',wrong:'We\'re social creatures! Our brains are designed for connection, not collection. Giving activates real happiness centers in the brain.'},
+  {cat:'🕊️ Freedom Question',q:'Jordan saves 50% of their income and lives simply. What does this give them that money can\'t buy directly?',opts:['Sadness 😢','Options — the ability to choose what they do next 🔓','A very small house 🏠','Lots of free time to be bored'],correct:1,right:'Options and freedom! Having money saved means you can say yes to great opportunities and no to bad ones. That\'s priceless.',wrong:'Freedom and options! When you have savings, you can take chances, change direction, or help someone. Without savings, you\'re stuck.'},
+  {cat:'📦 Stuff Science',q:'What happens to most things you buy within a few weeks of getting them?',opts:['They gain value and become antiques 💰','The excitement fades and they become just... stuff 📦','They get smarter and help you with homework','They start talking to you at night'],correct:1,right:'The excitement always fades! That\'s the happiness treadmill — you need the NEXT thing to feel good again.',wrong:'Excitement fades fast! Almost everything you buy becomes just a normal object within weeks. That\'s hedonic adaptation!'},
+  {cat:'✏️ Design Your Life',q:'The BEST approach to designing a happy life according to research is:',opts:['Buy as much cool stuff as possible 🛍️','Earn enough, save some, spend on experiences and people, give away some ❤️','Work 80 hours a week to get rich first, then relax','Figure it out when you\'re 40'],correct:1,right:'Balance is everything! Earn, save, experience, give — that\'s the formula researchers consistently find leads to high life satisfaction.',wrong:'Balance! Enough money to feel secure + experiences + relationships + generosity = consistently the highest life satisfaction scores in research.'},
+]});
+
+// GAME 3: MAKING MONEY
+window.tpgames['game-earn']=new TwoPlayerQuiz({id:'game-earn',perPlayer:4,questions:[
+  {cat:'🤝 All Work Matters',q:'A garbage collector and a surgeon both work hard every day. Which one is doing something noble?',opts:['The surgeon — much more education 🎓','The garbage collector — harder physical work 🗑️','Both — all honest work has dignity 🤝','Neither — they\'re just doing it for the money'],correct:2,right:'Both! Every person who works honestly and keeps society running deserves respect — no matter what it pays.',wrong:'BOTH! A clean city and healthy people both matter enormously. All honest work done with care has dignity and value.'},
+  {cat:'🦄 Rare Skills',q:'There are 300 million people who could wash dishes, but only 500 brain surgeons in the country. Why does the surgeon earn more?',opts:['Brains are worth more than dishes 🧠','Scarcity — rare skills command higher prices 🦄','Surgeons are better at negotiating','They went to fancier schools'],correct:1,right:'Scarcity! When very few people can do something, whoever needs it done pays more to attract one of those rare people.',wrong:'It\'s scarcity! When something is rare and needed, its price goes up. Brain surgery skills are MUCH rarer than dishwashing skills.'},
+  {cat:'🎨 Job vs Hobby',q:'Lily LOVES painting. She paints for fun on weekends AND works as a graphic designer. What\'s the difference?',opts:['Both are hobbies — she loves art 🎨','Both are jobs — she uses the same skill','Weekend painting = hobby (fun), graphic design = job (pays bills) 💼','Neither matters as long as she\'s happy'],correct:2,right:'Exactly! Same skill, different purpose. One feeds her soul, the other pays her rent. Both can coexist happily!',wrong:'Weekend painting = hobby (for joy, no pressure). Graphic design = job (uses similar skills to earn money and pay bills). Same skill, two different roles!'},
+  {cat:'💰 The Formula',q:'What is the "pay yourself first" money formula in the right order?',opts:['Spend → Save → Give → Bills','Bills → Spend → Save → Give','Save first → Bills → Give → Spend freely with the rest 🐷','Give → Bills → Spend → Hope there\'s something left'],correct:2,right:'Save FIRST! Then bills, then give, then spend freely without guilt. This one habit changes everything.',wrong:'Save FIRST before anything else! Then bills, then give, then spend what remains. Most people do it backwards — and end up with nothing saved.'},
+  {cat:'⚖️ Stakes & Pay',q:'A pharmacist earns much more than a cashier. A big reason is:',opts:['Pharmacists are taller on average 📏','A wrong medicine dose can kill someone — huge responsibility 💊','Pharmacies smell nicer','Cashiers prefer earning less'],correct:1,right:'High stakes = higher pay! When a mistake can cost a life, employers pay much more for accuracy and expertise.',wrong:'It\'s the stakes! If a pharmacist makes an error, someone could die. That enormous responsibility is reflected in their salary.'},
+  {cat:'🎓 Training',q:'An electrician does 2 years of trade school vs a doctor who does 12+ years. What\'s one big advantage the electrician has?',opts:['Electricians never get shocked 🔌','They finish training much sooner and earn money earlier with less debt ⚡','Electricity is more important than health','Trade school has better cafeteria food'],correct:1,right:'Earlier income, way less debt! Electricians earn good money much sooner. Both paths are valid — they\'re just very different.',wrong:'The electrician earns money YEARS earlier with far less student debt. Both are great careers — just very different paths and timelines.'},
+  {cat:'🎯 Follow Your Passion?',q:'"Follow your passion" is popular advice. What\'s the MORE useful question to ask?',opts:['"What is the highest-paying job?" 💰','"What am I good at, that the world needs, that I can enjoy?" 🎯','"What do I like doing for exactly 2 hours per day?"','Nothing — just spin a wheel'],correct:1,right:'The overlap of skill + need + enjoyment is where the best careers live. Pure passion alone doesn\'t always pay the bills!',wrong:'"What am I good at, that the world needs, and I can enjoy?" is the smarter question. Pure passion without skill or demand = tough career.'},
+  {cat:'🏆 Big Picture',q:'The three-step money formula is: Make as much as you can, save as much as you can, and then what?',opts:['Spend it all on yourself 🛍️','Hide it in a mattress 🛏️','Give away as much as you can ❤️','Buy a boat 🚤'],correct:2,right:'Give! Make → Save → Give. The three-step formula that builds a great financial life AND makes the world better.',wrong:'Give! Make as much as you can → Save as much as you can → Give away as much as you can. That\'s the complete formula!'},
+]});
+
+// GAME 4: ADVERTISING
+window.tpgames['game-ads']=new TwoPlayerQuiz({id:'game-ads',perPlayer:4,questions:[
+  {cat:'🧠 Brain Tricks',q:'An ad shows happy, popular kids wearing a certain backpack. What trick is this?',opts:['Honest product information 📋','Social proof — making you fear being left out 😱','A documentary about backpacks 🎒','A school supply reminder'],correct:1,right:'Social proof! They\'re triggering your fear of missing out. If the cool kids have it, your brain panics that you need it too.',wrong:'Social proof! Advertisers deliberately show "cool" people with products to make your brain think "I\'ll fit in if I buy this."'},
+  {cat:'🌐 Internet Trap',q:'You use a FREE game app and see ads for things you searched yesterday on a different website. How?',opts:['Spooky coincidence 👻','The apps share your data — advertisers track you everywhere 📱','Your parents told the app','The app can read your thoughts'],correct:1,right:'Data sharing! Apps collect your information and sell it. You\'re not the customer — you\'re the product being sold.',wrong:'Your data! Apps track everything and share it. "Free" apps are free because YOU are what they\'re selling — to advertisers.'},
+  {cat:'🎮 Designed Addiction',q:'A free game gets really hard right before a big victory and offers to let you pay $0.99 to win. This is:',opts:['A fair offer to help you out 🤝','A deliberately engineered frustration to make you spend money 🎰','A bug in the code','Extremely generous of the developers'],correct:1,right:'Engineered frustration! The game was designed to stop you at that EXACT moment. That frustration is the product.',wrong:'It\'s a trap! The game was designed by psychology experts to make you feel frustrated right when you\'re closest to winning. Totally on purpose.'},
+  {cat:'📺 Athletes & Money',q:'Babe Ruth earned the equivalent of ~$2M/year today. Modern baseball players earn $40M+. The MAIN reason is:',opts:['Modern players are much better at baseball ⚾','TV and advertising created billions in new revenue 📺','Inflation alone explains the difference 💸','Ruth was very bad at negotiating'],correct:1,right:'Television! TV brought billions in ad revenue to sports, and eventually players won the right to share in it. Ads made athletes rich!',wrong:'TV and advertising! Broadcasting rights bring in billions, and players eventually won the right to share that revenue. Ads → eyeballs → money → salaries!'},
+  {cat:'👕 Walking Billboard',q:'A shirt with a giant logo costs MORE than a plain shirt. Why would a company charge MORE for their logo on it?',opts:['The logo ink is made of gold 🥇','You become a free advertisement they don\'t have to pay for 📣','Brand names are just fancier quality','It takes longer to sew the logo on'],correct:1,right:'You\'re doing their advertising FOR them — and paying extra for the privilege! The logo turns you into a billboard.',wrong:'You\'re a free ad! That logo gets seen by hundreds of people every day. The company gets advertising. You pay for the privilege. Wild, right?'},
+  {cat:'🧠 Your Ancient Brain',q:'Why can\'t you stop scrolling even when there\'s nothing interesting? Your hunter-gatherer brain thinks:',opts:['Scrolling burns calories 🏃','There might be something important — like a predator or food! 👁️','The screen is warm and comforting 🌅','You just love rectangles'],correct:1,right:'Your movement-detecting brain is convinced something important might appear! It was useful for spotting lions. Not so useful for TikTok.',wrong:'Your ancient brain evolved to notice movement — it might be food or danger! Social media exploits this perfectly. It\'s not your fault!'},
+  {cat:'🤖 AI & You',q:'An AI algorithm knows exactly what content makes you angry, sad, and excited. What does it do with this?',opts:['Nothing — it\'s just trying to help 😇','Shows you more of what triggers strong emotions to keep you watching 📱','Alerts your parents immediately','Gives you a break so you don\'t get tired'],correct:1,right:'It shows you MORE emotional content! More emotion = more time on the app = more ad revenue. Your feelings are the product.',wrong:'It feeds you MORE of whatever keeps you watching! Outrage, excitement, fear — whatever works. Your attention is worth money to advertisers.'},
+  {cat:'⚡ Your Defense',q:'What is the BEST protection against being manipulated by social media and advertisers?',opts:['Never use any technology ever 📵','Know your own values so clearly that you can spot when someone is trying to change them 🎯','Trust all influencers with #ad tags','Buy everything they recommend so the algorithm likes you'],correct:1,right:'Know yourself! When you know what you value, you can spot when an app or ad is trying to replace your values with theirs.',wrong:'Know yourself! Understanding your own values, interests, and goals means you can recognize manipulation when it happens — and choose differently.'},
+]});
+
+// GAME 5: SPENDING & SAVING
+window.tpgames['game-smart']=new TwoPlayerQuiz({id:'game-smart',perPlayer:4,questions:[
+  {cat:'🐷 Pay Yourself First',q:'You just got $20 allowance. What should happen FIRST?',opts:['Buy the thing you\'ve been wanting 🎮','Set aside your savings immediately, before anything else 🐷','Pay for snacks — hunger is urgent 🍕','Ask your friend what they would do'],correct:1,right:'Save FIRST! Before snacks, before fun, before anything. Future you will be SO grateful.',wrong:'Save first! The money for future-you comes out BEFORE everything else. That\'s pay yourself first — and it actually works!'},
+  {cat:'🏠 Needs vs Wants',q:'Which of these is a NEED?',opts:['The latest gaming console 🎮','A new pair of Jordans when your current shoes are fine 👟','Food and a place to live 🏠','A giant LED gaming desk setup 💡'],correct:2,right:'Food and shelter! Everything else might be enjoyable, but these are the ones you absolutely cannot skip.',wrong:'Food and shelter are true needs — things without which you literally cannot function. Everything else is a want (a nice want, but still a want).'},
+  {cat:'⏳ The 24-Hour Rule',q:'You see an amazing new toy and NEED it immediately. The smartest move is:',opts:['Buy it now before it sells out — the ad said only 3 left! ⚡','Wait 24 hours to see if you still want it as much ⏳','Ask everyone you know if it\'s worth it','Cry until someone buys it for you'],correct:1,right:'Wait 24 hours! Most "I NEED IT NOW" feelings fade dramatically by the next day. The 24-hour rule saves so much money!',wrong:'Wait! The "only 3 left!" urgency is often a marketing trick. Almost all impulse purchases look much less urgent the next day.'},
+  {cat:'💵 The Right Order',q:'What is the correct order for handling money when you get it?',opts:['Spend → Bills → Save → Hope','Bills → Spend → Save → Whatever\'s left (usually $0)','Save first → Bills → Give → Spend the rest guilt-free 🐷','Spend it all immediately — YOLO'],correct:2,right:'Save first, bills second, give third, spend the rest freely! That order ensures the important things are always handled.',wrong:'Save FIRST! Then bills, then give, then spend what remains. Most people do it backwards and wonder why they never have savings.'},
+  {cat:'🔍 Smart Shopping',q:'You want a new backpack. The SMARTEST thing to do before buying is:',opts:['Buy the most expensive one — it must be best 💸','Check if the same thing costs less somewhere else, and wait for sales 🔍','Buy it immediately so you don\'t have to think about it','Ask an influencer which one to get'],correct:1,right:'Compare prices! A few minutes of research can save real money. Smart shoppers always check before they checkout.',wrong:'Compare! The same backpack can cost very different amounts at different stores or times. A few minutes of research pays off.'},
+  {cat:'🎁 Give Some Away',q:'Why does giving some of your money away actually make YOU feel good?',opts:['It doesn\'t — giving money away just makes you poorer 💸','Because your brain is wired to feel joy from helping others ❤️','Because it makes people like you','Tax reasons (ask your parents)'],correct:1,right:'Your brain releases feel-good chemicals when you help others! Giving is one of the most reliable happiness boosters ever studied.',wrong:'Science proves it! Human brains are social — helping others releases the same feel-good chemicals as eating chocolate. Generosity is actually selfish (in a good way)!'},
+  {cat:'📊 Comparing Savers',q:'Alex earns $100/week and saves "whatever\'s left" (usually $2). Sam earns $100/week and saves $20 first, then spends the rest. After one year, who has more?',opts:['Alex — they enjoyed more stuff all year 🎉','Sam — $20/week adds up to $1,040+, while Alex\'s "leftovers" rarely appear 🐷','They\'re equal — same income!','Alex, because Sam is too boring'],correct:1,right:'Sam — by a mile! $20 saved automatically every week = $1,040 a year. Alex\'s "leftover" method almost never produces real savings.',wrong:'Sam wins easily! $20 saved automatically 52 times = $1,040. Alex\'s "save the leftovers" strategy almost always results in... nothing.'},
+  {cat:'🧠 Lifestyle Design',q:'The key idea of "pay yourself first" is:',opts:['Buy yourself nice gifts regularly 🎁','Your savings happen automatically — then you design your lifestyle around what remains 🏗️','Pay your mortgage before breakfast 🏠','Treat yourself before treating anyone else'],correct:1,right:'Lifestyle follows savings! You save first, and then live on what\'s left — not the other way around. This flips everything.',wrong:'Your lifestyle adjusts to fit what\'s left after savings. Most people do it backwards — spend until they\'re broke, then save nothing.'},
+]});
+
+// GAME 6: INVESTING
+window.tpgames['game-invest']=new TwoPlayerQuiz({id:'game-invest',perPlayer:4,questions:[
+  {cat:'📈 Stocks',q:'You buy one share of Apple. What do you actually own?',opts:['One Apple product of your choice 🍎','A tiny piece of everything Apple owns — its buildings, patents, and future profits 📈','An IOU from Tim Cook personally','Access to the Apple store employee discount'],correct:1,right:'You own a tiny fraction of the whole company! If Apple grows, your share grows. If Apple struggles, so does your investment.',wrong:'You own a tiny slice of the whole company! That means a tiny piece of their profits, assets, and future. Pretty cool!'},
+  {cat:'📜 Bonds',q:'When you buy a government bond, what are you doing?',opts:['Buying a piece of the government 🏛️','Lending money to the government and getting paid interest in return 💰','Investing in government stocks','Donating to help pay for roads'],correct:1,right:'You\'re the bank! You lend money, they pay you interest, then return your money at the end. Safe and predictable.',wrong:'You\'re lending! The government borrows your money, pays you interest (like a salary for lending), then returns everything at the end.'},
+  {cat:'🗂️ Index Funds',q:'An S&P 500 index fund owns 500 companies at once. What\'s the big advantage?',opts:['You get 500 times the stress 😰','If one company fails, the other 499 cushion the blow — it\'s called diversification 🧺','You can visit all 500 offices','500 companies send you birthday cards'],correct:1,right:'Diversification! Spreading across 500 companies means no single failure can wipe you out. This is the closest thing to a free lunch in investing.',wrong:'Diversification! When you own a tiny piece of 500 companies, one failing barely affects you. That\'s why index funds are so popular.'},
+  {cat:'🌱 Compounding',q:'Edgar Bronfman Sr. said "To turn $100 into $110 is work. To turn $100 million into $110 million is..." what?',opts:['Impossible 😬','Inevitable — because the money itself does the work 💰','Just as hard','A lot of spreadsheets'],correct:1,right:'"Inevitable!" Because $100M invested at 10% earns $10M automatically. The money earns more money — that\'s the magic of compounding!',wrong:'"Inevitable!" A huge pile of money grows by itself — the more you have invested, the more it earns without extra effort. Compounding!'},
+  {cat:'📊 10-Year History',q:'$100 invested in Nvidia in 2015 grew to over $8,000 by 2024. What was the catch?',opts:['There was no catch — free money! 🎉','It dropped 65% in 2022 before recovering — you needed patience and strong nerves 💪','You had to work at Nvidia','It actually grew to $10,000'],correct:1,right:'Huge drops along the way! Nvidia fell 65% in 2022. Only patient investors who held through the pain saw the extraordinary reward.',wrong:'It dropped 65% in 2022! Most people panic-sell during big drops and miss the recovery. Patient investors who held saw 80× returns.'},
+  {cat:'⚖️ Risk vs Reward',q:'Which investment is SAFEST but grows the SLOWEST?',opts:['Nvidia stock 🖥️','Rocket Lab 🚀','US Government Treasury Bond 🇺🇸','A random startup company'],correct:2,right:'US Treasury! The safest investment in the world — the government has never failed to repay a bond. Pays ~4-5% per year steadily.',wrong:'US Treasury bonds! The government has never defaulted on a bond in history. It\'s the safest option — but it only pays ~4-5% per year.'},
+  {cat:'🚀 New Stocks',q:'ASML makes machines that make computer chips. Almost every chip in the world uses their equipment. This makes ASML:',opts:['Replaceable — anyone could build these machines 🔧','A near-monopoly — incredibly rare and valuable position in tech 🔬','Just another chip company','A bad investment because chips are boring'],correct:1,right:'Near-monopoly! Almost every chip manufacturer on Earth needs ASML\'s machines. That\'s an extraordinarily strong business position.',wrong:'Near-monopoly! ASML makes the machines that make the chips — and almost nobody else can. That\'s why their stock grew 7× in 10 years.'},
+  {cat:'⏰ Time & Investing',q:'The single most important factor in growing wealth through investing is:',opts:['Picking exactly the right stocks 🎯','Starting early and giving time for compounding to work ⏰','Checking prices every day 📱','Investing only in companies you\'ve heard of'],correct:1,right:'Time! Starting at age 10 vs 30 can mean the difference of millions of dollars by retirement. Time is the most powerful ingredient.',wrong:'Time! Compounding needs years to build momentum. Starting early — even with tiny amounts — dramatically outperforms starting late with more money.'},
+]});
+
+// INIT ALL GAMES
+function initAllGames(){
+  Object.keys(window.tpgames).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) window.tpgames[id].render();
+  });
+}
+
+// ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', function(){
@@ -1606,6 +3029,7 @@ window.addEventListener('DOMContentLoaded', function(){
   renderMarket();
   setTimeout(updateSim, 100);
   setTimeout(updateTradeoff, 100);
+  setTimeout(initAllGames, 200);
 });
 </script>
 </body>
